@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLOBAL X</title>
+<link rel="icon" href="https://www.google.com/favicon.ico">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+body { background:#fff; height:100vh; display:flex; flex-direction:column; }
+header { display:flex; justify-content:flex-end; align-items:center; padding:20px; gap:20px; font-size:14px; }
+header a { text-decoration:none; color:#000; }
+header a:hover { text-decoration:underline; }
+.g-icon { width:32px; height:32px; background:#1a73e8; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; cursor:pointer; }
+main { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top:-100px; }
+.logo { font-size:92px; font-weight:800; letter-spacing:-2px; margin-bottom:30px; background: linear-gradient(90deg, #0d47a1, #6200ea, #00bfa5); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+@media(max-width:600px){ .logo{ font-size:52px; } }
+.search-box { width:90%; max-width:584px; height:46px; border:1px solid #dfe1e5; border-radius:24px; display:flex; align-items:center; padding:0 20px; gap:15px; box-shadow: 0 1px 6px rgba(32,33,36,.15); }
+.search-box:hover { box-shadow: 0 2px 8px rgba(32,33,36,.28); }
+.search-box input { flex:1; border:none; outline:none; font-size:16px; }
+.search-box input::placeholder { color:#9aa0a6; }
+.icon { width:24px; height:24px; cursor:pointer; opacity:.7; }
+.buttons { margin-top:28px; display:flex; gap:12px; }
+.btn { background:#f8f9fa; border:1px solid #f8f9fa; padding:0 16px; height:36px; border-radius:4px; font-size:14px; cursor:pointer; }
+.btn:hover { border:1px solid #dadce0; box-shadow: 0 1px 1px rgba(0,0,0,.1); }
+footer { background:#f2f2f2; color:#70757a; }
+.f-top { padding:15px 30px; border-bottom:1px solid #dadce0; font-size:15px; }
+.f-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; padding:15px 30px; font-size:14px; gap:10px; }
+.f-bottom div { display:flex; gap:20px; }
+.f-bottom a { text-decoration:none; color:#70757a; }
+.f-bottom a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<header>
+<a href="#">Gmail</a>
+<a href="#">Images</a>
+<div class="g-icon">G</div>
+</header>
+
+<main>
+<div class="logo">GLOBAL X</div>
+<div class="search-box">
+<svg class="icon" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+<input id="searchInput" type="text" placeholder="Search GLOBAL X or type a URL" autofocus>
+<span id="voiceBtn" class="icon">🎤</span>
+<span class="icon">📷</span>
+</div>
+<div class="buttons">
+<button class="btn" onclick="doSearch()">Global X Search</button>
+<button class="btn" onclick="feelingLucky()">I'm Feeling Lucky</button>
+</div>
+</main>
+
+<footer>
+<div class="f-top">Sri Lanka</div>
+<div class="f-bottom">
+<div><a href="#">About</a><a href="#">Advertising</a><a href="#">Business</a><a href="#">How Search works</a></div>
+<div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Settings</a></div>
+</div>
+</footer>
+
+<script>
+// FORMULA 1: GOOGLE SEARCH LOGIC - Same as Google
+function doSearch(){
+  let q = document.getElementById('searchInput').value.trim();
+  if(!q){ return; }
+  // Ippo Google maari GLOBAL X search pannum - nee backend add panna idha maathalam
+  window.location.href = `https://www.google.com/search?q=site:globalx.com+${encodeURIComponent(q)}`;
+  // Future la un search engine API vandha: window.location.href = `/search?q=${encodeURIComponent(q)}`;
+}
+
+// Enter press
+document.getElementById('searchInput').addEventListener('keydown', (e)=>{
+  if(e.key==='Enter'){ doSearch(); }
+});
+
+// FORMULA 2: I'M FEELING LUCKY - Random or First Result
+function feelingLucky(){
+  let q = document.getElementById('searchInput').value.trim() || "GLOBAL X Agency Sri Lanka";
+  window.location.href = `https://www.google.com/search?q=${encodeURIComponent(q)}&btnI=1`;
+}
+
+// FORMULA 3: VOICE SEARCH - Google Web Speech API
+const voiceBtn = document.getElementById('voiceBtn');
+if('webkitSpeechRecognition' in window){
+  const rec = new webkitSpeechRecognition();
+  rec.lang='en-US';
+  voiceBtn.onclick=()=>{ rec.start(); voiceBtn.textContent='🔴'; };
+  rec.onresult=(e)=>{ document.getElementById('searchInput').value = e.results[0][0].transcript; voiceBtn.textContent='🎤'; doSearch(); };
+  rec.onend=()=>{ voiceBtn.textContent='🎤'; };
+}
+</script>
+</body>
+</html>

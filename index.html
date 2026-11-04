@@ -1,154 +1,926 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+
 <title>GLOBAL X - The Future of Search</title>
+<meta name="description" content="GLOBAL X - Search the web, explore images, videos, news and discover AI. Made in Sri Lanka.">
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>X</text></svg>">
+
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'SF Pro Display', -apple-system, Arial, sans-serif; }
-:root { --bg:#fff; --text:#202124; --border:#dfe1e5; --btn:#f8f9fa; --footer:#f2f2f2; --logo-grad: linear-gradient(90deg, #0d47a1, #6200ea, #00bfa5, #ff3d00); }
-body.dark { --bg:#0a0a0a; --text:#e8eaed; --border:#3c4043; --btn:#303134; --footer:#171717; }
-body { background:var(--bg); color:var(--text); height:100vh; display:flex; flex-direction:column; transition:.3s; overflow:hidden; }
-header { display:flex; justify-content:space-between; align-items:center; padding:18px 24px; font-size:14px; }
-.h-left, .h-right { display:flex; align-items:center; gap:20px; }
-header a { text-decoration:none; color:var(--text); opacity:.8; }
-header a:hover { text-decoration:underline; opacity:1; }
-.pill { border:1px solid var(--border); padding:6px 14px; border-radius:20px; cursor:pointer; font-size:13px; backdrop-filter:blur(10px); }
-.pill.active { background:var(--text); color:var(--bg); border-color:var(--text); }
-.g-icon { width:34px; height:34px; background:var(--text); color:var(--bg); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; cursor:pointer; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
 
-main { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top:-80px; }
-.logo { font-size:92px; font-weight:900; letter-spacing:-4px; margin-bottom:10px; background:var(--logo-grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter: drop-shadow(0 0 20px rgba(98,0,234,.2)); animation: glow 4s infinite; }
-@keyframes glow { 0%,100%{filter:drop-shadow(0 0 20px rgba(98,0,234,.2))} 50%{filter:drop-shadow(0 0 40px rgba(0,191,165,.4))} }
-.tagline { font-size:14px; letter-spacing:6px; opacity:.5; margin-bottom:40px; text-transform:uppercase; }
-@media(max-width:600px){ .logo{ font-size:54px; } .tagline{font-size:10px; letter-spacing:3px} }
+:root {
+    --bg: #ffffff;
+    --text: #202124;
+    --muted: #70757a;
+    --border: #dfe1e5;
+    --btn: #f8f9fa;
+    --footer: #f2f2f2;
+    --surface: #ffffff;
+    --shadow: rgba(0,0,0,.10);
+    --gradient: linear-gradient(90deg,#0d47a1,#6200ea,#00bfa5,#ff3d00);
+}
 
-.search-wrap { width:90%; max-width:640px; position:relative; }
-.search-box { width:100%; height:56px; border:1px solid var(--border); border-radius:28px; display:flex; align-items:center; padding:0 22px; gap:15px; background:var(--bg); box-shadow:0 1px 6px rgba(0,0,0,.08); transition:.2s; }
-.search-box:focus-within { box-shadow:0 4px 20px rgba(0,0,0,.15); border-color:transparent; transform: scale(1.01); }
-.search-box input { flex:1; border:none; outline:none; font-size:17px; background:transparent; color:var(--text); }
-.icon { width:26px; height:26px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:20px; }
+body.dark {
+    --bg: #0a0a0a;
+    --text: #e8eaed;
+    --muted: #bdc1c6;
+    --border: #3c4043;
+    --btn: #303134;
+    --footer: #171717;
+    --surface: #171717;
+    --shadow: rgba(0,0,0,.35);
+}
 
-.modes { display:flex; gap:8px; margin-top:18px; justify-content:center; flex-wrap:wrap; }
-.mode { padding:8px 16px; border-radius:20px; border:1px solid var(--border); font-size:13px; cursor:pointer; transition:.2s; }
-.mode:hover { background:var(--btn); }
-.mode.ai { background: linear-gradient(90deg, #6200ea, #00bfa5); color:#fff; border:none; font-weight:600; box-shadow:0 4px 15px rgba(98,0,234,.3); }
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--text);
+    transition: background .25s, color .25s;
+}
 
-.buttons { margin-top:26px; display:flex; gap:12px; }
-.btn { background:var(--btn); border:1px solid transparent; padding:0 20px; height:40px; border-radius:8px; font-size:14px; cursor:pointer; color:var(--text); transition:.2s; }
-.btn:hover { border-color:var(--border); box-shadow:0 1px 3px rgba(0,0,0,.1); transform:translateY(-1px); }
+button, input, textarea, select {
+    font: inherit;
+}
 
-footer { background:var(--footer); color:#70757a; }
-.f-top { padding:12px 30px; border-bottom:1px solid var(--border); font-size:14px; display:flex; justify-content:space-between; }
-.f-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; padding:12px 30px; font-size:13px; gap:10px; }
-.f-bottom div { display:flex; gap:18px; }
-.f-bottom a { text-decoration:none; color:#70757a; }
+button {
+    cursor: pointer;
+}
 
-.ai-panel { position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(20px); display:none; align-items:center; justify-content:center; z-index:99; }
-.ai-panel.show { display:flex; }
-.ai-box { background:var(--bg); width:90%; max-width:600px; border-radius:24px; padding:30px; box-shadow:0 20px 60px rgba(0,0,0,.3); }
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* HEADER */
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    gap: 12px;
+}
+
+.h-left, .h-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pill {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 22px;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.pill:hover {
+    background: var(--btn);
+}
+
+.pill.active {
+    background: var(--text);
+    color: var(--bg);
+}
+
+.header-link {
+    font-size: 13px;
+    opacity: .8;
+}
+
+.header-link:hover {
+    text-decoration: underline;
+}
+
+.g-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    display: grid;
+    place-items: center;
+    font-weight: bold;
+}
+
+/* MAIN */
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 15px 65px;
+}
+
+.logo {
+    font-size: clamp(48px, 10vw, 92px);
+    font-weight: 900;
+    letter-spacing: -4px;
+    margin-bottom: 8px;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 18px rgba(98,0,234,.2));
+    animation: glow 4s infinite;
+}
+
+@keyframes glow {
+    0%,100% {
+        filter: drop-shadow(0 0 15px rgba(98,0,234,.2));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(0,191,165,.35));
+    }
+}
+
+.tagline {
+    font-size: 13px;
+    letter-spacing: 4px;
+    opacity: .55;
+    margin-bottom: 38px;
+    text-align: center;
+}
+
+/* SEARCH */
+
+.search-wrap {
+    width: 100%;
+    max-width: 640px;
+}
+
+.search-box {
+    height: 58px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 18px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: var(--surface);
+    box-shadow: 0 2px 7px var(--shadow);
+    transition: .2s;
+}
+
+.search-box:focus-within {
+    box-shadow: 0 4px 20px var(--shadow);
+    border-color: transparent;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 16px;
+}
+
+.search-icon {
+    opacity: .55;
+    font-size: 19px;
+}
+
+.icon-btn {
+    width: 34px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text);
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+}
+
+.icon-btn:hover {
+    background: var(--btn);
+}
+
+/* MODES */
+
+.modes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.mode {
+    padding: 8px 15px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    color: var(--text);
+    background: transparent;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.mode:hover, .mode.active {
+    background: var(--btn);
+}
+
+.mode.ai {
+    border: none;
+    background: linear-gradient(90deg,#6200ea,#00bfa5);
+    color: white;
+    font-weight: 600;
+}
+
+/* BUTTONS */
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 27px;
+}
+
+.btn {
+    min-height: 40px;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: var(--btn);
+    color: var(--text);
+    font-size: 14px;
+    transition: .2s;
+}
+
+.btn:hover {
+    border-color: var(--border);
+    box-shadow: 0 2px 5px var(--shadow);
+}
+
+.btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* FOOTER */
+
+footer {
+    background: var(--footer);
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.f-top {
+    padding: 14px 30px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.f-bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 14px 30px;
+}
+
+.f-bottom div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.f-bottom a:hover {
+    text-decoration: underline;
+}
+
+/* AI MODAL */
+
+.ai-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: rgba(0,0,0,.65);
+    backdrop-filter: blur(12px);
+}
+
+.ai-panel.show {
+    display: flex;
+}
+
+.ai-box {
+    width: 100%;
+    max-width: 620px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 26px;
+    border-radius: 22px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.ai-box h2 {
+    font-size: 23px;
+    margin-bottom: 9px;
+}
+
+.ai-description {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+#aiInput {
+    width: 100%;
+    min-height: 110px;
+    padding: 14px;
+    resize: vertical;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    background: var(--btn);
+    color: var(--text);
+}
+
+#aiInput:focus {
+    border-color: #6200ea;
+}
+
+.ai-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.ai-submit {
+    flex: 1;
+    background: linear-gradient(90deg,#6200ea,#00bfa5);
+    color: white;
+}
+
+#aiAnswer {
+    display: none;
+    margin-top: 22px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.status {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+}
+
+select {
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    background: var(--surface);
+}
+
+@media(max-width:600px) {
+    header {
+        padding: 14px;
+    }
+
+    .h-left, .h-right {
+        gap: 7px;
+    }
+
+    .header-link {
+        display: none;
+    }
+
+    main {
+        padding: 45px 15px;
+    }
+
+    .logo {
+        letter-spacing: -2px;
+    }
+
+    .tagline {
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+    }
+
+    .search-box {
+        padding: 0 12px;
+        gap: 7px;
+    }
+
+    .mode {
+        padding: 8px 12px;
+    }
+
+    .f-top, .f-bottom {
+        padding: 13px 16px;
+    }
+
+    .f-bottom {
+        flex-direction: column;
+    }
+
+    .ai-box {
+        padding: 20px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
 </style>
 </head>
+
 <body id="body">
 
 <header>
-<div class="h-left">
-<span class="pill" onclick="toggleDark()">🌙 Dark</span>
-<span class="pill" id="aiToggle" onclick="openAI()">✨ AI Mode</span>
-</div>
-<div class="h-right">
-<a href="#">Gmail</a>
-<a href="#">Images</a>
-<a href="#" style="font-size:20px">⁝⁝⁝</a>
-<div class="g-icon">G</div>
-</div>
+    <div class="h-left">
+        <button class="pill" id="darkToggle" type="button"
+                onclick="toggleDark()">🌙 Dark</button>
+
+        <button class="pill" type="button"
+                onclick="openAI()">✨ AI Mode</button>
+    </div>
+
+    <div class="h-right">
+        <a class="header-link" href="https://mail.google.com/" target="_blank" rel="noopener">Gmail</a>
+        <a class="header-link" href="https://images.google.com/" target="_blank" rel="noopener">Images</a>
+        <div class="g-icon" aria-label="GLOBAL X">X</div>
+    </div>
 </header>
 
 <main>
-<div class="logo">GLOBAL X</div>
-<div class="tagline">Made in Sri Lanka • Future is Here</div>
+    <div class="logo">GLOBAL X</div>
 
-<div class="search-wrap">
-<div class="search-box">
-<span style="opacity:.4">🔍</span>
-<input id="searchInput" type="text" placeholder="Ask anything or search..." autofocus>
-<span id="voiceBtn" class="icon" title="Voice">🎤</span>
-<span class="icon" title="Image search">📷</span>
-<span class="icon" title="AI Search" onclick="openAI()">✨</span>
-</div>
-<div class="modes">
-<div class="mode" onclick="setMode('All')">All</div>
-<div class="mode" onclick="setMode('Images')">Images</div>
-<div class="mode" onclick="setMode('Videos')">Videos</div>
-<div class="mode" onclick="setMode('News')">News</div>
-<div class="mode" onclick="setMode('Maps')">Maps</div>
-<div class="mode ai" onclick="openAI()">🚀 AI Mode</div>
-</div>
-</div>
+    <div class="tagline">
+        Made in Sri Lanka • Future is Here
+    </div>
 
-<div class="buttons">
-<button class="btn" onclick="doSearch()">Global X Search</button>
-<button class="btn" onclick="feelingLucky()">I'm Feeling Lucky</button>
-</div>
+    <div class="search-wrap">
+
+        <div class="search-box">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Ask anything or search..."
+                aria-label="Search GLOBAL X"
+                autocomplete="off"
+            >
+
+            <button class="icon-btn" type="button"
+                    onclick="startVoice()" title="Voice Search"
+                    aria-label="Voice Search">🎤</button>
+
+            <button class="icon-btn" type="button"
+                    onclick="searchByImage()" title="Image Search"
+                    aria-label="Image Search">📷</button>
+
+            <button class="icon-btn" type="button"
+                    onclick="openAI()" title="AI Search"
+                    aria-label="AI Search">✨</button>
+        </div>
+
+        <div class="modes" aria-label="Search categories">
+            <button class="mode active" type="button"
+                    onclick="setMode('All',this)">All</button>
+
+            <button class="mode" type="button"
+                    onclick="setMode('Images',this)">Images</button>
+
+            <button class="mode" type="button"
+                    onclick="setMode('Videos',this)">Videos</button>
+
+            <button class="mode" type="button"
+                    onclick="setMode('News',this)">News</button>
+
+            <button class="mode" type="button"
+                    onclick="setMode('Maps',this)">Maps</button>
+
+            <button class="mode ai" type="button"
+                    onclick="openAI()">🚀 AI Mode</button>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button class="btn" type="button" onclick="doSearch()">
+            GLOBAL X Search
+        </button>
+
+        <button class="btn" type="button" onclick="feelingLucky()">
+            I'm Feeling Lucky
+        </button>
+    </div>
 </main>
 
 <footer>
-<div class="f-top"><span>Sri Lanka</span><span id="time"></span></div>
-<div class="f-bottom">
-<div><a href="#">About</a><a href="#">Business</a><a href="#">How Search Works</a></div>
-<div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Settings</a></div>
-</div>
+    <div class="f-top">
+        <span>Sri Lanka</span>
+        <span id="time">Loading...</span>
+    </div>
+
+    <div class="f-bottom">
+        <div>
+            <a href="https://github.com/">About</a>
+            <a href="https://github.com/">Business</a>
+            <a href="https://www.google.com/search/howsearchworks/">How Search Works</a>
+        </div>
+
+        <div>
+            <a href="https://policies.google.com/privacy">Privacy</a>
+            <a href="https://policies.google.com/terms">Terms</a>
+            <a href="#" onclick="toggleDark();return false;">Settings</a>
+        </div>
+    </div>
 </footer>
 
-<div class="ai-panel" id="aiPanel" onclick="closeAI(event)">
-<div class="ai-box">
-<h2 style="font-size:24px; margin-bottom:10px">✨ GLOBAL X AI Mode</h2>
-<p style="opacity:.7; font-size:14px; margin-bottom:20px">Tesla + Apple + Google combined intelligence</p>
-<textarea id="aiInput" style="width:100%; height:100px; border-radius:12px; border:1px solid var(--border); padding:15px; background:var(--btn); color:var(--text); outline:none; resize:none" placeholder="Ask AI anything... e.g., Explain quantum computing like I'm 5"></textarea>
-<div style="display:flex; gap:10px; margin-top:15px">
-<button class="btn" style="background:linear-gradient(90deg,#6200ea,#00bfa5); color:#fff; flex:1" onclick="askAI()">Ask AI 🚀</button>
-<button class="btn" onclick="closeAI()">Close</button>
-</div>
-<div id="aiAnswer" style="margin-top:20px; font-size:14px; line-height:1.6; display:none"></div>
-</div>
+<!-- AI WINDOW -->
+
+<div class="ai-panel" id="aiPanel"
+     onclick="closeAI(event)"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="aiTitle">
+
+    <div class="ai-box">
+
+        <h2 id="aiTitle">✨ GLOBAL X AI</h2>
+
+        <p class="ai-description">
+            Ask questions, learn new things and explore ideas.
+        </p>
+
+        <textarea
+            id="aiInput"
+            placeholder="Ask GLOBAL X AI anything..."
+            aria-label="Ask AI"
+        ></textarea>
+
+        <div class="ai-actions">
+            <button class="btn ai-submit" id="askButton"
+                    type="button" onclick="askAI()">
+                Ask AI 🚀
+            </button>
+
+            <button class="btn" type="button"
+                    onclick="closeAI()">
+                Close
+            </button>
+        </div>
+
+        <div id="aiAnswer" aria-live="polite"></div>
+
+        <div class="status" id="aiStatus">
+            AI backend connection required.
+        </div>
+
+    </div>
 </div>
 
 <script>
-let currentMode = 'All';
-function setMode(m){ currentMode=m; document.querySelectorAll('.mode').forEach(e=>e.classList.remove('active')); event.target.classList.add('active'); }
+/* =====================================
+   GLOBAL X CONFIGURATION
+===================================== */
 
-function doSearch(){
-  let q = document.getElementById('searchInput').value.trim();
-  if(!q) return;
-  if(currentMode==='AI'){ openAI(); document.getElementById('aiInput').value=q; return; }
-  let base = 'https://www.google.com/search?q=';
-  if(currentMode!=='All') base += currentMode.toLowerCase() + ' ';
-  window.location.href = base + encodeURIComponent(q);
+// Add your deployed backend URL here.
+// Example: https://your-worker.workers.dev/api/chat
+// Never put your private AI API key here.
+
+const AI_API_URL = "";
+
+
+/* =====================================
+   SEARCH SYSTEM
+===================================== */
+
+let currentMode = "All";
+
+const searchInput = document.getElementById("searchInput");
+
+function setMode(mode, button) {
+    currentMode = mode;
+
+    document.querySelectorAll(".mode").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
 }
-document.getElementById('searchInput').addEventListener('keydown', e=>{ if(e.key==='Enter') doSearch(); });
-function feelingLucky(){
-  let q = document.getElementById('searchInput').value.trim() || "GLOBAL X Sri Lanka";
-  window.location.href = `https://www.google.com/search?q=${encodeURIComponent(q)}&btnI=1`;
+
+function doSearch() {
+    const query = searchInput.value.trim();
+
+    if (!query) {
+        searchInput.focus();
+        return;
+    }
+
+    const encoded = encodeURIComponent(query);
+
+    let url = "";
+
+    switch (currentMode) {
+        case "Images":
+            url = "https://www.google.com/search?tbm=isch&q=" + encoded;
+            break;
+
+        case "Videos":
+            url = "https://www.google.com/search?tbm=vid&q=" + encoded;
+            break;
+
+        case "News":
+            url = "https://www.google.com/search?tbm=nws&q=" + encoded;
+            break;
+
+        case "Maps":
+            url = "https://www.google.com/maps/search/?api=1&query=" + encoded;
+            break;
+
+        default:
+            url = "https://www.google.com/search?q=" + encoded;
+    }
+
+    window.location.href = url;
 }
-function toggleDark(){ document.getElementById('body').classList.toggle('dark'); }
-function openAI(){ document.getElementById('aiPanel').classList.add('show'); }
-function closeAI(e){ if(!e || e.target.id==='aiPanel' || !e.target) document.getElementById('aiPanel').classList.remove('show'); }
-function askAI(){
-  let q = document.getElementById('aiInput').value.trim();
-  if(!q) return;
-  document.getElementById('aiAnswer').style.display='block';
-  document.getElementById('aiAnswer').innerHTML = `🤖 <b>GLOBAL X AI:</b><br><br>Great question! "<b>${q}</b>"<br><br>This is your AI Mode - Connect your OpenAI / Gemini API here to make it fully working like ChatGPT. For now, I'm searching the web for you...<br><br><i>→ Future: Add fetch('https://api.openai.com/v1/chat/completions')</i>`;
-  setTimeout(()=>{ window.open('https://chat.openai.com/?q='+encodeURIComponent(q), '_blank'); }, 800);
+
+searchInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        doSearch();
+    }
+});
+
+function feelingLucky() {
+    const query = searchInput.value.trim() || "GLOBAL X Sri Lanka";
+
+    window.location.href =
+        "https://www.google.com/search?q=" +
+        encodeURIComponent(query) + "&btnI=1";
 }
-const voiceBtn = document.getElementById('voiceBtn');
-if('webkitSpeechRecognition' in window){
-  const rec = new webkitSpeechRecognition(); rec.lang='en-US';
-  voiceBtn.onclick=()=>{ rec.start(); voiceBtn.textContent='🔴'; };
-  rec.onresult=(e)=>{ document.getElementById('searchInput').value = e.results[0][0].transcript; voiceBtn.textContent='🎤'; doSearch(); };
-  rec.onend=()=>{ voiceBtn.textContent='🎤'; };
+
+
+/* =====================================
+   IMAGE SEARCH
+===================================== */
+
+function searchByImage() {
+    // Opens Google Lens.
+    // Actual image-upload integration requires a dedicated service.
+
+    window.open("https://lens.google.com/", "_blank", "noopener");
 }
-setInterval(()=>{ document.getElementById('time').textContent = new Date().toLocaleTimeString('en-LK', {hour:'2-digit', minute:'2-digit'}) + ' • Colombo'; },1000);
+
+
+/* =====================================
+   DARK MODE
+===================================== */
+
+function toggleDark() {
+    const body = document.getElementById("body");
+    const button = document.getElementById("darkToggle");
+
+    body.classList.toggle("dark");
+
+    const isDark = body.classList.contains("dark");
+
+    button.textContent = isDark ? "☀️ Light" : "🌙 Dark";
+
+    try {
+        localStorage.setItem("globalx-theme", isDark ? "dark" : "light");
+    } catch (error) {
+        // Storage may be unavailable.
+    }
+}
+
+try {
+    const savedTheme = localStorage.getItem("globalx-theme");
+
+    if (savedTheme === "dark") {
+        document.getElementById("body").classList.add("dark");
+        document.getElementById("darkToggle").textContent = "☀️ Light";
+    }
+} catch (error) {
+    // Continue with default theme.
+}
+
+
+/* =====================================
+   AI MODE
+===================================== */
+
+const aiPanel = document.getElementById("aiPanel");
+const aiInput = document.getElementById("aiInput");
+const aiAnswer = document.getElementById("aiAnswer");
+const aiStatus = document.getElementById("aiStatus");
+const askButton = document.getElementById("askButton");
+
+function openAI() {
+    aiPanel.classList.add("show");
+
+    setTimeout(() => aiInput.focus(), 100);
+}
+
+function closeAI(event) {
+    if (!event || event.target === aiPanel) {
+        aiPanel.classList.remove("show");
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        aiPanel.classList.remove("show");
+    }
+});
+
+async function askAI() {
+    const question = aiInput.value.trim();
+
+    if (!question) {
+        aiInput.focus();
+        return;
+    }
+
+    aiAnswer.style.display = "block";
+    aiAnswer.textContent = "Thinking... Please wait.";
+
+    askButton.disabled = true;
+    aiStatus.textContent = "Connecting to GLOBAL X AI...";
+
+    if (!AI_API_URL) {
+        aiAnswer.textContent =
+            "GLOBAL X AI backend is not connected yet.\n\n" +
+            "The website frontend is ready, but a secure backend " +
+            "and AI API connection must be configured before " +
+            "real AI answers can be generated.";
+
+        aiStatus.textContent = "Backend setup required.";
+        askButton.disabled = false;
+        return;
+    }
+
+    try {
+        const response = await fetch(AI_API_URL, {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: question
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error("Server error: " + response.status);
+        }
+
+        const data = await response.json();
+
+        const answer = data.answer || data.reply;
+
+        if (typeof answer !== "string" || !answer.trim()) {
+            throw new Error("Invalid AI response.");
+        }
+
+        // textContent prevents HTML/script injection.
+        aiAnswer.textContent = answer;
+
+        aiStatus.textContent = "GLOBAL X AI response received.";
+
+    } catch (error) {
+        aiAnswer.textContent =
+            "Sorry! GLOBAL X AI could not connect.\n\n" +
+            "Please check your backend URL and server configuration.";
+
+        aiStatus.textContent = "Connection failed.";
+        console.error("GLOBAL X AI:", error);
+
+    } finally {
+        askButton.disabled = false;
+    }
+}
+
+
+/* =====================================
+   VOICE SEARCH
+===================================== */
+
+function startVoice() {
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert(
+            "Voice search is not supported in this browser. " +
+            "Please try a supported browser."
+        );
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    // Change language if required:
+    // ta-LK = Tamil
+    // en-US = English
+    // si-LK = Sinhala
+
+    recognition.lang = "ta-LK";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    const voiceButton = document.querySelector(
+        '[aria-label="Voice Search"]'
+    );
+
+    voiceButton.textContent = "🔴";
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+
+        searchInput.value = transcript;
+        doSearch();
+    };
+
+    recognition.onerror = function(event) {
+        console.error("Voice error:", event.error);
+
+        alert("Voice search failed. Please try again.");
+    };
+
+    recognition.onend = function() {
+        voiceButton.textContent = "🎤";
+    };
+
+    try {
+        recognition.start();
+    } catch (error) {
+        voiceButton.textContent = "🎤";
+        alert("Unable to start voice search.");
+    }
+}
+
+
+/* =====================================
+   CLOCK
+===================================== */
+
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById("time").textContent =
+        now.toLocaleTimeString("en-LK", {
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Asia/Colombo"
+        }) + " • Colombo";
+}
+
+updateClock();
+setInterval(updateClock, 30000);
+
 </script>
+
 </body>
 </html>

@@ -1,926 +1,218 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-
-<title>GLOBAL X - The Future of Search</title>
-<meta name="description" content="GLOBAL X - Search the web, explore images, videos, news and discover AI. Made in Sri Lanka.">
-
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>X</text></svg>">
-
+<title>GLOBAL X</title>
+<meta name="description" content="GLOBAL X - Search the web. Made in Sri Lanka.">
+<meta property="og:title" content="GLOBAL X">
+<meta property="og:description" content="Search the web. Made in Sri Lanka.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%230052b4'/%3E%3Cstop offset='.5' stop-color='%236b1ff0'/%3E%3Cstop offset='1' stop-color='%2322b8a4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='50' y='82' font-size='95' font-weight='900' text-anchor='middle' font-family='Arial' fill='url(%23g)'%3EX%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-}
-
-:root {
-    --bg: #ffffff;
-    --text: #202124;
-    --muted: #70757a;
-    --border: #dfe1e5;
-    --btn: #f8f9fa;
-    --footer: #f2f2f2;
-    --surface: #ffffff;
-    --shadow: rgba(0,0,0,.10);
-    --gradient: linear-gradient(90deg,#0d47a1,#6200ea,#00bfa5,#ff3d00);
-}
-
-body.dark {
-    --bg: #0a0a0a;
-    --text: #e8eaed;
-    --muted: #bdc1c6;
-    --border: #3c4043;
-    --btn: #303134;
-    --footer: #171717;
-    --surface: #171717;
-    --shadow: rgba(0,0,0,.35);
-}
-
-body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg);
-    color: var(--text);
-    transition: background .25s, color .25s;
-}
-
-button, input, textarea, select {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-/* HEADER */
-
-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 24px;
-    gap: 12px;
-}
-
-.h-left, .h-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.pill {
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    padding: 8px 14px;
-    border-radius: 22px;
-    font-size: 13px;
-    transition: .2s;
-}
-
-.pill:hover {
-    background: var(--btn);
-}
-
-.pill.active {
-    background: var(--text);
-    color: var(--bg);
-}
-
-.header-link {
-    font-size: 13px;
-    opacity: .8;
-}
-
-.header-link:hover {
-    text-decoration: underline;
-}
-
-.g-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--text);
-    color: var(--bg);
-    display: grid;
-    place-items: center;
-    font-weight: bold;
-}
-
-/* MAIN */
-
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 45px 15px 65px;
-}
-
-.logo {
-    font-size: clamp(48px, 10vw, 92px);
-    font-weight: 900;
-    letter-spacing: -4px;
-    margin-bottom: 8px;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 0 18px rgba(98,0,234,.2));
-    animation: glow 4s infinite;
-}
-
-@keyframes glow {
-    0%,100% {
-        filter: drop-shadow(0 0 15px rgba(98,0,234,.2));
-    }
-    50% {
-        filter: drop-shadow(0 0 30px rgba(0,191,165,.35));
-    }
-}
-
-.tagline {
-    font-size: 13px;
-    letter-spacing: 4px;
-    opacity: .55;
-    margin-bottom: 38px;
-    text-align: center;
-}
-
-/* SEARCH */
-
-.search-wrap {
-    width: 100%;
-    max-width: 640px;
-}
-
-.search-box {
-    height: 58px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 18px;
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    background: var(--surface);
-    box-shadow: 0 2px 7px var(--shadow);
-    transition: .2s;
-}
-
-.search-box:focus-within {
-    box-shadow: 0 4px 20px var(--shadow);
-    border-color: transparent;
-}
-
-.search-box input {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: var(--text);
-    font-size: 16px;
-}
-
-.search-icon {
-    opacity: .55;
-    font-size: 19px;
-}
-
-.icon-btn {
-    width: 34px;
-    height: 38px;
-    border: none;
-    border-radius: 50%;
-    background: transparent;
-    color: var(--text);
-    font-size: 20px;
-    display: grid;
-    place-items: center;
-}
-
-.icon-btn:hover {
-    background: var(--btn);
-}
-
-/* MODES */
-
-.modes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 18px;
-}
-
-.mode {
-    padding: 8px 15px;
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    color: var(--text);
-    background: transparent;
-    font-size: 13px;
-    transition: .2s;
-}
-
-.mode:hover, .mode.active {
-    background: var(--btn);
-}
-
-.mode.ai {
-    border: none;
-    background: linear-gradient(90deg,#6200ea,#00bfa5);
-    color: white;
-    font-weight: 600;
-}
-
-/* BUTTONS */
-
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 27px;
-}
-
-.btn {
-    min-height: 40px;
-    padding: 0 20px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    background: var(--btn);
-    color: var(--text);
-    font-size: 14px;
-    transition: .2s;
-}
-
-.btn:hover {
-    border-color: var(--border);
-    box-shadow: 0 2px 5px var(--shadow);
-}
-
-.btn:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-}
-
-/* FOOTER */
-
-footer {
-    background: var(--footer);
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.f-top {
-    padding: 14px 30px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.f-bottom {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 14px 30px;
-}
-
-.f-bottom div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-}
-
-.f-bottom a:hover {
-    text-decoration: underline;
-}
-
-/* AI MODAL */
-
-.ai-panel {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    background: rgba(0,0,0,.65);
-    backdrop-filter: blur(12px);
-}
-
-.ai-panel.show {
-    display: flex;
-}
-
-.ai-box {
-    width: 100%;
-    max-width: 620px;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 26px;
-    border-radius: 22px;
-    background: var(--surface);
-    color: var(--text);
-    box-shadow: 0 20px 60px rgba(0,0,0,.3);
-}
-
-.ai-box h2 {
-    font-size: 23px;
-    margin-bottom: 9px;
-}
-
-.ai-description {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 20px;
-}
-
-#aiInput {
-    width: 100%;
-    min-height: 110px;
-    padding: 14px;
-    resize: vertical;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    outline: none;
-    background: var(--btn);
-    color: var(--text);
-}
-
-#aiInput:focus {
-    border-color: #6200ea;
-}
-
-.ai-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.ai-submit {
-    flex: 1;
-    background: linear-gradient(90deg,#6200ea,#00bfa5);
-    color: white;
-}
-
-#aiAnswer {
-    display: none;
-    margin-top: 22px;
-    padding: 16px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    font-size: 14px;
-    line-height: 1.7;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
-
-.status {
-    margin-top: 12px;
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-}
-
-select {
-    padding: 8px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    background: var(--surface);
-}
-
-@media(max-width:600px) {
-    header {
-        padding: 14px;
-    }
-
-    .h-left, .h-right {
-        gap: 7px;
-    }
-
-    .header-link {
-        display: none;
-    }
-
-    main {
-        padding: 45px 15px;
-    }
-
-    .logo {
-        letter-spacing: -2px;
-    }
-
-    .tagline {
-        font-size: 10px;
-        letter-spacing: 2px;
-        margin-bottom: 30px;
-    }
-
-    .search-box {
-        padding: 0 12px;
-        gap: 7px;
-    }
-
-    .mode {
-        padding: 8px 12px;
-    }
-
-    .f-top, .f-bottom {
-        padding: 13px 16px;
-    }
-
-    .f-bottom {
-        flex-direction: column;
-    }
-
-    .ai-box {
-        padding: 20px;
-    }
-}
-
-@media(prefers-reduced-motion:reduce) {
-    *, *::before, *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-    }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fff;--text:#202124;--muted:#5f6368;--line:#dfe1e5;--btn:#f1f3f4;--btn-h:#e4e6e8;--foot:#f2f2f2;--shadow:rgba(60,64,67,.25)}
+body.dark{--bg:#121212;--text:#e8eaed;--muted:#a8adb3;--line:#3c4043;--btn:#2a2b2e;--btn-h:#38393d;--foot:#1a1a1a;--shadow:rgba(0,0,0,.6)}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;transition:background .2s}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid #6b1ff0;outline-offset:2px}
+
+header{display:flex;justify-content:flex-end;align-items:center;gap:22px;padding:20px 28px}
+header a{font-size:15px}
+header a:hover{text-decoration:underline}
+.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0052b4,#6b1ff0);color:#fff;font-family:Lexend,sans-serif;font-weight:800;font-size:18px;border:0}
+
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 80px}
+.logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(44px,11vw,104px);letter-spacing:-.02em;line-height:1;margin-bottom:44px;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.search{width:100%;max-width:700px;height:60px;display:flex;align-items:center;gap:12px;padding:0 20px;border:1px solid var(--line);border-radius:32px;background:var(--bg);box-shadow:0 2px 8px var(--shadow);transition:box-shadow .2s}
+.search:focus-within{box-shadow:0 4px 18px var(--shadow)}
+.search svg{flex:none}
+.search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font-size:17px}
+.search input::placeholder{color:var(--muted)}
+.ib{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:transparent;display:grid;place-items:center}
+.ib:hover{background:var(--btn)}
+.ib.on{background:#fde7e7}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:32px}
+.btn{height:44px;padding:0 26px;border:1px solid transparent;border-radius:22px;background:var(--btn);font-size:15px;transition:background .15s}
+.btn:hover{background:var(--btn-h);border-color:var(--line)}
+
+footer{background:var(--foot);color:var(--muted);font-size:15px}
+.f1{padding:15px 32px;border-bottom:1px solid var(--line)}
+.f2{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding:14px 32px}
+.f2 div{display:flex;flex-wrap:wrap;align-items:center}
+.f2 button{border:0;background:none;padding:4px 0;color:inherit}
+.f2 button:hover{text-decoration:underline}
+.f2 button+button::before{content:"•";display:inline-block;margin:0 14px;color:var(--muted);text-decoration:none}
+
+dialog{margin:auto;width:min(92vw,520px);max-height:85vh;overflow:auto;padding:28px;border:0;border-radius:20px;background:var(--bg);color:var(--text);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
+dialog h2{font-family:Lexend,sans-serif;font-size:22px;margin-bottom:14px}
+dialog p{line-height:1.65;font-size:15px;margin-bottom:12px;color:var(--muted)}
+dialog label{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:14px 0;font-size:15px}
+dialog select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.close{margin-top:10px}
+
+@media(max-width:600px){
+header{padding:14px 16px;gap:16px}
+.search{height:54px;padding:0 14px;gap:8px}
+.logo{margin-bottom:32px}
+.f1,.f2{padding-left:18px;padding-right:18px}
 }
 </style>
 </head>
-
 <body id="body">
 
 <header>
-    <div class="h-left">
-        <button class="pill" id="darkToggle" type="button"
-                onclick="toggleDark()">🌙 Dark</button>
-
-        <button class="pill" type="button"
-                onclick="openAI()">✨ AI Mode</button>
-    </div>
-
-    <div class="h-right">
-        <a class="header-link" href="https://mail.google.com/" target="_blank" rel="noopener">Gmail</a>
-        <a class="header-link" href="https://images.google.com/" target="_blank" rel="noopener">Images</a>
-        <div class="g-icon" aria-label="GLOBAL X">X</div>
-    </div>
+  <a href="https://mail.google.com/" target="_blank" rel="noopener">Gmail</a>
+  <a href="https://www.google.com/imghp" target="_blank" rel="noopener" id="imagesLink">Images</a>
+  <button class="avatar" type="button" aria-label="Settings" onclick="openInfo('settings')">X</button>
 </header>
 
 <main>
-    <div class="logo">GLOBAL X</div>
+  <div class="logo">GLOBAL X</div>
 
-    <div class="tagline">
-        Made in Sri Lanka • Future is Here
-    </div>
+  <div class="search" role="search">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#70757a" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
+    <input id="q" type="search" placeholder="Search GLOBAL X or type a URL" aria-label="Search GLOBAL X or type a URL" autocomplete="off" autofocus>
+    <button class="ib" id="micBtn" type="button" title="Voice search" aria-label="Voice search" onclick="startVoice()">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3" fill="#4285f4"/><path d="M5 11a7 7 0 0 0 14 0" fill="none" stroke="#34a853" stroke-width="2" stroke-linecap="round"/><path d="M12 18v4" stroke="#ea4335" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="ib" type="button" title="Search by image" aria-label="Search by image" onclick="window.open('https://lens.google.com/','_blank','noopener')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8V6a3 3 0 0 1 3-3h2" stroke="#4285f4"/><path d="M16 3h2a3 3 0 0 1 3 3v2" stroke="#ea4335"/><path d="M21 16v2a3 3 0 0 1-3 3h-2" stroke="#fbbc04"/><path d="M8 21H6a3 3 0 0 1-3-3v-2" stroke="#34a853"/><circle cx="12" cy="12" r="3.5" fill="#4285f4" stroke="none"/></svg>
+    </button>
+  </div>
 
-    <div class="search-wrap">
-
-        <div class="search-box">
-            <span class="search-icon" aria-hidden="true">🔍</span>
-
-            <input
-                id="searchInput"
-                type="search"
-                placeholder="Ask anything or search..."
-                aria-label="Search GLOBAL X"
-                autocomplete="off"
-            >
-
-            <button class="icon-btn" type="button"
-                    onclick="startVoice()" title="Voice Search"
-                    aria-label="Voice Search">🎤</button>
-
-            <button class="icon-btn" type="button"
-                    onclick="searchByImage()" title="Image Search"
-                    aria-label="Image Search">📷</button>
-
-            <button class="icon-btn" type="button"
-                    onclick="openAI()" title="AI Search"
-                    aria-label="AI Search">✨</button>
-        </div>
-
-        <div class="modes" aria-label="Search categories">
-            <button class="mode active" type="button"
-                    onclick="setMode('All',this)">All</button>
-
-            <button class="mode" type="button"
-                    onclick="setMode('Images',this)">Images</button>
-
-            <button class="mode" type="button"
-                    onclick="setMode('Videos',this)">Videos</button>
-
-            <button class="mode" type="button"
-                    onclick="setMode('News',this)">News</button>
-
-            <button class="mode" type="button"
-                    onclick="setMode('Maps',this)">Maps</button>
-
-            <button class="mode ai" type="button"
-                    onclick="openAI()">🚀 AI Mode</button>
-        </div>
-    </div>
-
-    <div class="buttons">
-        <button class="btn" type="button" onclick="doSearch()">
-            GLOBAL X Search
-        </button>
-
-        <button class="btn" type="button" onclick="feelingLucky()">
-            I'm Feeling Lucky
-        </button>
-    </div>
+  <div class="row">
+    <button class="btn" type="button" onclick="doSearch()">Global X Search</button>
+    <button class="btn" type="button" onclick="feelingLucky()">I'm Feeling Lucky</button>
+  </div>
 </main>
 
 <footer>
-    <div class="f-top">
-        <span>Sri Lanka</span>
-        <span id="time">Loading...</span>
+  <div class="f1">Sri Lanka</div>
+  <nav class="f2" aria-label="Footer">
+    <div>
+      <button type="button" onclick="openInfo('about')">About</button>
+      <button type="button" onclick="openInfo('advertising')">Advertising</button>
+      <button type="button" onclick="openInfo('business')">Business</button>
+      <button type="button" onclick="openInfo('how')">How Search works</button>
     </div>
-
-    <div class="f-bottom">
-        <div>
-            <a href="https://github.com/">About</a>
-            <a href="https://github.com/">Business</a>
-            <a href="https://www.google.com/search/howsearchworks/">How Search Works</a>
-        </div>
-
-        <div>
-            <a href="https://policies.google.com/privacy">Privacy</a>
-            <a href="https://policies.google.com/terms">Terms</a>
-            <a href="#" onclick="toggleDark();return false;">Settings</a>
-        </div>
+    <div>
+      <button type="button" onclick="openInfo('privacy')">Privacy</button>
+      <button type="button" onclick="openInfo('terms')">Terms</button>
+      <button type="button" onclick="openInfo('settings')">Settings</button>
     </div>
+  </nav>
 </footer>
 
-<!-- AI WINDOW -->
-
-<div class="ai-panel" id="aiPanel"
-     onclick="closeAI(event)"
-     role="dialog"
-     aria-modal="true"
-     aria-labelledby="aiTitle">
-
-    <div class="ai-box">
-
-        <h2 id="aiTitle">✨ GLOBAL X AI</h2>
-
-        <p class="ai-description">
-            Ask questions, learn new things and explore ideas.
-        </p>
-
-        <textarea
-            id="aiInput"
-            placeholder="Ask GLOBAL X AI anything..."
-            aria-label="Ask AI"
-        ></textarea>
-
-        <div class="ai-actions">
-            <button class="btn ai-submit" id="askButton"
-                    type="button" onclick="askAI()">
-                Ask AI 🚀
-            </button>
-
-            <button class="btn" type="button"
-                    onclick="closeAI()">
-                Close
-            </button>
-        </div>
-
-        <div id="aiAnswer" aria-live="polite"></div>
-
-        <div class="status" id="aiStatus">
-            AI backend connection required.
-        </div>
-
-    </div>
-</div>
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <h2 id="dlgTitle"></h2>
+  <div id="dlgBody"></div>
+  <button class="btn close" type="button" onclick="dlg.close()">Close</button>
+</dialog>
 
 <script>
-/* =====================================
-   GLOBAL X CONFIGURATION
-===================================== */
+const q = document.getElementById("q");
+const dlg = document.getElementById("dlg");
+const body = document.body;
+const GOOGLE = "https://www.google.com/search?q=";
 
-// Add your deployed backend URL here.
-// Example: https://your-worker.workers.dev/api/chat
-// Never put your private AI API key here.
-
-const AI_API_URL = "";
-
-
-/* =====================================
-   SEARCH SYSTEM
-===================================== */
-
-let currentMode = "All";
-
-const searchInput = document.getElementById("searchInput");
-
-function setMode(mode, button) {
-    currentMode = mode;
-
-    document.querySelectorAll(".mode").forEach(item => {
-        item.classList.remove("active");
-    });
-
-    if (button) {
-        button.classList.add("active");
-    }
+/* ---------- saved settings ---------- */
+function load(key, fallback) { try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; } }
+function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+let theme = load("gx-theme", "light");
+let voiceLang = load("gx-voice", "en-US");
+function applyTheme() {
+  body.classList.toggle("dark", theme === "dark");
+  document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#121212" : "#ffffff";
 }
+applyTheme();
 
+/* ---------- search ---------- */
+function looksLikeUrl(t) {
+  return !/\s/.test(t) && /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(t);
+}
 function doSearch() {
-    const query = searchInput.value.trim();
-
-    if (!query) {
-        searchInput.focus();
-        return;
-    }
-
-    const encoded = encodeURIComponent(query);
-
-    let url = "";
-
-    switch (currentMode) {
-        case "Images":
-            url = "https://www.google.com/search?tbm=isch&q=" + encoded;
-            break;
-
-        case "Videos":
-            url = "https://www.google.com/search?tbm=vid&q=" + encoded;
-            break;
-
-        case "News":
-            url = "https://www.google.com/search?tbm=nws&q=" + encoded;
-            break;
-
-        case "Maps":
-            url = "https://www.google.com/maps/search/?api=1&query=" + encoded;
-            break;
-
-        default:
-            url = "https://www.google.com/search?q=" + encoded;
-    }
-
-    window.location.href = url;
+  const t = q.value.trim();
+  if (!t) { q.focus(); return; }
+  if (looksLikeUrl(t)) {
+    window.location.href = /^https?:\/\//i.test(t) ? t : "https://" + t;
+    return;
+  }
+  window.location.href = GOOGLE + encodeURIComponent(t);
 }
-
-searchInput.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        doSearch();
-    }
-});
-
 function feelingLucky() {
-    const query = searchInput.value.trim() || "GLOBAL X Sri Lanka";
-
-    window.location.href =
-        "https://www.google.com/search?q=" +
-        encodeURIComponent(query) + "&btnI=1";
+  const t = q.value.trim() || "GLOBAL X Sri Lanka";
+  window.location.href = GOOGLE + encodeURIComponent(t) + "&btnI=1";
 }
-
-
-/* =====================================
-   IMAGE SEARCH
-===================================== */
-
-function searchByImage() {
-    // Opens Google Lens.
-    // Actual image-upload integration requires a dedicated service.
-
-    window.open("https://lens.google.com/", "_blank", "noopener");
-}
-
-
-/* =====================================
-   DARK MODE
-===================================== */
-
-function toggleDark() {
-    const body = document.getElementById("body");
-    const button = document.getElementById("darkToggle");
-
-    body.classList.toggle("dark");
-
-    const isDark = body.classList.contains("dark");
-
-    button.textContent = isDark ? "☀️ Light" : "🌙 Dark";
-
-    try {
-        localStorage.setItem("globalx-theme", isDark ? "dark" : "light");
-    } catch (error) {
-        // Storage may be unavailable.
-    }
-}
-
-try {
-    const savedTheme = localStorage.getItem("globalx-theme");
-
-    if (savedTheme === "dark") {
-        document.getElementById("body").classList.add("dark");
-        document.getElementById("darkToggle").textContent = "☀️ Light";
-    }
-} catch (error) {
-    // Continue with default theme.
-}
-
-
-/* =====================================
-   AI MODE
-===================================== */
-
-const aiPanel = document.getElementById("aiPanel");
-const aiInput = document.getElementById("aiInput");
-const aiAnswer = document.getElementById("aiAnswer");
-const aiStatus = document.getElementById("aiStatus");
-const askButton = document.getElementById("askButton");
-
-function openAI() {
-    aiPanel.classList.add("show");
-
-    setTimeout(() => aiInput.focus(), 100);
-}
-
-function closeAI(event) {
-    if (!event || event.target === aiPanel) {
-        aiPanel.classList.remove("show");
-    }
-}
-
-document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape") {
-        aiPanel.classList.remove("show");
-    }
+q.addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
+document.getElementById("imagesLink").addEventListener("click", e => {
+  const t = q.value.trim();
+  if (t) { e.preventDefault(); window.open(GOOGLE + encodeURIComponent(t) + "&tbm=isch", "_blank", "noopener"); }
 });
 
-async function askAI() {
-    const question = aiInput.value.trim();
-
-    if (!question) {
-        aiInput.focus();
-        return;
-    }
-
-    aiAnswer.style.display = "block";
-    aiAnswer.textContent = "Thinking... Please wait.";
-
-    askButton.disabled = true;
-    aiStatus.textContent = "Connecting to GLOBAL X AI...";
-
-    if (!AI_API_URL) {
-        aiAnswer.textContent =
-            "GLOBAL X AI backend is not connected yet.\n\n" +
-            "The website frontend is ready, but a secure backend " +
-            "and AI API connection must be configured before " +
-            "real AI answers can be generated.";
-
-        aiStatus.textContent = "Backend setup required.";
-        askButton.disabled = false;
-        return;
-    }
-
-    try {
-        const response = await fetch(AI_API_URL, {
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                message: question
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error("Server error: " + response.status);
-        }
-
-        const data = await response.json();
-
-        const answer = data.answer || data.reply;
-
-        if (typeof answer !== "string" || !answer.trim()) {
-            throw new Error("Invalid AI response.");
-        }
-
-        // textContent prevents HTML/script injection.
-        aiAnswer.textContent = answer;
-
-        aiStatus.textContent = "GLOBAL X AI response received.";
-
-    } catch (error) {
-        aiAnswer.textContent =
-            "Sorry! GLOBAL X AI could not connect.\n\n" +
-            "Please check your backend URL and server configuration.";
-
-        aiStatus.textContent = "Connection failed.";
-        console.error("GLOBAL X AI:", error);
-
-    } finally {
-        askButton.disabled = false;
-    }
-}
-
-
-/* =====================================
-   VOICE SEARCH
-===================================== */
-
+/* ---------- voice ---------- */
 function startVoice() {
-    const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-        alert(
-            "Voice search is not supported in this browser. " +
-            "Please try a supported browser."
-        );
-        return;
-    }
-
-    const recognition = new SpeechRecognition();
-
-    // Change language if required:
-    // ta-LK = Tamil
-    // en-US = English
-    // si-LK = Sinhala
-
-    recognition.lang = "ta-LK";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    const voiceButton = document.querySelector(
-        '[aria-label="Voice Search"]'
-    );
-
-    voiceButton.textContent = "🔴";
-
-    recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-
-        searchInput.value = transcript;
-        doSearch();
-    };
-
-    recognition.onerror = function(event) {
-        console.error("Voice error:", event.error);
-
-        alert("Voice search failed. Please try again.");
-    };
-
-    recognition.onend = function() {
-        voiceButton.textContent = "🎤";
-    };
-
-    try {
-        recognition.start();
-    } catch (error) {
-        voiceButton.textContent = "🎤";
-        alert("Unable to start voice search.");
-    }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { alert("Voice search is not supported in this browser. Try Chrome or Edge."); return; }
+  const btn = document.getElementById("micBtn");
+  const rec = new SR();
+  rec.lang = voiceLang;
+  rec.interimResults = false;
+  rec.onresult = e => { q.value = e.results[0][0].transcript; doSearch(); };
+  rec.onerror = e => { alert(e.error === "not-allowed" ? "Allow microphone access to use voice search." : "Voice search failed. Try again."); };
+  rec.onend = () => btn.classList.remove("on");
+  try { rec.start(); btn.classList.add("on"); } catch (e) { btn.classList.remove("on"); }
 }
 
+/* ---------- footer pages ---------- */
+const P = t => "<p>" + t + "</p>";
+const pages = {
+  about: ["About GLOBAL X",
+    P("GLOBAL X is a search homepage made in Sri Lanka. Type a question or a web address and go straight to what you need.") +
+    P("It supports voice search in English, Tamil and Sinhala, and image search through Google Lens.")],
+  advertising: ["Advertising",
+    P("GLOBAL X does not show ads today. If you want to advertise or sponsor GLOBAL X in the future, contact the founder through the Business page.")],
+  business: ["Business",
+    P("Building something for Sri Lankan users? GLOBAL X is open to partnerships, sponsorships and API collaborations.") +
+    P("Business contact details will be published here soon.")],
+  how: ["How Search works",
+    P("When you press Global X Search, your words are sent to Google Search and the results open in your browser.") +
+    P("If you type a web address such as example.com, GLOBAL X opens that site directly.") +
+    P("The Images link and the Lens button open Google Images and Google Lens.")],
+  privacy: ["Privacy",
+    P("GLOBAL X does not keep an account for you and does not store your searches on its own servers.") +
+    P("Your theme and voice-language choices are saved only in your own browser.") +
+    P("Searches are handled by Google, so Google's privacy policy applies once you reach its results. Voice search uses your browser's speech service and asks for microphone permission first.")],
+  terms: ["Terms",
+    P("GLOBAL X is provided as is, without any guarantee that it will always be available or error free.") +
+    P("Search results come from third parties. GLOBAL X is not responsible for the content of the websites you visit.") +
+    P("By using this site you agree to use it lawfully.")],
+  settings: ["Settings", ""]
+};
 
-/* =====================================
-   CLOCK
-===================================== */
-
-function updateClock() {
-    const now = new Date();
-
-    document.getElementById("time").textContent =
-        now.toLocaleTimeString("en-LK", {
-            hour: "2-digit",
-            minute: "2-digit",
-            timeZone: "Asia/Colombo"
-        }) + " • Colombo";
+function openInfo(key) {
+  const [title, html] = pages[key];
+  document.getElementById("dlgTitle").textContent = title;
+  const box = document.getElementById("dlgBody");
+  box.innerHTML = html;
+  if (key === "settings") {
+    box.innerHTML =
+      '<label>Theme<select id="selTheme"><option value="light">Light</option><option value="dark">Dark</option></select></label>' +
+      '<label>Voice language<select id="selVoice"><option value="en-US">English</option><option value="ta-LK">Tamil</option><option value="si-LK">Sinhala</option></select></label>';
+    const st = document.getElementById("selTheme"), sv = document.getElementById("selVoice");
+    st.value = theme; sv.value = voiceLang;
+    st.onchange = () => { theme = st.value; save("gx-theme", theme); applyTheme(); };
+    sv.onchange = () => { voiceLang = sv.value; save("gx-voice", voiceLang); };
+  }
+  dlg.showModal();
 }
-
-updateClock();
-setInterval(updateClock, 30000);
-
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
 </script>
-
 </body>
 </html>

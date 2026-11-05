@@ -37,7 +37,13 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;justify-conten
 .ib{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:transparent;display:grid;place-items:center}
 .ib:hover{background:var(--btn)}
 .ib.on{background:#fde7e7}
-.row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:32px}
+.modes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px;max-width:700px}
+.mode{height:36px;padding:0 16px;border:1px solid var(--line);border-radius:18px;background:transparent;font-size:14px;transition:background .15s}
+.mode:hover{background:var(--btn)}
+.mode.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.mode.ai{border:0;background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;font-weight:600}
+.mode.ai.active{outline:2px solid var(--text);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:28px}
 .btn{height:44px;padding:0 26px;border:1px solid transparent;border-radius:22px;background:var(--btn);font-size:15px;transition:background .15s}
 .btn:hover{background:var(--btn-h);border-color:var(--line)}
 
@@ -87,6 +93,17 @@ header{padding:14px 16px;gap:16px}
     <button class="ib" type="button" title="Search by image" aria-label="Search by image" onclick="window.open('https://lens.google.com/','_blank','noopener')">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8V6a3 3 0 0 1 3-3h2" stroke="#4285f4"/><path d="M16 3h2a3 3 0 0 1 3 3v2" stroke="#ea4335"/><path d="M21 16v2a3 3 0 0 1-3 3h-2" stroke="#fbbc04"/><path d="M8 21H6a3 3 0 0 1-3-3v-2" stroke="#34a853"/><circle cx="12" cy="12" r="3.5" fill="#4285f4" stroke="none"/></svg>
     </button>
+  </div>
+
+  <div class="modes" id="modes" role="group" aria-label="Search type">
+    <button class="mode ai" type="button" data-mode="AI">✨ AI</button>
+    <button class="mode active" type="button" data-mode="All" aria-pressed="true">All</button>
+    <button class="mode" type="button" data-mode="Web">Web</button>
+    <button class="mode" type="button" data-mode="Images">Images</button>
+    <button class="mode" type="button" data-mode="Videos">Videos</button>
+    <button class="mode" type="button" data-mode="News">News</button>
+    <button class="mode" type="button" data-mode="Maps">Maps</button>
+    <button class="mode" type="button" data-mode="Shopping">Shopping</button>
   </div>
 
   <div class="row">
@@ -140,14 +157,39 @@ applyTheme();
 function looksLikeUrl(t) {
   return !/\s/.test(t) && /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(t);
 }
+let mode = "All";
+const MODE_URL = {
+  All:      t => GOOGLE + t,
+  Web:      t => GOOGLE + t + "&udm=14",
+  AI:       t => GOOGLE + t + "&udm=50",
+  Images:   t => GOOGLE + t + "&tbm=isch",
+  Videos:   t => GOOGLE + t + "&tbm=vid",
+  News:     t => GOOGLE + t + "&tbm=nws",
+  Shopping: t => GOOGLE + t + "&tbm=shop",
+  Maps:     t => "https://www.google.com/maps/search/?api=1&query=" + t
+};
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll(".mode").forEach(b => {
+    const on = b.dataset.mode === m;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-pressed", on);
+  });
+}
+document.getElementById("modes").addEventListener("click", e => {
+  const b = e.target.closest(".mode");
+  if (!b) return;
+  setMode(b.dataset.mode);
+  if (q.value.trim()) doSearch(); else q.focus();
+});
 function doSearch() {
   const t = q.value.trim();
   if (!t) { q.focus(); return; }
-  if (looksLikeUrl(t)) {
+  if ((mode === "All" || mode === "Web") && looksLikeUrl(t)) {
     window.location.href = /^https?:\/\//i.test(t) ? t : "https://" + t;
     return;
   }
-  window.location.href = GOOGLE + encodeURIComponent(t);
+  window.location.href = MODE_URL[mode](encodeURIComponent(t));
 }
 function feelingLucky() {
   const t = q.value.trim() || "GLOBAL X Sri Lanka";

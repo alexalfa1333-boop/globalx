@@ -32,7 +32,7 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;justify-conten
 .search{width:100%;max-width:700px;height:60px;display:flex;align-items:center;gap:12px;padding:0 20px;border:1px solid var(--line);border-radius:32px;background:var(--bg);box-shadow:0 2px 8px var(--shadow);transition:box-shadow .2s}
 .search:focus-within{box-shadow:0 4px 18px var(--shadow)}
 .search svg{flex:none}
-.search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font-size:17px}
+.search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font-size:17px;-webkit-appearance:none;appearance:none;border-radius:0}
 .search input::placeholder{color:var(--muted)}
 .ib{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:transparent;display:grid;place-items:center}
 .ib:hover{background:var(--btn)}
@@ -60,6 +60,8 @@ dialog select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;b
 @media(max-width:600px){
 header{padding:14px 16px;gap:16px}
 .search{height:54px;padding:0 14px;gap:8px}
+.f2 div{gap:2px 22px}
+.f2 button+button::before{display:none}
 .logo{margin-bottom:32px}
 .f1,.f2{padding-left:18px;padding-right:18px}
 }
@@ -78,7 +80,7 @@ header{padding:14px 16px;gap:16px}
 
   <div class="search" role="search">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#70757a" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
-    <input id="q" type="search" placeholder="Search GLOBAL X or type a URL" aria-label="Search GLOBAL X or type a URL" autocomplete="off" autofocus>
+    <input id="q" type="text" inputmode="search" enterkeyhint="search" placeholder="Search GLOBAL X or type a URL" aria-label="Search GLOBAL X or type a URL" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
     <button class="ib" id="micBtn" type="button" title="Voice search" aria-label="Voice search" onclick="startVoice()">
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3" fill="#4285f4"/><path d="M5 11a7 7 0 0 0 14 0" fill="none" stroke="#34a853" stroke-width="2" stroke-linecap="round"/><path d="M12 18v4" stroke="#ea4335" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
@@ -121,6 +123,7 @@ const q = document.getElementById("q");
 const dlg = document.getElementById("dlg");
 const body = document.body;
 const GOOGLE = "https://www.google.com/search?q=";
+if (window.matchMedia("(max-width:600px)").matches) q.placeholder = "Search or type a URL";
 
 /* ---------- saved settings ---------- */
 function load(key, fallback) { try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; } }

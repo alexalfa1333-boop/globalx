@@ -82,7 +82,23 @@ body.splashing{overflow:hidden;height:100dvh}
 #splash.stage2 .splash-logo{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.globe .m,.globe .o{animation:none}}
 
+/* rating popup */
+#rate{position:relative;text-align:center}
+.rate-x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;line-height:1;color:var(--muted)}
+.rate-x:hover{background:var(--btn)}
+.stars{display:flex;justify-content:center;gap:6px;margin:20px 0 6px}
+.star{width:48px;height:48px;border:0;background:none;padding:6px;border-radius:12px;transition:transform .1s}
+.star:active{transform:scale(.9)}
+.star svg{width:100%;height:100%;display:block}
+.star path{fill:none;stroke:#f5a623;stroke-width:1.6;stroke-linejoin:round;transition:fill .15s}
+.star.on path{fill:#f5a623}
+.star-label{min-height:22px;margin-bottom:12px;font-size:14px;color:var(--muted)}
+.btn.primary{background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;min-width:130px}
+.btn.primary:hover{border-color:transparent;opacity:.92}
+#rate [hidden]{display:none}
+
 @media(max-width:600px){
+.star{width:44px;height:44px}
 header{padding:14px 16px;gap:16px}
 .search{height:54px;padding:0 14px;gap:8px}
 .f2 div{gap:2px 22px}
@@ -174,6 +190,22 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
   <h2 id="dlgTitle"></h2>
   <div id="dlgBody"></div>
   <button class="btn close" type="button" onclick="dlg.close()">Close</button>
+</dialog>
+
+<dialog id="rate" aria-labelledby="rateTitle">
+  <button class="rate-x" type="button" aria-label="Close" onclick="document.getElementById('rate').close()">×</button>
+  <div id="rateAsk">
+    <h2 id="rateTitle">Your rating for our service</h2>
+    <p>How was your experience with GLOBAL X? Tap a star to rate us.</p>
+    <div class="stars" id="stars" role="radiogroup" aria-label="Rate from 1 to 5 stars"></div>
+    <div class="star-label" id="starLabel" aria-live="polite"></div>
+    <button class="btn primary" id="rateSubmit" type="button" hidden>Submit</button>
+  </div>
+  <div id="rateDone" hidden>
+    <h2>Thank you for your response</h2>
+    <p>Your feedback helps us make GLOBAL X better.</p>
+    <button class="btn primary" id="rateOk" type="button">OK</button>
+  </div>
 </dialog>
 
 <script>
@@ -293,6 +325,7 @@ const pages = {
   privacy: ["Privacy",
     P("GLOBAL X does not keep an account for you and does not store your searches on its own servers.") +
     P("Your theme and voice-language choices are saved only in your own browser.") +
+    P("If you rate our service, your star rating and basic device details (browser, device type, language, time zone and screen size) are sent to us. We do not ask for your name or email.") +
     P("Searches are handled by Google, so Google's privacy policy applies once you reach its results. Voice search uses your browser's speech service and asks for microphone permission first.")],
   terms: ["Terms",
     P("GLOBAL X is provided as is, without any guarantee that it will always be available or error free.") +
@@ -318,6 +351,101 @@ function openInfo(key) {
   dlg.showModal();
 }
 dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+/* ---------- rating popup (appears 2 minutes after opening) ---------- */
+// To receive ratings, paste a Google Apps Script / Formspree / Worker URL here.
+// While empty, ratings are saved only on the visitor's own device.
+const RATING_URL = "";
+
+(function () {
+  const rate = document.getElementById("rate");
+  const box = document.getElementById("stars");
+  const label = document.getElementById("starLabel");
+  const submit = document.getElementById("rateSubmit");
+  const ask = document.getElementById("rateAsk");
+  const done = document.getElementById("rateDone");
+  const testMode = location.hash === "#rate";
+  const WORDS = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.4l-5.9 3.3 1.2-6.6-4.8-4.6 6.6-.9z"/></svg>';
+  let value = 0;
+
+  try { if (!testMode && localStorage.getItem("gx-rated") === "1") return; } catch (e) {}
+
+  for (let i = 1; i <= 5; i++) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "star";
+    b.dataset.v = i;
+    b.setAttribute("role", "radio");
+    b.setAttribute("aria-checked", "false");
+    b.setAttribute("aria-label", i + (i === 1 ? " star" : " stars") + " - " + WORDS[i - 1]);
+    b.innerHTML = STAR;
+    box.appendChild(b);
+  }
+  const stars = box.querySelectorAll(".star");
+
+  function paint(n) {
+    stars.forEach((s, i) => s.classList.toggle("on", i < n));
+    label.textContent = n ? WORDS[n - 1] : "";
+  }
+  box.addEventListener("click", e => {
+    const b = e.target.closest(".star");
+    if (!b) return;
+    value = +b.dataset.v;
+    stars.forEach((s, i) => s.setAttribute("aria-checked", i + 1 === value));
+    paint(value);
+    submit.hidden = false;
+  });
+  box.addEventListener("mouseover", e => {
+    const b = e.target.closest(".star");
+    if (b) paint(+b.dataset.v);
+  });
+  box.addEventListener("mouseleave", () => paint(value));
+
+  function store(v) {
+    let vid = "";
+    try { vid = localStorage.getItem("gx-vid") || ("v" + Math.random().toString(36).slice(2, 10)); localStorage.setItem("gx-vid", vid); } catch (e) {}
+    const data = {
+      rating: v, id: vid,
+      time: new Date().toISOString(), localTime: new Date().toLocaleString(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+      language: navigator.language || "",
+      device: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
+      platform: navigator.platform || "", screen: screen.width + "x" + screen.height,
+      ua: navigator.userAgent, page: location.href.split("#")[0], referrer: document.referrer
+    };
+    try {
+      const list = JSON.parse(localStorage.getItem("gx-ratings") || "[]");
+      list.push(data);
+      localStorage.setItem("gx-ratings", JSON.stringify(list));
+      localStorage.setItem("gx-rated", "1");
+    } catch (e) {}
+    if (RATING_URL) {
+      try {
+        fetch(RATING_URL, {
+          method: "POST", mode: "no-cors", keepalive: true,
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(data)
+        }).catch(() => {});
+      } catch (e) {}
+    }
+  }
+  submit.addEventListener("click", () => {
+    if (!value) return;
+    store(value);
+    ask.hidden = true;
+    done.hidden = false;
+  });
+  document.getElementById("rateOk").addEventListener("click", () => rate.close());
+
+  function show() {
+    if (rate.open) return;
+    if (dlg.open || body.classList.contains("splashing")) { setTimeout(show, 5000); return; }
+    value = 0; paint(0); submit.hidden = true; ask.hidden = false; done.hidden = true;
+    rate.showModal();
+  }
+  setTimeout(show, testMode ? 4500 : 120000);
+})();
 </script>
 </body>
 </html>

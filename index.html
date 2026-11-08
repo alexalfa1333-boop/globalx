@@ -17,7 +17,6 @@
 :root{--bg:#fff;--text:#202124;--muted:#5f6368;--line:#dfe1e5;--btn:#f1f3f4;--btn-h:#e4e6e8;--foot:#f2f2f2;--shadow:rgba(60,64,67,.25)}
 body.dark{--bg:#121212;--text:#e8eaed;--muted:#a8adb3;--line:#3c4043;--btn:#2a2b2e;--btn-h:#38393d;--foot:#1a1a1a;--shadow:rgba(0,0,0,.6)}
 body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;transition:background .2s}
-body.splashing{overflow:hidden;height:100dvh}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer}
 a{color:inherit;text-decoration:none}
@@ -64,23 +63,24 @@ dialog label{display:flex;justify-content:space-between;align-items:center;gap:1
 dialog select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
 .close{margin-top:10px}
 
-/* ---------- splash intro ---------- */
-#splash{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(ellipse at 50% 40%,#101a3d 0%,#070b1a 60%,#03050d 100%);color:#fff;overflow:hidden;cursor:pointer;transition:opacity .7s ease,visibility .7s}
-#splash.hide{opacity:0;visibility:hidden}
-#net{position:absolute;inset:0;width:100%;height:100%}
-#splash::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px)}
-.globe{position:relative;z-index:1;width:clamp(180px,42vw,300px);aspect-ratio:1;filter:drop-shadow(0 0 22px rgba(107,31,240,.55));animation:pop .9s cubic-bezier(.2,.9,.3,1.2) both}
-.globe svg{width:100%;height:100%;overflow:visible}
-.glow{position:absolute;z-index:0;width:clamp(220px,50vw,360px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(34,184,164,.28),rgba(107,31,240,.18) 45%,transparent 70%);animation:pulse 3s ease-in-out infinite}
-#splash .logo{position:relative;z-index:1;margin:10px 0 0;font-size:clamp(40px,10vw,84px);animation:rise 1s .5s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 0 16px rgba(107,31,240,.5))}
-.tag{position:relative;z-index:1;font-family:Lexend,sans-serif;font-size:clamp(11px,2.6vw,14px);letter-spacing:.38em;text-transform:uppercase;color:#9fb0d9;animation:rise 1s .9s both}
-.bar{position:relative;z-index:1;width:min(200px,50vw);height:3px;margin-top:18px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden;animation:rise 1s 1s both}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#0052b4,#6b1ff0,#22b8a4);animation:load 3.4s .3s ease-in-out forwards}
-@keyframes pop{from{opacity:0;transform:scale(.6) rotate(-20deg)}to{opacity:1;transform:none}}
-@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-@keyframes pulse{50%{transform:scale(1.12);opacity:.7}}
-@keyframes load{to{width:100%}}
-@media(prefers-reduced-motion:reduce){.globe,.glow,#splash .logo,.tag,.bar{animation:none}}
+/* splash intro */
+body.splashing{overflow:hidden;height:100dvh}
+#splash{position:fixed;inset:0;z-index:1000;background:#fff;display:grid;place-items:center;transition:opacity .6s ease,visibility .6s;cursor:pointer}
+#splash.out{opacity:0;visibility:hidden}
+#splash>*{grid-area:1/1}
+.globe{width:min(46vw,190px);height:auto;transition:opacity .45s,transform .45s}
+.globe .m{fill:none;stroke:url(#sg);stroke-width:2.4;transform-box:fill-box;transform-origin:center;animation:spin 2.1s linear infinite}
+.globe .m2{animation-delay:-.7s}
+.globe .m3{animation-delay:-1.4s}
+.globe .r{fill:none;stroke:url(#sg);stroke-width:2.4}
+.globe .l{stroke:url(#sg);stroke-width:1.6;opacity:.7}
+.globe .o{animation:orbit 2.1s linear infinite;transform-origin:60px 60px}
+@keyframes spin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(0)}}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.splash-logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(40px,12vw,96px);letter-spacing:-.02em;line-height:1;white-space:nowrap;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:scale(.9);transition:opacity .6s ease,transform .6s ease}
+#splash.stage2 .globe{opacity:0;transform:scale(.6)}
+#splash.stage2 .splash-logo{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.globe .m,.globe .o{animation:none}}
 
 @media(max-width:600px){
 header{padding:14px 16px;gap:16px}
@@ -88,68 +88,33 @@ header{padding:14px 16px;gap:16px}
 .f2 div{gap:2px 22px}
 .f2 button+button::before{display:none}
 .logo{margin-bottom:32px}
-#splash .logo{margin-bottom:0}
 .f1,.f2{padding-left:18px;padding-right:18px}
 }
 </style>
 </head>
 <body id="body" class="splashing">
 
-<!-- ===== SPLASH INTRO ===== -->
-<div id="splash" role="presentation" aria-label="GLOBAL X loading">
-  <canvas id="net"></canvas>
-  <div class="glow"></div>
-
-  <div class="globe">
-    <svg viewBox="0 0 200 200" aria-hidden="true">
-      <defs>
-        <linearGradient id="gg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3b8bff"/>
-          <stop offset=".5" stop-color="#8b4dff"/>
-          <stop offset="1" stop-color="#22e0c0"/>
-        </linearGradient>
-        <clipPath id="gc"><circle cx="100" cy="100" r="62"/></clipPath>
-      </defs>
-
-      <!-- globe -->
-      <g fill="none" stroke="url(#gg)" stroke-width="5" stroke-linecap="round">
-        <circle cx="100" cy="100" r="62"/>
-        <g clip-path="url(#gc)" stroke-width="4">
-          <!-- spinning meridians -->
-          <ellipse cx="100" cy="100" rx="62" ry="62">
-            <animate attributeName="rx" values="62;0;62" dur="6s" repeatCount="indefinite"/>
-          </ellipse>
-          <ellipse cx="100" cy="100" rx="62" ry="62">
-            <animate attributeName="rx" values="62;0;62" dur="6s" begin="-2s" repeatCount="indefinite"/>
-          </ellipse>
-          <ellipse cx="100" cy="100" rx="62" ry="62">
-            <animate attributeName="rx" values="62;0;62" dur="6s" begin="-4s" repeatCount="indefinite"/>
-          </ellipse>
-          <line x1="100" y1="36" x2="100" y2="164"/>
-          <!-- latitudes -->
-          <path d="M40 70 Q100 90 160 70"/>
-          <line x1="36" y1="100" x2="164" y2="100"/>
-          <path d="M40 130 Q100 150 160 130"/>
-        </g>
-      </g>
-
-      <!-- orbit ring + arrow -->
-      <g transform="rotate(-38 100 100)">
-        <ellipse cx="100" cy="100" rx="88" ry="30" fill="none" stroke="url(#gg)" stroke-width="5" stroke-dasharray="230 90" stroke-linecap="round">
-          <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="5s" repeatCount="indefinite"/>
-        </ellipse>
-        <g>
-          <polygon points="0,-9 20,0 0,9 5,0" fill="#22e0c0"/>
-          <animateMotion dur="5s" repeatCount="indefinite" rotate="auto" path="M188,100 A88,30 0 1,1 12,100 A88,30 0 1,1 188,100"/>
-        </g>
-      </g>
-    </svg>
-  </div>
-
-  <div class="logo">GLOBAL X</div>
-  <div class="tag">Connecting the world</div>
-  <div class="bar"><i></i></div>
+<div id="splash" aria-hidden="true">
+  <svg class="globe" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0052b4"/><stop offset=".5" stop-color="#6b1ff0"/><stop offset="1" stop-color="#22b8a4"/>
+      </linearGradient>
+    </defs>
+    <circle class="r" cx="60" cy="60" r="50"/>
+    <line class="l" x1="10" y1="60" x2="110" y2="60"/>
+    <line class="l" x1="20" y1="30" x2="100" y2="30"/>
+    <line class="l" x1="20" y1="90" x2="100" y2="90"/>
+    <ellipse class="m m1" cx="60" cy="60" rx="50" ry="50"/>
+    <ellipse class="m m2" cx="60" cy="60" rx="50" ry="50"/>
+    <ellipse class="m m3" cx="60" cy="60" rx="50" ry="50"/>
+    <g class="o"><circle cx="60" cy="6" r="5" fill="#22b8a4"/></g>
+  </svg>
+  <div class="splash-logo">GLOBAL X</div>
 </div>
+<script>
+try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash").remove(); document.body.classList.remove("splashing"); } } catch (e) {}
+</script>
 
 <header>
   <a href="https://mail.google.com/" target="_blank" rel="noopener">Gmail</a>
@@ -220,61 +185,21 @@ if (window.matchMedia("(max-width:600px)").matches) q.placeholder = "Search or t
 
 /* ---------- splash intro ---------- */
 (function () {
-  const splash = document.getElementById("splash");
-  let seen = false;
-  try { seen = sessionStorage.getItem("gx-splash") === "1"; } catch (e) {}
-  if (seen) { splash.remove(); body.classList.remove("splashing"); return; }
-
-  /* digital network background */
-  const cv = document.getElementById("net"), ctx = cv.getContext("2d");
-  let W, H, nodes = [], raf;
-  function size() {
-    const d = Math.min(window.devicePixelRatio || 1, 2);
-    W = cv.width = innerWidth * d; H = cv.height = innerHeight * d;
-    cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px";
-    const n = Math.round(Math.min(70, innerWidth / 14));
-    nodes = Array.from({ length: n }, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      vx: (Math.random() - .5) * .5 * d, vy: (Math.random() - .5) * .5 * d
-    }));
-  }
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    const link = Math.min(W, H) * .22;
-    for (const a of nodes) {
-      a.x += a.vx; a.y += a.vy;
-      if (a.x < 0 || a.x > W) a.vx *= -1;
-      if (a.y < 0 || a.y > H) a.vy *= -1;
-    }
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      ctx.fillStyle = "rgba(120,170,255,.8)";
-      ctx.beginPath(); ctx.arc(a.x, a.y, 1.8, 0, 6.283); ctx.fill();
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j], dx = a.x - b.x, dy = a.y - b.y, dist = Math.hypot(dx, dy);
-        if (dist < link) {
-          ctx.strokeStyle = "rgba(107,140,255," + (1 - dist / link) * .35 + ")";
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-    }
-    raf = requestAnimationFrame(draw);
-  }
-  size(); draw();
-  addEventListener("resize", size);
-
-  /* close splash */
+  const s = document.getElementById("splash");
+  if (!s) return;
   let done = false;
+  const t1 = setTimeout(() => s.classList.add("stage2"), 2000);
+  const t2 = setTimeout(finish, 3600);
   function finish() {
-    if (done) return; done = true;
+    if (done) return;
+    done = true;
+    clearTimeout(t1); clearTimeout(t2);
+    s.classList.add("out");
+    document.body.classList.remove("splashing");
+    setTimeout(() => s.remove(), 700);
     try { sessionStorage.setItem("gx-splash", "1"); } catch (e) {}
-    splash.classList.add("hide");
-    body.classList.remove("splashing");
-    setTimeout(() => { cancelAnimationFrame(raf); removeEventListener("resize", size); splash.remove(); }, 800);
   }
-  splash.addEventListener("click", finish);
-  setTimeout(finish, 4200);
+  s.addEventListener("click", finish);
 })();
 
 /* ---------- saved settings ---------- */

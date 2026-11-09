@@ -8,7 +8,72 @@
 <meta name="description" content="GLOBAL X - Search the web. Made in Sri Lanka.">
 <meta property="og:title" content="GLOBAL X">
 <meta property="og:description" content="Search the web. Made in Sri Lanka.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%230052b4'/%3E%3Cstop offset='.5' stop-color='%236b1ff0'/%3E%3Cstop offset='1' stop-color='%2322b8a4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='50' y='82' font-size='95' font-weight='900' text-anchor='middle' font-family='Arial' fill='url(%23g)'%3EX%3C/text%3E%3C/svg%3E">
+
+<!-- PWA / install as app -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GLOBAL X">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<script>
+/* 1) catch the install event as early as possible */
+window.__bip = null;
+window.addEventListener("beforeinstallprompt", function (e) {
+  e.preventDefault();
+  window.__bip = e;
+  window.dispatchEvent(new Event("gx-bip"));
+});
+
+/* 2) draw the GLOBAL X icon with canvas (no image files needed) */
+window.gxIcon = function (size, span) {
+  var c = document.createElement("canvas");
+  c.width = c.height = size;
+  var x = c.getContext("2d");
+  var g = x.createLinearGradient(0, 0, size, size);
+  g.addColorStop(0, "#0052b4"); g.addColorStop(0.5, "#6b1ff0"); g.addColorStop(1, "#22b8a4");
+  x.fillStyle = g; x.fillRect(0, 0, size, size);
+  x.strokeStyle = "#fff"; x.lineCap = "round"; x.lineWidth = size * span * 0.19;
+  var m = size / 2, h = size * span / 2;
+  x.beginPath();
+  x.moveTo(m - h, m - h); x.lineTo(m + h, m + h);
+  x.moveTo(m - h, m + h); x.lineTo(m + h, m - h);
+  x.stroke();
+  return c.toDataURL("image/png");
+};
+
+/* 3) build manifest + icons and attach them to the page */
+(function () {
+  try {
+    var i192 = gxIcon(192, 0.4), i512 = gxIcon(512, 0.4), iMask = gxIcon(512, 0.32), i180 = gxIcon(180, 0.4);
+    window.__gxIcon192 = i192;
+
+    var base = location.href.split("#")[0].split("?")[0];
+    var scope = new URL("./", base).href;
+    var manifest = {
+      id: scope,
+      name: "GLOBAL X",
+      short_name: "GLOBAL X",
+      description: "Search the web. Made in Sri Lanka.",
+      start_url: base,
+      scope: scope,
+      display: "standalone",
+      orientation: "any",
+      background_color: "#ffffff",
+      theme_color: "#ffffff",
+      icons: [
+        { src: i192, sizes: "192x192", type: "image/png", purpose: "any" },
+        { src: i512, sizes: "512x512", type: "image/png", purpose: "any" },
+        { src: iMask, sizes: "512x512", type: "image/png", purpose: "maskable" }
+      ]
+    };
+    var url = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" }));
+
+    var l1 = document.createElement("link"); l1.rel = "manifest"; l1.href = url; document.head.appendChild(l1);
+    var l2 = document.createElement("link"); l2.rel = "apple-touch-icon"; l2.href = i180; document.head.appendChild(l2);
+    var l3 = document.createElement("link"); l3.rel = "icon"; l3.type = "image/png"; l3.href = i192; document.head.appendChild(l3);
+  } catch (e) {}
+})();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700;800&display=swap" rel="stylesheet">
@@ -96,6 +161,19 @@ body.splashing{overflow:hidden;height:100dvh}
 .btn.primary{background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;min-width:130px}
 .btn.primary:hover{border-color:transparent;opacity:.92}
 #rate [hidden]{display:none}
+
+/* install banner */
+#install{position:fixed;left:50%;bottom:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,170%);z-index:900;width:min(94vw,440px);display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 40px var(--shadow);transition:transform .4s ease;visibility:hidden}
+#install.show{transform:translate(-50%,0);visibility:visible}
+#install .ic{flex:none;width:48px;height:48px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#0052b4,#6b1ff0,#22b8a4)}
+#install .ic img{width:100%;height:100%;display:block}
+#install .tx{flex:1;min-width:0;font-size:14px;line-height:1.4}
+#install .tx b{display:block;font-size:15px}
+#install .tx span{color:var(--muted)}
+#install .tx span b{display:inline;font-size:inherit;color:var(--text)}
+#install .btn{height:38px;padding:0 18px;font-size:14px;min-width:0}
+#install .no{flex:none;width:30px;height:30px;border:0;background:none;font-size:20px;color:var(--muted);border-radius:50%}
+#install .no:hover{background:var(--btn)}
 
 @media(max-width:600px){
 .star{width:44px;height:44px}
@@ -207,6 +285,17 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
     <button class="btn primary" id="rateOk" type="button">OK</button>
   </div>
 </dialog>
+
+<!-- install banner -->
+<div id="install" role="dialog" aria-label="Install GLOBAL X">
+  <div class="ic"><img id="installIcon" alt="" width="48" height="48"></div>
+  <div class="tx">
+    <b>Install GLOBAL X</b>
+    <span id="installMsg">Add to your home screen for quick access.</span>
+  </div>
+  <button class="btn primary" id="installBtn" type="button">Install</button>
+  <button class="no" id="installNo" type="button" aria-label="Close">×</button>
+</div>
 
 <script>
 const q = document.getElementById("q");
@@ -445,6 +534,81 @@ const RATING_URL = "";
     rate.showModal();
   }
   setTimeout(show, testMode ? 4500 : 120000);
+})();
+
+/* ---------- PWA: auto install prompt ---------- */
+// optional: if you also upload a sw.js file next to index.html, it is used for offline support
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+
+(function () {
+  const bar = document.getElementById("install");
+  const btn = document.getElementById("installBtn");
+  const msg = document.getElementById("installMsg");
+  const no  = document.getElementById("installNo");
+  if (window.__gxIcon192) document.getElementById("installIcon").src = window.__gxIcon192;
+
+  // already running as an installed app -> nothing to show
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  if (standalone) return;
+
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isMobile = isIOS || /android|mobi/i.test(ua);
+
+  let dismissedAt = 0;
+  try { dismissedAt = +localStorage.getItem("gx-install-dismissed") || 0; } catch (e) {}
+  if (Date.now() - dismissedAt < 3 * 24 * 3600 * 1000) return; // closed within last 3 days
+
+  let shown = false;
+  function showBar() {
+    if (shown) return;
+    if (body.classList.contains("splashing") || document.getElementById("rate").open || dlg.open) { setTimeout(showBar, 1500); return; }
+    shown = true;
+    bar.classList.add("show");
+  }
+  function hideBar(remember) {
+    bar.classList.remove("show");
+    if (remember) save("gx-install-dismissed", Date.now());
+  }
+
+  function ready() { // one-tap install available (Chrome / Edge / Samsung / Android / desktop)
+    msg.textContent = "Add to your home screen for quick access.";
+    btn.style.display = "";
+    setTimeout(showBar, 1200);
+  }
+  if (window.__bip) ready();
+  window.addEventListener("gx-bip", ready);
+
+  btn.addEventListener("click", async () => {
+    const ev = window.__bip;
+    if (!ev) { hideBar(false); return; }
+    ev.prompt();
+    try { await ev.userChoice; } catch (e) {}
+    window.__bip = null;
+    hideBar(false);
+  });
+  no.addEventListener("click", () => hideBar(true));
+  window.addEventListener("appinstalled", () => { window.__bip = null; hideBar(false); });
+
+  // iPhone / iPad (Safari has no install prompt, so show the steps)
+  if (isIOS) {
+    msg.innerHTML = 'Tap <b>Share</b> ⬆️ then <b>Add to Home Screen</b>.';
+    btn.style.display = "none";
+    setTimeout(showBar, 4000);
+  } else if (isMobile) {
+    // other mobile browsers that never fire the install event: show manual hint
+    setTimeout(() => {
+      if (!window.__bip) {
+        msg.innerHTML = 'Open the browser menu <b>⋮</b> then tap <b>Install app</b> or <b>Add to Home screen</b>.';
+        btn.style.display = "none";
+        showBar();
+      }
+    }, 6000);
+  }
 })();
 </script>
 </body>

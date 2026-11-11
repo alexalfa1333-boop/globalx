@@ -8,22 +8,17 @@
 <meta name="description" content="GLOBAL X - Search the web. Made in Sri Lanka.">
 <meta property="og:title" content="GLOBAL X">
 <meta property="og:description" content="Search the web. Made in Sri Lanka.">
-
-<!-- PWA / install as app -->
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="GLOBAL X">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <script>
-/* 1) catch the install event as early as possible */
 window.__bip = null;
 window.addEventListener("beforeinstallprompt", function (e) {
   e.preventDefault();
   window.__bip = e;
   window.dispatchEvent(new Event("gx-bip"));
 });
-
-/* 2) draw the GLOBAL X icon with canvas (no image files needed) */
 window.gxIcon = function (size, span) {
   var c = document.createElement("canvas");
   c.width = c.height = size;
@@ -39,26 +34,17 @@ window.gxIcon = function (size, span) {
   x.stroke();
   return c.toDataURL("image/png");
 };
-
-/* 3) build manifest + icons and attach them to the page */
 (function () {
   try {
     var i192 = gxIcon(192, 0.4), i512 = gxIcon(512, 0.4), iMask = gxIcon(512, 0.32), i180 = gxIcon(180, 0.4);
     window.__gxIcon192 = i192;
-
     var base = location.href.split("#")[0].split("?")[0];
     var scope = new URL("./", base).href;
     var manifest = {
-      id: scope,
-      name: "GLOBAL X",
-      short_name: "GLOBAL X",
+      id: scope, name: "GLOBAL X", short_name: "GLOBAL X",
       description: "Search the web. Made in Sri Lanka.",
-      start_url: base,
-      scope: scope,
-      display: "standalone",
-      orientation: "any",
-      background_color: "#ffffff",
-      theme_color: "#ffffff",
+      start_url: base, scope: scope, display: "standalone", orientation: "any",
+      background_color: "#ffffff", theme_color: "#ffffff",
       icons: [
         { src: i192, sizes: "192x192", type: "image/png", purpose: "any" },
         { src: i512, sizes: "512x512", type: "image/png", purpose: "any" },
@@ -66,14 +52,12 @@ window.gxIcon = function (size, span) {
       ]
     };
     var url = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" }));
-
     var l1 = document.createElement("link"); l1.rel = "manifest"; l1.href = url; document.head.appendChild(l1);
     var l2 = document.createElement("link"); l2.rel = "apple-touch-icon"; l2.href = i180; document.head.appendChild(l2);
     var l3 = document.createElement("link"); l3.rel = "icon"; l3.type = "image/png"; l3.href = i192; document.head.appendChild(l3);
   } catch (e) {}
 })();
 </script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700;800&display=swap" rel="stylesheet">
@@ -86,14 +70,17 @@ button,input,select{font:inherit;color:inherit}
 button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid #6b1ff0;outline-offset:2px}
-
-header{display:flex;justify-content:flex-end;align-items:center;gap:22px;padding:20px 28px}
+header{display:flex;justify-content:flex-end;align-items:center;gap:16px;padding:20px 28px}
 header a{font-size:15px}
 header a:hover{text-decoration:underline}
-.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0052b4,#6b1ff0);color:#fff;font-family:Lexend,sans-serif;font-weight:800;font-size:18px;border:0}
-
+.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0052b4,#6b1ff0);color:#fff;font-family:Lexend,sans-serif;font-weight:800;font-size:18px;border:0;overflow:hidden}
+.loginBtn{height:40px;padding:0 20px;border:0;border-radius:20px;background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;font-size:14px;font-weight:700}
+.userChip{display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border:1px solid var(--line);border-radius:24px;background:var(--bg);cursor:pointer}
+.userChip span{font-size:13px;font-weight:700;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 80px}
-.logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(44px,11vw,104px);letter-spacing:-.02em;line-height:1;margin-bottom:44px;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(44px,11vw,104px);letter-spacing:-.02em;line-height:1;margin-bottom:12px;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.welcome{font-size:16px;color:var(--muted);margin-bottom:28px;text-align:center;padding:0 12px;min-height:22px}
+.welcome b{color:var(--text)}
 .search{width:100%;max-width:700px;height:60px;display:flex;align-items:center;gap:12px;padding:0 20px;border:1px solid var(--line);border-radius:32px;background:var(--bg);box-shadow:0 2px 8px var(--shadow);transition:box-shadow .2s}
 .search:focus-within{box-shadow:0 4px 18px var(--shadow)}
 .search svg{flex:none}
@@ -111,7 +98,6 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;justify-conten
 .row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:28px}
 .btn{height:44px;padding:0 26px;border:1px solid transparent;border-radius:22px;background:var(--btn);font-size:15px;transition:background .15s}
 .btn:hover{background:var(--btn-h);border-color:var(--line)}
-
 footer{background:var(--foot);color:var(--muted);font-size:15px}
 .f1{padding:15px 32px;border-bottom:1px solid var(--line)}
 .f2{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding:14px 32px}
@@ -119,16 +105,13 @@ footer{background:var(--foot);color:var(--muted);font-size:15px}
 .f2 button{border:0;background:none;padding:4px 0;color:inherit}
 .f2 button:hover{text-decoration:underline}
 .f2 button+button::before{content:"•";display:inline-block;margin:0 14px;color:var(--muted);text-decoration:none}
-
 dialog{margin:auto;width:min(92vw,520px);max-height:85vh;overflow:auto;padding:28px;border:0;border-radius:20px;background:var(--bg);color:var(--text);box-shadow:0 20px 60px rgba(0,0,0,.35)}
 dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
-dialog h2{font-family:Lexend,sans-serif;font-size:22px;margin-bottom:14px}
+dialog h2{font-family:Lexend,sans-serif;font-size:22px;margin-bottom:6px}
 dialog p{line-height:1.65;font-size:15px;margin-bottom:12px;color:var(--muted)}
 dialog label{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:14px 0;font-size:15px}
 dialog select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
 .close{margin-top:10px}
-
-/* splash intro */
 body.splashing{overflow:hidden;height:100dvh}
 #splash{position:fixed;inset:0;z-index:1000;background:#fff;display:grid;place-items:center;transition:opacity .6s ease,visibility .6s;cursor:pointer}
 #splash.out{opacity:0;visibility:hidden}
@@ -146,8 +129,6 @@ body.splashing{overflow:hidden;height:100dvh}
 #splash.stage2 .globe{opacity:0;transform:scale(.6)}
 #splash.stage2 .splash-logo{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.globe .m,.globe .o{animation:none}}
-
-/* rating popup */
 #rate{position:relative;text-align:center}
 .rate-x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;line-height:1;color:var(--muted)}
 .rate-x:hover{background:var(--btn)}
@@ -161,8 +142,6 @@ body.splashing{overflow:hidden;height:100dvh}
 .btn.primary{background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;min-width:130px}
 .btn.primary:hover{border-color:transparent;opacity:.92}
 #rate [hidden]{display:none}
-
-/* install banner */
 #install{position:fixed;left:50%;bottom:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,170%);z-index:900;width:min(94vw,440px);display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 40px var(--shadow);transition:transform .4s ease;visibility:hidden}
 #install.show{transform:translate(-50%,0);visibility:visible}
 #install .ic{flex:none;width:48px;height:48px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#0052b4,#6b1ff0,#22b8a4)}
@@ -174,27 +153,35 @@ body.splashing{overflow:hidden;height:100dvh}
 #install .btn{height:38px;padding:0 18px;font-size:14px;min-width:0}
 #install .no{flex:none;width:30px;height:30px;border:0;background:none;font-size:20px;color:var(--muted);border-radius:50%}
 #install .no:hover{background:var(--btn)}
-
+/* LOGIN */
+.loginBox{margin-top:10px}
+.field{margin:14px 0}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.field input{width:100%;height:48px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:15px;outline:0}
+.field input:focus{border-color:#6b1ff0}
+.userPreview{display:flex;align-items:center;gap:10px;background:var(--btn);padding:10px 12px;border-radius:12px;font-size:14px;margin-top:10px}
+.userPreview b{color:#6b1ff0}
+.loginMsg{font-size:13px;color:#d93025;min-height:18px;margin-top:6px}
+.loginMsg.ok{color:#188038}
+.linkBtn{border:0;background:none;color:#6b1ff0;font-weight:700;font-size:14px;padding:6px 0}
+.accRow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.accRow span{color:var(--muted)}
 @media(max-width:600px){
 .star{width:44px;height:44px}
-header{padding:14px 16px;gap:16px}
+header{padding:14px 16px;gap:10px}
 .search{height:54px;padding:0 14px;gap:8px}
 .f2 div{gap:2px 22px}
 .f2 button+button::before{display:none}
-.logo{margin-bottom:32px}
+.logo{margin-bottom:10px}
 .f1,.f2{padding-left:18px;padding-right:18px}
+.userChip span{max-width:90px}
 }
 </style>
 </head>
 <body id="body" class="splashing">
-
 <div id="splash" aria-hidden="true">
   <svg class="globe" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0052b4"/><stop offset=".5" stop-color="#6b1ff0"/><stop offset="1" stop-color="#22b8a4"/>
-      </linearGradient>
-    </defs>
+    <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0052b4"/><stop offset=".5" stop-color="#6b1ff0"/><stop offset="1" stop-color="#22b8a4"/></linearGradient></defs>
     <circle class="r" cx="60" cy="60" r="50"/>
     <line class="l" x1="10" y1="60" x2="110" y2="60"/>
     <line class="l" x1="20" y1="30" x2="100" y2="30"/>
@@ -209,16 +196,16 @@ header{padding:14px 16px;gap:16px}
 <script>
 try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash").remove(); document.body.classList.remove("splashing"); } } catch (e) {}
 </script>
-
 <header>
   <a href="https://mail.google.com/" target="_blank" rel="noopener">Gmail</a>
   <a href="https://www.google.com/imghp" target="_blank" rel="noopener" id="imagesLink">Images</a>
-  <button class="avatar" type="button" aria-label="Settings" onclick="openInfo('settings')">X</button>
+  <div id="authArea">
+    <button class="loginBtn" type="button" onclick="openLogin()">Login</button>
+  </div>
 </header>
-
 <main>
   <div class="logo">GLOBAL X</div>
-
+  <div class="welcome" id="welcomeText">Search the web. Made in Sri Lanka. 🇱🇰</div>
   <div class="search" role="search">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#70757a" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
     <input id="q" type="text" inputmode="search" enterkeyhint="search" placeholder="Search GLOBAL X or type a URL" aria-label="Search GLOBAL X or type a URL" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
@@ -229,7 +216,6 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8V6a3 3 0 0 1 3-3h2" stroke="#4285f4"/><path d="M16 3h2a3 3 0 0 1 3 3v2" stroke="#ea4335"/><path d="M21 16v2a3 3 0 0 1-3 3h-2" stroke="#fbbc04"/><path d="M8 21H6a3 3 0 0 1-3-3v-2" stroke="#34a853"/><circle cx="12" cy="12" r="3.5" fill="#4285f4" stroke="none"/></svg>
     </button>
   </div>
-
   <div class="modes" id="modes" role="group" aria-label="Search type">
     <button class="mode ai" type="button" data-mode="AI">✨ AI</button>
     <button class="mode active" type="button" data-mode="All" aria-pressed="true">All</button>
@@ -240,13 +226,11 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
     <button class="mode" type="button" data-mode="Maps">Maps</button>
     <button class="mode" type="button" data-mode="Shopping">Shopping</button>
   </div>
-
   <div class="row">
     <button class="btn" type="button" onclick="doSearch()">Global X Search</button>
     <button class="btn" type="button" onclick="feelingLucky()">I'm Feeling Lucky</button>
   </div>
 </main>
-
 <footer>
   <div class="f1">Sri Lanka</div>
   <nav class="f2" aria-label="Footer">
@@ -263,48 +247,51 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
     </div>
   </nav>
 </footer>
+<dialog id="dlg" aria-labelledby="dlgTitle"><h2 id="dlgTitle"></h2><div id="dlgBody"></div><button class="btn close" type="button" onclick="dlg.close()">Close</button></dialog>
 
-<dialog id="dlg" aria-labelledby="dlgTitle">
-  <h2 id="dlgTitle"></h2>
-  <div id="dlgBody"></div>
-  <button class="btn close" type="button" onclick="dlg.close()">Close</button>
+<!-- LOGIN / SIGNUP -->
+<dialog id="loginDlg">
+  <h2 id="loginTitle">Login to GLOBAL X</h2>
+  <p>Un GLOBAL X account la login pannu. Pudhusa naa Create Account pannu.</p>
+  <div class="loginBox">
+    <div class="field"><label>Username</label><input id="gxUser" type="text" placeholder="Ex: alex" autocomplete="username"></div>
+    <div class="userPreview">Un Account: <b id="gxPreview">yourname@x.com</b></div>
+    <div class="field"><label>Password</label><input id="gxPass" type="password" placeholder="Password - min 4 letters" autocomplete="current-password"></div>
+    <div class="loginMsg" id="loginMsg"></div>
+    <button class="btn primary" id="loginMainBtn" type="button" onclick="doLoginOrSignup()" style="width:100%">Login</button>
+    <div style="text-align:center;margin-top:12px"><button class="linkBtn" type="button" id="toggleAuthBtn" onclick="toggleAuthMode()">New user? Create Account</button></div>
+    <div style="text-align:center;margin-top:8px"><button class="btn" type="button" onclick="document.getElementById('loginDlg').close()">Close</button></div>
+  </div>
+</dialog>
+
+<!-- MY ACCOUNT -->
+<dialog id="accDlg">
+  <h2>My GLOBAL X Account</h2>
+  <p>Un details permanent ah indha phone la save aagirukku.</p>
+  <div id="accBody"></div>
+  <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+    <button class="btn primary" type="button" onclick="logoutUser()">Logout</button>
+    <button class="btn" type="button" onclick="document.getElementById('accDlg').close()">Close</button>
+  </div>
 </dialog>
 
 <dialog id="rate" aria-labelledby="rateTitle">
   <button class="rate-x" type="button" aria-label="Close" onclick="document.getElementById('rate').close()">×</button>
-  <div id="rateAsk">
-    <h2 id="rateTitle">Your rating for our service</h2>
-    <p>How was your experience with GLOBAL X? Tap a star to rate us.</p>
-    <div class="stars" id="stars" role="radiogroup" aria-label="Rate from 1 to 5 stars"></div>
-    <div class="star-label" id="starLabel" aria-live="polite"></div>
-    <button class="btn primary" id="rateSubmit" type="button" hidden>Submit</button>
-  </div>
-  <div id="rateDone" hidden>
-    <h2>Thank you for your response</h2>
-    <p>Your feedback helps us make GLOBAL X better.</p>
-    <button class="btn primary" id="rateOk" type="button">OK</button>
-  </div>
+  <div id="rateAsk"><h2 id="rateTitle">Your rating for our service</h2><p>How was your experience with GLOBAL X? Tap a star to rate us.</p><div class="stars" id="stars" role="radiogroup" aria-label="Rate from 1 to 5 stars"></div><div class="star-label" id="starLabel" aria-live="polite"></div><button class="btn primary" id="rateSubmit" type="button" hidden>Submit</button></div>
+  <div id="rateDone" hidden><h2>Thank you for your response</h2><p>Your feedback helps us make GLOBAL X better.</p><button class="btn primary" id="rateOk" type="button">OK</button></div>
 </dialog>
-
-<!-- install banner -->
 <div id="install" role="dialog" aria-label="Install GLOBAL X">
   <div class="ic"><img id="installIcon" alt="" width="48" height="48"></div>
-  <div class="tx">
-    <b>Install GLOBAL X</b>
-    <span id="installMsg">Add to your home screen for quick access.</span>
-  </div>
+  <div class="tx"><b>Install GLOBAL X</b><span id="installMsg">Add to your home screen for quick access.</span></div>
   <button class="btn primary" id="installBtn" type="button">Install</button>
   <button class="no" id="installNo" type="button" aria-label="Close">×</button>
 </div>
-
 <script>
 const q = document.getElementById("q");
 const dlg = document.getElementById("dlg");
 const body = document.body;
 const GOOGLE = "https://www.google.com/search?q=";
 if (window.matchMedia("(max-width:600px)").matches) q.placeholder = "Search or type a URL";
-
-/* ---------- splash intro ---------- */
 (function () {
   const s = document.getElementById("splash");
   if (!s) return;
@@ -322,8 +309,6 @@ if (window.matchMedia("(max-width:600px)").matches) q.placeholder = "Search or t
   }
   s.addEventListener("click", finish);
 })();
-
-/* ---------- saved settings ---------- */
 function load(key, fallback) { try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; } }
 function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
 let theme = load("gx-theme", "light");
@@ -334,22 +319,131 @@ function applyTheme() {
 }
 applyTheme();
 
-/* ---------- search ---------- */
-function looksLikeUrl(t) {
-  return !/\s/.test(t) && /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(t);
+/* ---------- GLOBAL X LOGIN SYSTEM - PERMANENT SAVE ---------- */
+let authMode = "login";
+function getUsers(){ try{ return JSON.parse(localStorage.getItem("gx-users")||"{}"); }catch(e){ return {}; } }
+function setUsers(u){ try{ localStorage.setItem("gx-users", JSON.stringify(u)); }catch(e){} }
+function getCurrentUser(){
+  try{
+    var email = localStorage.getItem("gx-session");
+    if(!email) return null;
+    var users = getUsers();
+    return users[email] || null;
+  }catch(e){ return null; }
 }
+function cleanName(v){
+  v = (v||"").trim().toLowerCase().replace("@x.com","").replace(/[^a-z0-9._]/g,"");
+  return v;
+}
+function updatePreview(){
+  var n = cleanName(document.getElementById("gxUser").value);
+  document.getElementById("gxPreview").textContent = (n||"yourname") + "@x.com";
+}
+document.getElementById("gxUser").addEventListener("input", updatePreview);
+function openLogin(){
+  var cur = getCurrentUser();
+  if(cur){ openAccount(); return; }
+  authMode = "login";
+  document.getElementById("loginTitle").textContent = "Login to GLOBAL X";
+  document.getElementById("loginMainBtn").textContent = "Login";
+  document.getElementById("toggleAuthBtn").textContent = "New user? Create Account";
+  document.getElementById("loginMsg").textContent = "";
+  document.getElementById("loginMsg").className = "loginMsg";
+  document.getElementById("loginDlg").showModal();
+  setTimeout(()=>document.getElementById("gxUser").focus(), 100);
+}
+function toggleAuthMode(){
+  if(authMode==="login"){
+    authMode="signup";
+    document.getElementById("loginTitle").textContent = "Create GLOBAL X Account";
+    document.getElementById("loginMainBtn").textContent = "Create Account";
+    document.getElementById("toggleAuthBtn").textContent = "Already have account? Login";
+  } else {
+    authMode="login";
+    document.getElementById("loginTitle").textContent = "Login to GLOBAL X";
+    document.getElementById("loginMainBtn").textContent = "Login";
+    document.getElementById("toggleAuthBtn").textContent = "New user? Create Account";
+  }
+  document.getElementById("loginMsg").textContent = "";
+}
+function doLoginOrSignup(){
+  var raw = document.getElementById("gxUser").value;
+  var pass = document.getElementById("gxPass").value;
+  var msg = document.getElementById("loginMsg");
+  var name = cleanName(raw);
+  if(!name){ msg.textContent="Username podu da! Ex: alex"; msg.className="loginMsg"; return; }
+  if(name.length < 3){ msg.textContent="Username min 3 letters irukanum da"; return; }
+  if(!pass || pass.length < 4){ msg.textContent="Password min 4 letters podu da"; return; }
+  var email = name + "@x.com";
+  var users = getUsers();
+  if(authMode==="signup"){
+    if(users[email]){ msg.textContent="Indha username already irukku da! Vera peru try pannu."; return; }
+    users[email] = { username:name, email:email, password:pass, created:new Date().toLocaleString(), searches:0 };
+    setUsers(users);
+    save("gx-session", email);
+    msg.textContent="Account create aagiduchu! Welcome "+email;
+    msg.className="loginMsg ok";
+    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); showWelcome(); }, 800);
+  } else {
+    if(!users[email]){ msg.textContent="Account illa da! Create Account ah click pannu."; return; }
+    if(users[email].password !== pass){ msg.textContent="Password thappu da! Thirumba try pannu."; return; }
+    save("gx-session", email);
+    msg.textContent="Welcome back "+email;
+    msg.className="loginMsg ok";
+    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); showWelcome(); }, 600);
+  }
+}
+function refreshAuthUI(){
+  var cur = getCurrentUser();
+  var area = document.getElementById("authArea");
+  if(cur){
+    var first = cur.username.charAt(0).toUpperCase();
+    area.innerHTML = '<button class="userChip" type="button" onclick="openAccount()"><span class="avatar" style="width:32px;height:32px;font-size:15px">'+first+'</span><span>'+cur.email+'</span></button>';
+  } else {
+    area.innerHTML = '<button class="loginBtn" type="button" onclick="openLogin()">Login</button>';
+  }
+  showWelcome();
+}
+function showWelcome(){
+  var cur = getCurrentUser();
+  var w = document.getElementById("welcomeText");
+  if(cur){ w.innerHTML = 'Vanakkam <b>'+cur.username+'</b> 👋 - <b>'+cur.email+'</b> | Search the web. Made in Sri Lanka. 🇱🇰'; }
+  else { w.innerHTML = 'Search the web. Made in Sri Lanka. 🇱🇰'; }
+}
+function openAccount(){
+  var cur = getCurrentUser();
+  if(!cur){ openLogin(); return; }
+  document.getElementById("accBody").innerHTML =
+    '<div class="accRow"><b>Username</b><span>'+cur.username+'</span></div>'+
+    '<div class="accRow"><b>GLOBAL X Email</b><span>'+cur.email+'</span></div>'+
+    '<div class="accRow"><b>Account Created</b><span>'+cur.created+'</span></div>'+
+    '<div class="accRow"><b>Total Searches</b><span>'+(cur.searches||0)+'</span></div>'+
+    '<div class="accRow"><b>Status</b><span>✅ Active - Saved Permanent</span></div>';
+  document.getElementById("accDlg").showModal();
+}
+function logoutUser(){
+  try{ localStorage.removeItem("gx-session"); }catch(e){}
+  document.getElementById("accDlg").close();
+  refreshAuthUI();
+  alert("Logout aagiduchu da! Thirumba Login pannalam.");
+}
+refreshAuthUI();
+document.getElementById("gxPass").addEventListener("keydown", function(e){ if(e.key==="Enter") doLoginOrSignup(); });
+
+/* ---------- search ---------- */
+function looksLikeUrl(t){ return !/\s/.test(t) && /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(t); }
 let mode = "All";
 const MODE_URL = {
-  All:      t => GOOGLE + t,
-  Web:      t => GOOGLE + t + "&udm=14",
-  AI:       t => GOOGLE + t + "&udm=50",
-  Images:   t => GOOGLE + t + "&tbm=isch",
-  Videos:   t => GOOGLE + t + "&tbm=vid",
-  News:     t => GOOGLE + t + "&tbm=nws",
+  All: t => GOOGLE + t,
+  Web: t => GOOGLE + t + "&udm=14",
+  AI: t => GOOGLE + t + "&udm=50",
+  Images: t => GOOGLE + t + "&tbm=isch",
+  Videos: t => GOOGLE + t + "&tbm=vid",
+  News: t => GOOGLE + t + "&tbm=nws",
   Shopping: t => GOOGLE + t + "&tbm=shop",
-  Maps:     t => "https://www.google.com/maps/search/?api=1&query=" + t
+  Maps: t => "https://www.google.com/maps/search/?api=1&query=" + t
 };
-function setMode(m) {
+function setMode(m){
   mode = m;
   document.querySelectorAll(".mode").forEach(b => {
     const on = b.dataset.mode === m;
@@ -363,16 +457,18 @@ document.getElementById("modes").addEventListener("click", e => {
   setMode(b.dataset.mode);
   if (q.value.trim()) doSearch(); else q.focus();
 });
-function doSearch() {
+function doSearch(){
   const t = q.value.trim();
   if (!t) { q.focus(); return; }
+  var cur = getCurrentUser();
+  if(cur){ var users=getUsers(); users[cur.email].searches=(users[cur.email].searches||0)+1; setUsers(users); }
   if ((mode === "All" || mode === "Web") && looksLikeUrl(t)) {
     window.location.href = /^https?:\/\//i.test(t) ? t : "https://" + t;
     return;
   }
   window.location.href = MODE_URL[mode](encodeURIComponent(t));
 }
-function feelingLucky() {
+function feelingLucky(){
   const t = q.value.trim() || "GLOBAL X Sri Lanka";
   window.location.href = GOOGLE + encodeURIComponent(t) + "&btnI=1";
 }
@@ -381,9 +477,7 @@ document.getElementById("imagesLink").addEventListener("click", e => {
   const t = q.value.trim();
   if (t) { e.preventDefault(); window.open(GOOGLE + encodeURIComponent(t) + "&tbm=isch", "_blank", "noopener"); }
 });
-
-/* ---------- voice ---------- */
-function startVoice() {
+function startVoice(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { alert("Voice search is not supported in this browser. Try Chrome or Edge."); return; }
   const btn = document.getElementById("micBtn");
@@ -395,43 +489,23 @@ function startVoice() {
   rec.onend = () => btn.classList.remove("on");
   try { rec.start(); btn.classList.add("on"); } catch (e) { btn.classList.remove("on"); }
 }
-
-/* ---------- footer pages ---------- */
 const P = t => "<p>" + t + "</p>";
 const pages = {
-  about: ["About GLOBAL X",
-    P("GLOBAL X is a search homepage made in Sri Lanka. Type a question or a web address and go straight to what you need.") +
-    P("It supports voice search in English, Tamil and Sinhala, and image search through Google Lens.")],
-  advertising: ["Advertising",
-    P("GLOBAL X does not show ads today. If you want to advertise or sponsor GLOBAL X in the future, contact the founder through the Business page.")],
-  business: ["Business",
-    P("Building something for Sri Lankan users? GLOBAL X is open to partnerships, sponsorships and API collaborations.") +
-    P("Business contact details will be published here soon.")],
-  how: ["How Search works",
-    P("When you press Global X Search, your words are sent to Google Search and the results open in your browser.") +
-    P("If you type a web address such as example.com, GLOBAL X opens that site directly.") +
-    P("The Images link and the Lens button open Google Images and Google Lens.")],
-  privacy: ["Privacy",
-    P("GLOBAL X does not keep an account for you and does not store your searches on its own servers.") +
-    P("Your theme and voice-language choices are saved only in your own browser.") +
-    P("If you rate our service, your star rating and basic device details (browser, device type, language, time zone and screen size) are sent to us. We do not ask for your name or email.") +
-    P("Searches are handled by Google, so Google's privacy policy applies once you reach its results. Voice search uses your browser's speech service and asks for microphone permission first.")],
-  terms: ["Terms",
-    P("GLOBAL X is provided as is, without any guarantee that it will always be available or error free.") +
-    P("Search results come from third parties. GLOBAL X is not responsible for the content of the websites you visit.") +
-    P("By using this site you agree to use it lawfully.")],
+  about: ["About GLOBAL X", P("GLOBAL X is a search homepage made in Sri Lanka. Type a question or a web address and go straight to what you need.") + P("It supports voice search in English, Tamil and Sinhala, and image search through Google Lens.")],
+  advertising: ["Advertising", P("GLOBAL X does not show ads today. If you want to advertise or sponsor GLOBAL X in the future, contact the founder through the Business page.")],
+  business: ["Business", P("Building something for Sri Lankan users? GLOBAL X is open to partnerships, sponsorships and API collaborations.") + P("Business contact details will be published here soon.")],
+  how: ["How Search works", P("When you press Global X Search, your words are sent to Google Search and the results open in your browser.") + P("If you type a web address such as example.com, GLOBAL X opens that site directly.") + P("The Images link and the Lens button open Google Images and Google Lens.")],
+  privacy: ["Privacy", P("GLOBAL X does not keep an account for you and does not store your searches on its own servers.") + P("Your theme and voice-language choices are saved only in your own browser.") + P("If you rate our service, your star rating and basic device details (browser, device type, language, time zone and screen size) are sent to us. We do not ask for your name or email.") + P("Searches are handled by Google, so Google's privacy policy applies once you reach its results. Voice search uses your browser's speech service and asks for microphone permission first.")],
+  terms: ["Terms", P("GLOBAL X is provided as is, without any guarantee that it will always be available or error free.") + P("Search results come from third parties. GLOBAL X is not responsible for the content of the websites you visit.") + P("By using this site you agree to use it lawfully.")],
   settings: ["Settings", ""]
 };
-
-function openInfo(key) {
+function openInfo(key){
   const [title, html] = pages[key];
   document.getElementById("dlgTitle").textContent = title;
   const box = document.getElementById("dlgBody");
   box.innerHTML = html;
   if (key === "settings") {
-    box.innerHTML =
-      '<label>Theme<select id="selTheme"><option value="light">Light</option><option value="dark">Dark</option></select></label>' +
-      '<label>Voice language<select id="selVoice"><option value="en-US">English</option><option value="ta-LK">Tamil</option><option value="si-LK">Sinhala</option></select></label>';
+    box.innerHTML = '<label>Theme<select id="selTheme"><option value="light">Light</option><option value="dark">Dark</option></select></label>' + '<label>Voice language<select id="selVoice"><option value="en-US">English</option><option value="ta-LK">Tamil</option><option value="si-LK">Sinhala</option></select></label>';
     const st = document.getElementById("selTheme"), sv = document.getElementById("selVoice");
     st.value = theme; sv.value = voiceLang;
     st.onchange = () => { theme = st.value; save("gx-theme", theme); applyTheme(); };
@@ -440,12 +514,7 @@ function openInfo(key) {
   dlg.showModal();
 }
 dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
-
-/* ---------- rating popup (appears 2 minutes after opening) ---------- */
-// To receive ratings, paste a Google Apps Script / Formspree / Worker URL here.
-// While empty, ratings are saved only on the visitor's own device.
 const RATING_URL = "";
-
 (function () {
   const rate = document.getElementById("rate");
   const box = document.getElementById("stars");
@@ -457,158 +526,57 @@ const RATING_URL = "";
   const WORDS = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.4l-5.9 3.3 1.2-6.6-4.8-4.6 6.6-.9z"/></svg>';
   let value = 0;
-
   try { if (!testMode && localStorage.getItem("gx-rated") === "1") return; } catch (e) {}
-
   for (let i = 1; i <= 5; i++) {
     const b = document.createElement("button");
-    b.type = "button";
-    b.className = "star";
-    b.dataset.v = i;
-    b.setAttribute("role", "radio");
-    b.setAttribute("aria-checked", "false");
+    b.type = "button"; b.className = "star"; b.dataset.v = i;
+    b.setAttribute("role", "radio"); b.setAttribute("aria-checked", "false");
     b.setAttribute("aria-label", i + (i === 1 ? " star" : " stars") + " - " + WORDS[i - 1]);
-    b.innerHTML = STAR;
-    box.appendChild(b);
+    b.innerHTML = STAR; box.appendChild(b);
   }
   const stars = box.querySelectorAll(".star");
-
-  function paint(n) {
-    stars.forEach((s, i) => s.classList.toggle("on", i < n));
-    label.textContent = n ? WORDS[n - 1] : "";
-  }
-  box.addEventListener("click", e => {
-    const b = e.target.closest(".star");
-    if (!b) return;
-    value = +b.dataset.v;
-    stars.forEach((s, i) => s.setAttribute("aria-checked", i + 1 === value));
-    paint(value);
-    submit.hidden = false;
-  });
-  box.addEventListener("mouseover", e => {
-    const b = e.target.closest(".star");
-    if (b) paint(+b.dataset.v);
-  });
+  function paint(n){ stars.forEach((s, i) => s.classList.toggle("on", i < n)); label.textContent = n ? WORDS[n - 1] : ""; }
+  box.addEventListener("click", e => { const b = e.target.closest(".star"); if (!b) return; value = +b.dataset.v; stars.forEach((s, i) => s.setAttribute("aria-checked", i + 1 === value)); paint(value); submit.hidden = false; });
+  box.addEventListener("mouseover", e => { const b = e.target.closest(".star"); if (b) paint(+b.dataset.v); });
   box.addEventListener("mouseleave", () => paint(value));
-
-  function store(v) {
+  function store(v){
     let vid = "";
     try { vid = localStorage.getItem("gx-vid") || ("v" + Math.random().toString(36).slice(2, 10)); localStorage.setItem("gx-vid", vid); } catch (e) {}
-    const data = {
-      rating: v, id: vid,
-      time: new Date().toISOString(), localTime: new Date().toLocaleString(),
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
-      language: navigator.language || "",
-      device: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
-      platform: navigator.platform || "", screen: screen.width + "x" + screen.height,
-      ua: navigator.userAgent, page: location.href.split("#")[0], referrer: document.referrer
-    };
-    try {
-      const list = JSON.parse(localStorage.getItem("gx-ratings") || "[]");
-      list.push(data);
-      localStorage.setItem("gx-ratings", JSON.stringify(list));
-      localStorage.setItem("gx-rated", "1");
-    } catch (e) {}
-    if (RATING_URL) {
-      try {
-        fetch(RATING_URL, {
-          method: "POST", mode: "no-cors", keepalive: true,
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(data)
-        }).catch(() => {});
-      } catch (e) {}
-    }
+    const data = { rating: v, id: vid, time: new Date().toISOString(), localTime: new Date().toLocaleString(), timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "", language: navigator.language || "", device: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Mobile" : "Desktop", platform: navigator.platform || "", screen: screen.width + "x" + screen.height, ua: navigator.userAgent, page: location.href.split("#")[0], referrer: document.referrer };
+    try { const list = JSON.parse(localStorage.getItem("gx-ratings") || "[]"); list.push(data); localStorage.setItem("gx-ratings", JSON.stringify(list)); localStorage.setItem("gx-rated", "1"); } catch (e) {}
+    if (RATING_URL) { try { fetch(RATING_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) }).catch(() => {}); } catch (e) {} }
   }
-  submit.addEventListener("click", () => {
-    if (!value) return;
-    store(value);
-    ask.hidden = true;
-    done.hidden = false;
-  });
+  submit.addEventListener("click", () => { if (!value) return; store(value); ask.hidden = true; done.hidden = false; });
   document.getElementById("rateOk").addEventListener("click", () => rate.close());
-
-  function show() {
-    if (rate.open) return;
-    if (dlg.open || body.classList.contains("splashing")) { setTimeout(show, 5000); return; }
-    value = 0; paint(0); submit.hidden = true; ask.hidden = false; done.hidden = true;
-    rate.showModal();
-  }
+  function show(){ if (rate.open) return; if (dlg.open || body.classList.contains("splashing")) { setTimeout(show, 5000); return; } value = 0; paint(0); submit.hidden = true; ask.hidden = false; done.hidden = true; rate.showModal(); }
   setTimeout(show, testMode ? 4500 : 120000);
 })();
-
-/* ---------- PWA: auto install prompt ---------- */
-// optional: if you also upload a sw.js file next to index.html, it is used for offline support
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
-  });
-}
-
+if ("serviceWorker" in navigator) { window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); }); }
 (function () {
   const bar = document.getElementById("install");
   const btn = document.getElementById("installBtn");
   const msg = document.getElementById("installMsg");
   const no  = document.getElementById("installNo");
   if (window.__gxIcon192) document.getElementById("installIcon").src = window.__gxIcon192;
-
-  // already running as an installed app -> nothing to show
   const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   if (standalone) return;
-
   const ua = navigator.userAgent;
   const isIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   const isMobile = isIOS || /android|mobi/i.test(ua);
-
   let dismissedAt = 0;
   try { dismissedAt = +localStorage.getItem("gx-install-dismissed") || 0; } catch (e) {}
-  if (Date.now() - dismissedAt < 3 * 24 * 3600 * 1000) return; // closed within last 3 days
-
+  if (Date.now() - dismissedAt < 3 * 24 * 3600 * 1000) return;
   let shown = false;
-  function showBar() {
-    if (shown) return;
-    if (body.classList.contains("splashing") || document.getElementById("rate").open || dlg.open) { setTimeout(showBar, 1500); return; }
-    shown = true;
-    bar.classList.add("show");
-  }
-  function hideBar(remember) {
-    bar.classList.remove("show");
-    if (remember) save("gx-install-dismissed", Date.now());
-  }
-
-  function ready() { // one-tap install available (Chrome / Edge / Samsung / Android / desktop)
-    msg.textContent = "Add to your home screen for quick access.";
-    btn.style.display = "";
-    setTimeout(showBar, 1200);
-  }
+  function showBar(){ if (shown) return; if (body.classList.contains("splashing") || document.getElementById("rate").open || dlg.open) { setTimeout(showBar, 1500); return; } shown = true; bar.classList.add("show"); }
+  function hideBar(remember){ bar.classList.remove("show"); if (remember) save("gx-install-dismissed", Date.now()); }
+  function ready(){ msg.textContent = "Add to your home screen for quick access."; btn.style.display = ""; setTimeout(showBar, 1200); }
   if (window.__bip) ready();
   window.addEventListener("gx-bip", ready);
-
-  btn.addEventListener("click", async () => {
-    const ev = window.__bip;
-    if (!ev) { hideBar(false); return; }
-    ev.prompt();
-    try { await ev.userChoice; } catch (e) {}
-    window.__bip = null;
-    hideBar(false);
-  });
+  btn.addEventListener("click", async () => { const ev = window.__bip; if (!ev) { hideBar(false); return; } ev.prompt(); try { await ev.userChoice; } catch (e) {} window.__bip = null; hideBar(false); });
   no.addEventListener("click", () => hideBar(true));
   window.addEventListener("appinstalled", () => { window.__bip = null; hideBar(false); });
-
-  // iPhone / iPad (Safari has no install prompt, so show the steps)
-  if (isIOS) {
-    msg.innerHTML = 'Tap <b>Share</b> ⬆️ then <b>Add to Home Screen</b>.';
-    btn.style.display = "none";
-    setTimeout(showBar, 4000);
-  } else if (isMobile) {
-    // other mobile browsers that never fire the install event: show manual hint
-    setTimeout(() => {
-      if (!window.__bip) {
-        msg.innerHTML = 'Open the browser menu <b>⋮</b> then tap <b>Install app</b> or <b>Add to Home screen</b>.';
-        btn.style.display = "none";
-        showBar();
-      }
-    }, 6000);
-  }
+  if (isIOS) { msg.innerHTML = 'Tap <b>Share</b> ⬆️ then <b>Add to Home Screen</b>.'; btn.style.display = "none"; setTimeout(showBar, 4000); }
+  else if (isMobile) { setTimeout(() => { if (!window.__bip) { msg.innerHTML = 'Open the browser menu <b>⋮</b> then tap <b>Install app</b> or <b>Add to Home screen</b>.'; btn.style.display = "none"; showBar(); } }, 6000); }
 })();
 </script>
 </body>

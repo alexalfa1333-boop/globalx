@@ -407,7 +407,7 @@ function refreshAuthUI(){
 function showWelcome(){
   var cur = getCurrentUser();
   var w = document.getElementById("welcomeText");
-  if(cur){ w.innerHTML = 'Vanakkam <b>'+cur.username+'</b> 👋 - <b>'+cur.email+'</b> | Search the web. Made in Sri Lanka. 🇱🇰'; }
+  if(cur){ w.innerHTML = ' <b>'+cur.username+'</b>  - <b>'+cur.email+'</b> | Search the web. Made in Sri Lanka. 🇱🇰'; }
   else { w.innerHTML = 'Search the web. Made in Sri Lanka. 🇱🇰'; }
 }
 function openAccount(){

@@ -78,9 +78,7 @@ header a:hover{text-decoration:underline}
 .userChip{display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border:1px solid var(--line);border-radius:24px;background:var(--bg);cursor:pointer}
 .userChip span{font-size:13px;font-weight:700;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 80px}
-.logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(44px,11vw,104px);letter-spacing:-.02em;line-height:1;margin-bottom:12px;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
-.welcome{font-size:16px;color:var(--muted);margin-bottom:28px;text-align:center;padding:0 12px;min-height:22px}
-.welcome b{color:var(--text)}
+.logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(44px,11vw,104px);letter-spacing:-.02em;line-height:1;margin-bottom:32px;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
 .search{width:100%;max-width:700px;height:60px;display:flex;align-items:center;gap:12px;padding:0 20px;border:1px solid var(--line);border-radius:32px;background:var(--bg);box-shadow:0 2px 8px var(--shadow);transition:box-shadow .2s}
 .search:focus-within{box-shadow:0 4px 18px var(--shadow)}
 .search svg{flex:none}
@@ -153,7 +151,6 @@ body.splashing{overflow:hidden;height:100dvh}
 #install .btn{height:38px;padding:0 18px;font-size:14px;min-width:0}
 #install .no{flex:none;width:30px;height:30px;border:0;background:none;font-size:20px;color:var(--muted);border-radius:50%}
 #install .no:hover{background:var(--btn)}
-/* LOGIN */
 .loginBox{margin-top:10px}
 .field{margin:14px 0}
 .field label{display:block;font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text)}
@@ -172,7 +169,7 @@ header{padding:14px 16px;gap:10px}
 .search{height:54px;padding:0 14px;gap:8px}
 .f2 div{gap:2px 22px}
 .f2 button+button::before{display:none}
-.logo{margin-bottom:10px}
+.logo{margin-bottom:28px}
 .f1,.f2{padding-left:18px;padding-right:18px}
 .userChip span{max-width:90px}
 }
@@ -205,7 +202,6 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
 </header>
 <main>
   <div class="logo">GLOBAL X</div>
-  <div class="welcome" id="welcomeText">Search the web. Made in Sri Lanka. 🇱🇰</div>
   <div class="search" role="search">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#70757a" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
     <input id="q" type="text" inputmode="search" enterkeyhint="search" placeholder="Search GLOBAL X or type a URL" aria-label="Search GLOBAL X or type a URL" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
@@ -248,8 +244,6 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
   </nav>
 </footer>
 <dialog id="dlg" aria-labelledby="dlgTitle"><h2 id="dlgTitle"></h2><div id="dlgBody"></div><button class="btn close" type="button" onclick="dlg.close()">Close</button></dialog>
-
-<!-- LOGIN / SIGNUP -->
 <dialog id="loginDlg">
   <h2 id="loginTitle">Login to GLOBAL X</h2>
   <p>Un GLOBAL X account la login pannu. Pudhusa naa Create Account pannu.</p>
@@ -263,8 +257,6 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
     <div style="text-align:center;margin-top:8px"><button class="btn" type="button" onclick="document.getElementById('loginDlg').close()">Close</button></div>
   </div>
 </dialog>
-
-<!-- MY ACCOUNT -->
 <dialog id="accDlg">
   <h2>My GLOBAL X Account</h2>
   <p>Un details permanent ah indha phone la save aagirukku.</p>
@@ -274,7 +266,6 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
     <button class="btn" type="button" onclick="document.getElementById('accDlg').close()">Close</button>
   </div>
 </dialog>
-
 <dialog id="rate" aria-labelledby="rateTitle">
   <button class="rate-x" type="button" aria-label="Close" onclick="document.getElementById('rate').close()">×</button>
   <div id="rateAsk"><h2 id="rateTitle">Your rating for our service</h2><p>How was your experience with GLOBAL X? Tap a star to rate us.</p><div class="stars" id="stars" role="radiogroup" aria-label="Rate from 1 to 5 stars"></div><div class="star-label" id="starLabel" aria-live="polite"></div><button class="btn primary" id="rateSubmit" type="button" hidden>Submit</button></div>
@@ -318,8 +309,6 @@ function applyTheme() {
   document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#121212" : "#ffffff";
 }
 applyTheme();
-
-/* ---------- GLOBAL X LOGIN SYSTEM - PERMANENT SAVE ---------- */
 let authMode = "login";
 function getUsers(){ try{ return JSON.parse(localStorage.getItem("gx-users")||"{}"); }catch(e){ return {}; } }
 function setUsers(u){ try{ localStorage.setItem("gx-users", JSON.stringify(u)); }catch(e){} }
@@ -383,14 +372,14 @@ function doLoginOrSignup(){
     save("gx-session", email);
     msg.textContent="Account create aagiduchu! Welcome "+email;
     msg.className="loginMsg ok";
-    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); showWelcome(); }, 800);
+    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); }, 800);
   } else {
     if(!users[email]){ msg.textContent="Account illa da! Create Account ah click pannu."; return; }
     if(users[email].password !== pass){ msg.textContent="Password thappu da! Thirumba try pannu."; return; }
     save("gx-session", email);
     msg.textContent="Welcome back "+email;
     msg.className="loginMsg ok";
-    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); showWelcome(); }, 600);
+    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); }, 600);
   }
 }
 function refreshAuthUI(){
@@ -402,13 +391,6 @@ function refreshAuthUI(){
   } else {
     area.innerHTML = '<button class="loginBtn" type="button" onclick="openLogin()">Login</button>';
   }
-  showWelcome();
-}
-function showWelcome(){
-  var cur = getCurrentUser();
-  var w = document.getElementById("welcomeText");
-  if(cur){ w.innerHTML = ' <b>'+cur.username+'</b>  - <b>'+cur.email+'</b> | Search the web. Made in Sri Lanka. 🇱🇰'; }
-  else { w.innerHTML = 'Search the web. Made in Sri Lanka. 🇱🇰'; }
 }
 function openAccount(){
   var cur = getCurrentUser();
@@ -429,8 +411,6 @@ function logoutUser(){
 }
 refreshAuthUI();
 document.getElementById("gxPass").addEventListener("keydown", function(e){ if(e.key==="Enter") doLoginOrSignup(); });
-
-/* ---------- search ---------- */
 function looksLikeUrl(t){ return !/\s/.test(t) && /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(t); }
 let mode = "All";
 const MODE_URL = {

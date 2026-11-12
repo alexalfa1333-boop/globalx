@@ -213,7 +213,7 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
     </button>
   </div>
   <div class="modes" id="modes" role="group" aria-label="Search type">
-    <button class="mode ai" type="button" data-mode="AI">✨ AI</button>
+    <button class="mode ai" type="button" data-mode="AI">AI</button>
     <button class="mode active" type="button" data-mode="All" aria-pressed="true">All</button>
     <button class="mode" type="button" data-mode="Web">Web</button>
     <button class="mode" type="button" data-mode="Images">Images</button>
@@ -246,11 +246,11 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
 <dialog id="dlg" aria-labelledby="dlgTitle"><h2 id="dlgTitle"></h2><div id="dlgBody"></div><button class="btn close" type="button" onclick="dlg.close()">Close</button></dialog>
 <dialog id="loginDlg">
   <h2 id="loginTitle">Login to GLOBAL X</h2>
-  <p>Un GLOBAL X account la login pannu. Pudhusa naa Create Account pannu.</p>
+  <p>Log in to your GLOBAL X account. If you are new here, create an account instead.</p>
   <div class="loginBox">
     <div class="field"><label>Username</label><input id="gxUser" type="text" placeholder="Ex: alex" autocomplete="username"></div>
-    <div class="userPreview">Un Account: <b id="gxPreview">yourname@x.com</b></div>
-    <div class="field"><label>Password</label><input id="gxPass" type="password" placeholder="Password - min 4 letters" autocomplete="current-password"></div>
+    <div class="userPreview">Your Account: <b id="gxPreview">yourname@x.com</b></div>
+    <div class="field"><label>Password</label><input id="gxPass" type="password" placeholder="Password - min 4 characters" autocomplete="current-password"></div>
     <div class="loginMsg" id="loginMsg"></div>
     <button class="btn primary" id="loginMainBtn" type="button" onclick="doLoginOrSignup()" style="width:100%">Login</button>
     <div style="text-align:center;margin-top:12px"><button class="linkBtn" type="button" id="toggleAuthBtn" onclick="toggleAuthMode()">New user? Create Account</button></div>
@@ -259,7 +259,7 @@ try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash
 </dialog>
 <dialog id="accDlg">
   <h2>My GLOBAL X Account</h2>
-  <p>Un details permanent ah indha phone la save aagirukku.</p>
+  <p>Your details are saved permanently on this device.</p>
   <div id="accBody"></div>
   <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
     <button class="btn primary" type="button" onclick="logoutUser()">Logout</button>
@@ -346,7 +346,7 @@ function toggleAuthMode(){
     authMode="signup";
     document.getElementById("loginTitle").textContent = "Create GLOBAL X Account";
     document.getElementById("loginMainBtn").textContent = "Create Account";
-    document.getElementById("toggleAuthBtn").textContent = "Already have account? Login";
+    document.getElementById("toggleAuthBtn").textContent = "Already have an account? Login";
   } else {
     authMode="login";
     document.getElementById("loginTitle").textContent = "Login to GLOBAL X";
@@ -360,24 +360,24 @@ function doLoginOrSignup(){
   var pass = document.getElementById("gxPass").value;
   var msg = document.getElementById("loginMsg");
   var name = cleanName(raw);
-  if(!name){ msg.textContent="Username podu da! Ex: alex"; msg.className="loginMsg"; return; }
-  if(name.length < 3){ msg.textContent="Username min 3 letters irukanum da"; return; }
-  if(!pass || pass.length < 4){ msg.textContent="Password min 4 letters podu da"; return; }
+  if(!name){ msg.textContent="Please enter a username. Example: alex"; msg.className="loginMsg"; return; }
+  if(name.length < 3){ msg.textContent="Username must be at least 3 characters."; return; }
+  if(!pass || pass.length < 4){ msg.textContent="Password must be at least 4 characters."; return; }
   var email = name + "@x.com";
   var users = getUsers();
   if(authMode==="signup"){
-    if(users[email]){ msg.textContent="Indha username already irukku da! Vera peru try pannu."; return; }
+    if(users[email]){ msg.textContent="This username is already taken. Please try another one."; return; }
     users[email] = { username:name, email:email, password:pass, created:new Date().toLocaleString(), searches:0 };
     setUsers(users);
     save("gx-session", email);
-    msg.textContent="Account create aagiduchu! Welcome "+email;
+    msg.textContent="Account created successfully! Welcome "+email;
     msg.className="loginMsg ok";
     setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); }, 800);
   } else {
-    if(!users[email]){ msg.textContent="Account illa da! Create Account ah click pannu."; return; }
-    if(users[email].password !== pass){ msg.textContent="Password thappu da! Thirumba try pannu."; return; }
+    if(!users[email]){ msg.textContent="No account found. Please click Create Account."; return; }
+    if(users[email].password !== pass){ msg.textContent="Incorrect password. Please try again."; return; }
     save("gx-session", email);
-    msg.textContent="Welcome back "+email;
+    msg.textContent="Welcome back, "+email;
     msg.className="loginMsg ok";
     setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); }, 600);
   }
@@ -400,14 +400,14 @@ function openAccount(){
     '<div class="accRow"><b>GLOBAL X Email</b><span>'+cur.email+'</span></div>'+
     '<div class="accRow"><b>Account Created</b><span>'+cur.created+'</span></div>'+
     '<div class="accRow"><b>Total Searches</b><span>'+(cur.searches||0)+'</span></div>'+
-    '<div class="accRow"><b>Status</b><span>✅ Active - Saved Permanent</span></div>';
+    '<div class="accRow"><b>Status</b><span>Active - Saved Permanently</span></div>';
   document.getElementById("accDlg").showModal();
 }
 function logoutUser(){
   try{ localStorage.removeItem("gx-session"); }catch(e){}
   document.getElementById("accDlg").close();
   refreshAuthUI();
-  alert("Logout aagiduchu da! Thirumba Login pannalam.");
+  alert("You have been logged out. You can log in again anytime.");
 }
 refreshAuthUI();
 document.getElementById("gxPass").addEventListener("keydown", function(e){ if(e.key==="Enter") doLoginOrSignup(); });
@@ -475,7 +475,7 @@ const pages = {
   advertising: ["Advertising", P("GLOBAL X does not show ads today. If you want to advertise or sponsor GLOBAL X in the future, contact the founder through the Business page.")],
   business: ["Business", P("Building something for Sri Lankan users? GLOBAL X is open to partnerships, sponsorships and API collaborations.") + P("Business contact details will be published here soon.")],
   how: ["How Search works", P("When you press Global X Search, your words are sent to Google Search and the results open in your browser.") + P("If you type a web address such as example.com, GLOBAL X opens that site directly.") + P("The Images link and the Lens button open Google Images and Google Lens.")],
-  privacy: ["Privacy", P("GLOBAL X does not keep an account for you and does not store your searches on its own servers.") + P("Your theme and voice-language choices are saved only in your own browser.") + P("If you rate our service, your star rating and basic device details (browser, device type, language, time zone and screen size) are sent to us. We do not ask for your name or email.") + P("Searches are handled by Google, so Google's privacy policy applies once you reach its results. Voice search uses your browser's speech service and asks for microphone permission first.")],
+  privacy: ["Privacy", P("GLOBAL X does not keep an account for you on its own servers; your GLOBAL X login is saved only in this browser's local storage, on this device.") + P("Your theme and voice-language choices are saved only in your own browser.") + P("If you rate our service, your star rating and basic device details (browser, device type, language, time zone and screen size) are sent to us. We do not ask for your name or email.") + P("Searches are handled by Google, so Google's privacy policy applies once you reach its results. Voice search uses your browser's speech service and asks for microphone permission first.")],
   terms: ["Terms", P("GLOBAL X is provided as is, without any guarantee that it will always be available or error free.") + P("Search results come from third parties. GLOBAL X is not responsible for the content of the websites you visit.") + P("By using this site you agree to use it lawfully.")],
   settings: ["Settings", ""]
 };
@@ -555,8 +555,8 @@ if ("serviceWorker" in navigator) { window.addEventListener("load", () => { navi
   btn.addEventListener("click", async () => { const ev = window.__bip; if (!ev) { hideBar(false); return; } ev.prompt(); try { await ev.userChoice; } catch (e) {} window.__bip = null; hideBar(false); });
   no.addEventListener("click", () => hideBar(true));
   window.addEventListener("appinstalled", () => { window.__bip = null; hideBar(false); });
-  if (isIOS) { msg.innerHTML = 'Tap <b>Share</b> ⬆️ then <b>Add to Home Screen</b>.'; btn.style.display = "none"; setTimeout(showBar, 4000); }
-  else if (isMobile) { setTimeout(() => { if (!window.__bip) { msg.innerHTML = 'Open the browser menu <b>⋮</b> then tap <b>Install app</b> or <b>Add to Home screen</b>.'; btn.style.display = "none"; showBar(); } }, 6000); }
+  if (isIOS) { msg.innerHTML = 'Tap <b>Share</b>, then <b>Add to Home Screen</b>.'; btn.style.display = "none"; setTimeout(showBar, 4000); }
+  else if (isMobile) { setTimeout(() => { if (!window.__bip) { msg.innerHTML = 'Open the browser menu, then tap <b>Install app</b> or <b>Add to Home screen</b>.'; btn.style.display = "none"; showBar(); } }, 6000); }
 })();
 </script>
 </body>

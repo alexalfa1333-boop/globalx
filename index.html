@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,559 +6,982 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
 <title>GLOBAL X</title>
-<meta name="description" content="GLOBAL X - Search the web. Made in Sri Lanka.">
-<meta property="og:title" content="GLOBAL X">
-<meta property="og:description" content="Search the web. Made in Sri Lanka.">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="GLOBAL X">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<script>
-window.__bip = null;
-window.addEventListener("beforeinstallprompt", function (e) {
-  e.preventDefault();
-  window.__bip = e;
-  window.dispatchEvent(new Event("gx-bip"));
-});
-window.gxIcon = function (size, span) {
-  var c = document.createElement("canvas");
-  c.width = c.height = size;
-  var x = c.getContext("2d");
-  var g = x.createLinearGradient(0, 0, size, size);
-  g.addColorStop(0, "#0052b4"); g.addColorStop(0.5, "#6b1ff0"); g.addColorStop(1, "#22b8a4");
-  x.fillStyle = g; x.fillRect(0, 0, size, size);
-  x.strokeStyle = "#fff"; x.lineCap = "round"; x.lineWidth = size * span * 0.19;
-  var m = size / 2, h = size * span / 2;
-  x.beginPath();
-  x.moveTo(m - h, m - h); x.lineTo(m + h, m + h);
-  x.moveTo(m - h, m + h); x.lineTo(m + h, m - h);
-  x.stroke();
-  return c.toDataURL("image/png");
-};
-(function () {
-  try {
-    var i192 = gxIcon(192, 0.4), i512 = gxIcon(512, 0.4), iMask = gxIcon(512, 0.32), i180 = gxIcon(180, 0.4);
-    window.__gxIcon192 = i192;
-    var base = location.href.split("#")[0].split("?")[0];
-    var scope = new URL("./", base).href;
-    var manifest = {
-      id: scope, name: "GLOBAL X", short_name: "GLOBAL X",
-      description: "Search the web. Made in Sri Lanka.",
-      start_url: base, scope: scope, display: "standalone", orientation: "any",
-      background_color: "#ffffff", theme_color: "#ffffff",
-      icons: [
-        { src: i192, sizes: "192x192", type: "image/png", purpose: "any" },
-        { src: i512, sizes: "512x512", type: "image/png", purpose: "any" },
-        { src: iMask, sizes: "512x512", type: "image/png", purpose: "maskable" }
-      ]
-    };
-    var url = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" }));
-    var l1 = document.createElement("link"); l1.rel = "manifest"; l1.href = url; document.head.appendChild(l1);
-    var l2 = document.createElement("link"); l2.rel = "apple-touch-icon"; l2.href = i180; document.head.appendChild(l2);
-    var l3 = document.createElement("link"); l3.rel = "icon"; l3.type = "image/png"; l3.href = i192; document.head.appendChild(l3);
-  } catch (e) {}
-})();
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700;800&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#fff;--text:#202124;--muted:#5f6368;--line:#dfe1e5;--btn:#f1f3f4;--btn-h:#e4e6e8;--foot:#f2f2f2;--shadow:rgba(60,64,67,.25)}
-body.dark{--bg:#121212;--text:#e8eaed;--muted:#a8adb3;--line:#3c4043;--btn:#2a2b2e;--btn-h:#38393d;--foot:#1a1a1a;--shadow:rgba(0,0,0,.6)}
-body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;transition:background .2s}
-button,input,select{font:inherit;color:inherit}
+:root{
+--bg:#fff;--text:#202124;--muted:#70757a;
+--line:#ddd;--btn:#f1f3f4;--panel:#f7f8fa;
+}
+body.dark{
+--bg:#121212;--text:#eee;--muted:#aaa;
+--line:#444;--btn:#292929;--panel:#1d1d1d;
+}
+body{
+background:var(--bg);color:var(--text);
+font-family:Arial,sans-serif;min-height:100vh;
+}
+button,input{font:inherit;color:inherit}
 button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid #6b1ff0;outline-offset:2px}
-header{display:flex;justify-content:flex-end;align-items:center;gap:16px;padding:20px 28px}
-header a{font-size:15px}
-header a:hover{text-decoration:underline}
-.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0052b4,#6b1ff0);color:#fff;font-family:Lexend,sans-serif;font-weight:800;font-size:18px;border:0;overflow:hidden}
-.loginBtn{height:40px;padding:0 20px;border:0;border-radius:20px;background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;font-size:14px;font-weight:700}
-.userChip{display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border:1px solid var(--line);border-radius:24px;background:var(--bg);cursor:pointer}
-.userChip span{font-size:13px;font-weight:700;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 80px}
-.logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(44px,11vw,104px);letter-spacing:-.02em;line-height:1;margin-bottom:32px;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
-.search{width:100%;max-width:700px;height:60px;display:flex;align-items:center;gap:12px;padding:0 20px;border:1px solid var(--line);border-radius:32px;background:var(--bg);box-shadow:0 2px 8px var(--shadow);transition:box-shadow .2s}
-.search:focus-within{box-shadow:0 4px 18px var(--shadow)}
-.search svg{flex:none}
-.search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font-size:17px;-webkit-appearance:none;appearance:none;border-radius:0}
-.search input::placeholder{color:var(--muted)}
-.ib{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:transparent;display:grid;place-items:center}
-.ib:hover{background:var(--btn)}
-.ib.on{background:#fde7e7}
-.modes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px;max-width:700px}
-.mode{height:36px;padding:0 16px;border:1px solid var(--line);border-radius:18px;background:transparent;font-size:14px;transition:background .15s}
-.mode:hover{background:var(--btn)}
-.mode.active{background:var(--text);color:var(--bg);border-color:var(--text)}
-.mode.ai{border:0;background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;font-weight:600}
-.mode.ai.active{outline:2px solid var(--text);outline-offset:2px}
-.row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:28px}
-.btn{height:44px;padding:0 26px;border:1px solid transparent;border-radius:22px;background:var(--btn);font-size:15px;transition:background .15s}
-.btn:hover{background:var(--btn-h);border-color:var(--line)}
-footer{background:var(--foot);color:var(--muted);font-size:15px}
-.f1{padding:15px 32px;border-bottom:1px solid var(--line)}
-.f2{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding:14px 32px}
-.f2 div{display:flex;flex-wrap:wrap;align-items:center}
-.f2 button{border:0;background:none;padding:4px 0;color:inherit}
-.f2 button:hover{text-decoration:underline}
-.f2 button+button::before{content:"•";display:inline-block;margin:0 14px;color:var(--muted);text-decoration:none}
-dialog{margin:auto;width:min(92vw,520px);max-height:85vh;overflow:auto;padding:28px;border:0;border-radius:20px;background:var(--bg);color:var(--text);box-shadow:0 20px 60px rgba(0,0,0,.35)}
-dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
-dialog h2{font-family:Lexend,sans-serif;font-size:22px;margin-bottom:6px}
-dialog p{line-height:1.65;font-size:15px;margin-bottom:12px;color:var(--muted)}
-dialog label{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:14px 0;font-size:15px}
-dialog select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
-.close{margin-top:10px}
-body.splashing{overflow:hidden;height:100dvh}
-#splash{position:fixed;inset:0;z-index:1000;background:#fff;display:grid;place-items:center;transition:opacity .6s ease,visibility .6s;cursor:pointer}
-#splash.out{opacity:0;visibility:hidden}
-#splash>*{grid-area:1/1}
-.globe{width:min(46vw,190px);height:auto;transition:opacity .45s,transform .45s}
-.globe .m{fill:none;stroke:url(#sg);stroke-width:2.4;transform-box:fill-box;transform-origin:center;animation:spin 2.1s linear infinite}
-.globe .m2{animation-delay:-.7s}
-.globe .m3{animation-delay:-1.4s}
-.globe .r{fill:none;stroke:url(#sg);stroke-width:2.4}
-.globe .l{stroke:url(#sg);stroke-width:1.6;opacity:.7}
-.globe .o{animation:orbit 2.1s linear infinite;transform-origin:60px 60px}
-@keyframes spin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(0)}}
-@keyframes orbit{to{transform:rotate(360deg)}}
-.splash-logo{font-family:Lexend,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(40px,12vw,96px);letter-spacing:-.02em;line-height:1;white-space:nowrap;background:linear-gradient(90deg,#0052b4 0%,#6b1ff0 45%,#5a6fc0 70%,#22b8a4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:scale(.9);transition:opacity .6s ease,transform .6s ease}
-#splash.stage2 .globe{opacity:0;transform:scale(.6)}
-#splash.stage2 .splash-logo{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.globe .m,.globe .o{animation:none}}
-#rate{position:relative;text-align:center}
-.rate-x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;line-height:1;color:var(--muted)}
-.rate-x:hover{background:var(--btn)}
-.stars{display:flex;justify-content:center;gap:6px;margin:20px 0 6px}
-.star{width:48px;height:48px;border:0;background:none;padding:6px;border-radius:12px;transition:transform .1s}
-.star:active{transform:scale(.9)}
-.star svg{width:100%;height:100%;display:block}
-.star path{fill:none;stroke:#f5a623;stroke-width:1.6;stroke-linejoin:round;transition:fill .15s}
-.star.on path{fill:#f5a623}
-.star-label{min-height:22px;margin-bottom:12px;font-size:14px;color:var(--muted)}
-.btn.primary{background:linear-gradient(90deg,#6b1ff0,#22b8a4);color:#fff;min-width:130px}
-.btn.primary:hover{border-color:transparent;opacity:.92}
-#rate [hidden]{display:none}
-#install{position:fixed;left:50%;bottom:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,170%);z-index:900;width:min(94vw,440px);display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 40px var(--shadow);transition:transform .4s ease;visibility:hidden}
-#install.show{transform:translate(-50%,0);visibility:visible}
-#install .ic{flex:none;width:48px;height:48px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#0052b4,#6b1ff0,#22b8a4)}
-#install .ic img{width:100%;height:100%;display:block}
-#install .tx{flex:1;min-width:0;font-size:14px;line-height:1.4}
-#install .tx b{display:block;font-size:15px}
-#install .tx span{color:var(--muted)}
-#install .tx span b{display:inline;font-size:inherit;color:var(--text)}
-#install .btn{height:38px;padding:0 18px;font-size:14px;min-width:0}
-#install .no{flex:none;width:30px;height:30px;border:0;background:none;font-size:20px;color:var(--muted);border-radius:50%}
-#install .no:hover{background:var(--btn)}
-.loginBox{margin-top:10px}
+header{
+height:65px;display:flex;align-items:center;
+justify-content:space-between;padding:0 18px;
+border-bottom:1px solid var(--line);
+}
+.brand{
+font-family:Lexend,sans-serif;font-size:22px;
+font-weight:800;background:linear-gradient(90deg,#0052b4,#6b1ff0,#22b8a4);
+color:transparent;background-clip:text;
+}
+.menuBtn{
+border:0;background:var(--btn);width:43px;height:43px;
+border-radius:12px;font-size:25px;
+}
+.auth{display:flex;align-items:center;gap:8px}
+.loginBtn,.primary{
+background:linear-gradient(90deg,#6b1ff0,#22b8a4);
+color:white;border:0;padding:12px 19px;border-radius:25px;
+font-weight:bold;
+}
+.userBtn{
+border:1px solid var(--line);background:var(--panel);
+padding:10px;border-radius:22px;font-size:12px;
+}
+main{
+min-height:calc(100vh - 130px);
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+padding:25px 16px;
+}
+.logo{
+font-family:Lexend,sans-serif;font-size:clamp(45px,12vw,95px);
+font-weight:800;margin-bottom:30px;
+background:linear-gradient(90deg,#0052b4,#6b1ff0,#22b8a4);
+color:transparent;background-clip:text;
+}
+.search{
+width:100%;max-width:650px;height:55px;
+border:1px solid var(--line);border-radius:30px;
+display:flex;align-items:center;padding:0 18px;
+}
+.search input{
+border:0;outline:0;background:transparent;
+flex:1;min-width:0;font-size:16px;
+}
+.modes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:20px}
+.mode{
+padding:9px 15px;border:1px solid var(--line);
+border-radius:20px;background:var(--bg);
+}
+.mode.active{background:var(--text);color:var(--bg)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{
+border:0;background:var(--btn);
+padding:12px 20px;border-radius:25px;
+}
+footer{text-align:center;padding:20px;color:var(--muted)}
+/* MENU */
+.overlay{
+position:fixed;inset:0;background:#0008;
+z-index:10;display:none;
+}
+.overlay.show{display:block}
+.sidebar{
+position:fixed;z-index:11;top:0;left:-310px;
+height:100%;width:min(290px,85vw);
+background:var(--bg);padding:22px;
+transition:.3s;box-shadow:5px 0 20px #0002;
+}
+.sidebar.show{left:0}
+.sideTitle{font-family:Lexend;font-size:21px;margin:20px 0}
+.sideItem{
+width:100%;padding:15px;text-align:left;
+border:0;background:var(--panel);
+border-radius:12px;margin:6px 0;font-size:15px;
+}
+.closeSide{float:right;border:0;background:none;font-size:25px}
+/* PAGES */
+.page{
+display:none;max-width:950px;width:100%;
+margin:auto;padding:25px 15px;
+}
+.page.show{display:block}
+.pageTitle{
+font-family:Lexend;font-size:25px;margin-bottom:20px;
+}
+.card{
+background:var(--panel);border:1px solid var(--line);
+padding:18px;border-radius:15px;margin-bottom:15px;
+}
+.grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+gap:12px;margin-bottom:20px;
+}
+.stat{
+background:var(--panel);padding:20px 12px;
+border:1px solid var(--line);border-radius:15px;
+text-align:center;
+}
+.stat strong{display:block;font-size:30px;margin-top:10px;color:#7850e9}
+.stat span{font-size:13px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:left}
+.tableWrap{overflow-x:auto}
+.badge{color:#188038;font-weight:bold}
+.star{color:#f5a623;font-size:17px}
+/* DIALOGS */
+dialog{
+margin:auto;width:min(92%,430px);
+background:var(--bg);color:var(--text);
+border:1px solid var(--line);border-radius:20px;
+padding:25px;
+}
+dialog::backdrop{background:#0009}
+dialog h2{font-family:Lexend;margin-bottom:10px}
+dialog p{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:15px}
 .field{margin:14px 0}
-.field label{display:block;font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text)}
-.field input{width:100%;height:48px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:15px;outline:0}
-.field input:focus{border-color:#6b1ff0}
-.userPreview{display:flex;align-items:center;gap:10px;background:var(--btn);padding:10px 12px;border-radius:12px;font-size:14px;margin-top:10px}
-.userPreview b{color:#6b1ff0}
-.loginMsg{font-size:13px;color:#d93025;min-height:18px;margin-top:6px}
-.loginMsg.ok{color:#188038}
-.linkBtn{border:0;background:none;color:#6b1ff0;font-weight:700;font-size:14px;padding:6px 0}
-.accRow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
-.accRow span{color:var(--muted)}
+.field label{display:block;margin-bottom:7px;font-size:14px}
+.field input{
+width:100%;height:46px;border:1px solid var(--line);
+border-radius:10px;padding:10px;background:var(--bg);
+}
+.full{width:100%;margin-top:10px}
+.msg{font-size:13px;margin-top:10px;color:#d93025}
+.stars{display:flex;justify-content:center;gap:5px;margin:20px 0}
+.starBtn{font-size:38px;background:none;border:0;color:#ccc}
+.starBtn.selected{color:#f5a623}
+.hidden{display:none!important}
 @media(max-width:600px){
-.star{width:44px;height:44px}
-header{padding:14px 16px;gap:10px}
-.search{height:54px;padding:0 14px;gap:8px}
-.f2 div{gap:2px 22px}
-.f2 button+button::before{display:none}
-.logo{margin-bottom:28px}
-.f1,.f2{padding-left:18px;padding-right:18px}
-.userChip span{max-width:90px}
+.pageTitle{font-size:21px}
+.grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
-<body id="body" class="splashing">
-<div id="splash" aria-hidden="true">
-  <svg class="globe" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0052b4"/><stop offset=".5" stop-color="#6b1ff0"/><stop offset="1" stop-color="#22b8a4"/></linearGradient></defs>
-    <circle class="r" cx="60" cy="60" r="50"/>
-    <line class="l" x1="10" y1="60" x2="110" y2="60"/>
-    <line class="l" x1="20" y1="30" x2="100" y2="30"/>
-    <line class="l" x1="20" y1="90" x2="100" y2="90"/>
-    <ellipse class="m m1" cx="60" cy="60" rx="50" ry="50"/>
-    <ellipse class="m m2" cx="60" cy="60" rx="50" ry="50"/>
-    <ellipse class="m m3" cx="60" cy="60" rx="50" ry="50"/>
-    <g class="o"><circle cx="60" cy="6" r="5" fill="#22b8a4"/></g>
-  </svg>
-  <div class="splash-logo">GLOBAL X</div>
-</div>
-<script>
-try { if (sessionStorage.getItem("gx-splash")) { document.getElementById("splash").remove(); document.body.classList.remove("splashing"); } } catch (e) {}
-</script>
+
+<body>
+
 <header>
-  <a href="https://mail.google.com/" target="_blank" rel="noopener">Gmail</a>
-  <a href="https://www.google.com/imghp" target="_blank" rel="noopener" id="imagesLink">Images</a>
-  <div id="authArea">
-    <button class="loginBtn" type="button" onclick="openLogin()">Login</button>
-  </div>
-</header>
-<main>
-  <div class="logo">GLOBAL X</div>
-  <div class="search" role="search">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#70757a" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
-    <input id="q" type="text" inputmode="search" enterkeyhint="search" placeholder="Search GLOBAL X or type a URL" aria-label="Search GLOBAL X or type a URL" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
-    <button class="ib" id="micBtn" type="button" title="Voice search" aria-label="Voice search" onclick="startVoice()">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3" fill="#4285f4"/><path d="M5 11a7 7 0 0 0 14 0" fill="none" stroke="#34a853" stroke-width="2" stroke-linecap="round"/><path d="M12 18v4" stroke="#ea4335" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-    <button class="ib" type="button" title="Search by image" aria-label="Search by image" onclick="window.open('https://lens.google.com/','_blank','noopener')">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8V6a3 3 0 0 1 3-3h2" stroke="#4285f4"/><path d="M16 3h2a3 3 0 0 1 3 3v2" stroke="#ea4335"/><path d="M21 16v2a3 3 0 0 1-3 3h-2" stroke="#fbbc04"/><path d="M8 21H6a3 3 0 0 1-3-3v-2" stroke="#34a853"/><circle cx="12" cy="12" r="3.5" fill="#4285f4" stroke="none"/></svg>
-    </button>
-  </div>
-  <div class="modes" id="modes" role="group" aria-label="Search type">
-    <button class="mode ai" type="button" data-mode="AI">AI</button>
-    <button class="mode active" type="button" data-mode="All" aria-pressed="true">All</button>
-    <button class="mode" type="button" data-mode="Web">Web</button>
-    <button class="mode" type="button" data-mode="Images">Images</button>
-    <button class="mode" type="button" data-mode="Videos">Videos</button>
-    <button class="mode" type="button" data-mode="News">News</button>
-    <button class="mode" type="button" data-mode="Maps">Maps</button>
-    <button class="mode" type="button" data-mode="Shopping">Shopping</button>
-  </div>
-  <div class="row">
-    <button class="btn" type="button" onclick="doSearch()">Global X Search</button>
-    <button class="btn" type="button" onclick="feelingLucky()">I'm Feeling Lucky</button>
-  </div>
-</main>
-<footer>
-  <div class="f1">Sri Lanka</div>
-  <nav class="f2" aria-label="Footer">
-    <div>
-      <button type="button" onclick="openInfo('about')">About</button>
-      <button type="button" onclick="openInfo('advertising')">Advertising</button>
-      <button type="button" onclick="openInfo('business')">Business</button>
-      <button type="button" onclick="openInfo('how')">How Search works</button>
-    </div>
-    <div>
-      <button type="button" onclick="openInfo('privacy')">Privacy</button>
-      <button type="button" onclick="openInfo('terms')">Terms</button>
-      <button type="button" onclick="openInfo('settings')">Settings</button>
-    </div>
-  </nav>
-</footer>
-<dialog id="dlg" aria-labelledby="dlgTitle"><h2 id="dlgTitle"></h2><div id="dlgBody"></div><button class="btn close" type="button" onclick="dlg.close()">Close</button></dialog>
-<dialog id="loginDlg">
-  <h2 id="loginTitle">Login to GLOBAL X</h2>
-  <p>Log in to your GLOBAL X account. If you are new here, create an account instead.</p>
-  <div class="loginBox">
-    <div class="field"><label>Username</label><input id="gxUser" type="text" placeholder="Ex: alex" autocomplete="username"></div>
-    <div class="userPreview">Your Account: <b id="gxPreview">yourname@x.com</b></div>
-    <div class="field"><label>Password</label><input id="gxPass" type="password" placeholder="Password - min 4 characters" autocomplete="current-password"></div>
-    <div class="loginMsg" id="loginMsg"></div>
-    <button class="btn primary" id="loginMainBtn" type="button" onclick="doLoginOrSignup()" style="width:100%">Login</button>
-    <div style="text-align:center;margin-top:12px"><button class="linkBtn" type="button" id="toggleAuthBtn" onclick="toggleAuthMode()">New user? Create Account</button></div>
-    <div style="text-align:center;margin-top:8px"><button class="btn" type="button" onclick="document.getElementById('loginDlg').close()">Close</button></div>
-  </div>
-</dialog>
-<dialog id="accDlg">
-  <h2>My GLOBAL X Account</h2>
-  <p>Your details are saved permanently on this device.</p>
-  <div id="accBody"></div>
-  <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
-    <button class="btn primary" type="button" onclick="logoutUser()">Logout</button>
-    <button class="btn" type="button" onclick="document.getElementById('accDlg').close()">Close</button>
-  </div>
-</dialog>
-<dialog id="rate" aria-labelledby="rateTitle">
-  <button class="rate-x" type="button" aria-label="Close" onclick="document.getElementById('rate').close()">×</button>
-  <div id="rateAsk"><h2 id="rateTitle">Your rating for our service</h2><p>How was your experience with GLOBAL X? Tap a star to rate us.</p><div class="stars" id="stars" role="radiogroup" aria-label="Rate from 1 to 5 stars"></div><div class="star-label" id="starLabel" aria-live="polite"></div><button class="btn primary" id="rateSubmit" type="button" hidden>Submit</button></div>
-  <div id="rateDone" hidden><h2>Thank you for your response</h2><p>Your feedback helps us make GLOBAL X better.</p><button class="btn primary" id="rateOk" type="button">OK</button></div>
-</dialog>
-<div id="install" role="dialog" aria-label="Install GLOBAL X">
-  <div class="ic"><img id="installIcon" alt="" width="48" height="48"></div>
-  <div class="tx"><b>Install GLOBAL X</b><span id="installMsg">Add to your home screen for quick access.</span></div>
-  <button class="btn primary" id="installBtn" type="button">Install</button>
-  <button class="no" id="installNo" type="button" aria-label="Close">×</button>
+<button class="menuBtn" onclick="openMenu()">☰</button>
+<div class="brand">GLOBAL X</div>
+<div class="auth" id="authArea">
+<button class="loginBtn" onclick="openLogin()">Login</button>
 </div>
-<script>
-const q = document.getElementById("q");
-const dlg = document.getElementById("dlg");
-const body = document.body;
-const GOOGLE = "https://www.google.com/search?q=";
-if (window.matchMedia("(max-width:600px)").matches) q.placeholder = "Search or type a URL";
-(function () {
-  const s = document.getElementById("splash");
-  if (!s) return;
-  let done = false;
-  const t1 = setTimeout(() => s.classList.add("stage2"), 2000);
-  const t2 = setTimeout(finish, 3600);
-  function finish() {
-    if (done) return;
-    done = true;
-    clearTimeout(t1); clearTimeout(t2);
-    s.classList.add("out");
-    document.body.classList.remove("splashing");
-    setTimeout(() => s.remove(), 700);
-    try { sessionStorage.setItem("gx-splash", "1"); } catch (e) {}
-  }
-  s.addEventListener("click", finish);
-})();
-function load(key, fallback) { try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; } }
-function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
-let theme = load("gx-theme", "light");
-let voiceLang = load("gx-voice", "en-US");
-function applyTheme() {
-  body.classList.toggle("dark", theme === "dark");
-  document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#121212" : "#ffffff";
-}
-applyTheme();
+</header>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<aside class="sidebar" id="sidebar">
+<button class="closeSide" onclick="closeMenu()">×</button>
+<div class="sideTitle">GLOBAL X</div>
+<button class="sideItem" onclick="showPage('home')">⌂ Home</button>
+<button class="sideItem" onclick="showPage('services')">🌐 GLOBAL X Services</button>
+<button class="sideItem" onclick="showPage('about')">ⓘ About</button>
+<button class="sideItem" onclick="toggleTheme()">🌙 Dark / Light Mode</button>
+<button class="sideItem" onclick="openLogin()">👤 Login / Account</button>
+</aside>
+
+<!-- HOME -->
+<main id="home">
+<div class="logo">GLOBAL X</div>
+
+<div class="search">
+<span>⌕</span>
+<input id="q" placeholder="Search GLOBAL X or type a URL">
+</div>
+
+<div class="modes" id="modes">
+<button class="mode active" data-mode="All">All</button>
+<button class="mode" data-mode="Web">Web</button>
+<button class="mode" data-mode="AI">AI</button>
+<button class="mode" data-mode="Images">Images</button>
+<button class="mode" data-mode="Videos">Videos</button>
+<button class="mode" data-mode="News">News</button>
+<button class="mode" data-mode="Maps">Maps</button>
+<button class="mode" data-mode="Shopping">Shopping</button>
+</div>
+
+<div class="actions">
+<button class="btn" onclick="doSearch()">Global X Search</button>
+<button class="btn" onclick="feelingLucky()">I'm Feeling Lucky</button>
+</div>
+</main>
+
+<!-- SERVICES DASHBOARD -->
+<section class="page" id="services">
+
+<h2 class="pageTitle">🌐 GLOBAL X Services</h2>
+
+<div class="card">
+<h3>GLOBAL X Admin Dashboard</h3>
+<p style="margin-top:8px;color:var(--muted)">
+Live user login and rating activities.
+</p>
+<p id="adminStatus" style="margin-top:10px">Checking administrator access...</p>
+</div>
+
+<div id="dashboard" class="hidden">
+
+<div class="grid">
+<div class="stat">
+<span>Total Registered Users</span>
+<strong id="totalUsers">0</strong>
+</div>
+
+<div class="stat">
+<span>Total Login Activities</span>
+<strong id="totalLogins">0</strong>
+</div>
+
+<div class="stat">
+<span>Total Ratings</span>
+<strong id="totalRatings">0</strong>
+</div>
+
+<div class="stat">
+<span>Five Star Ratings</span>
+<strong id="fiveStars">0</strong>
+</div>
+</div>
+
+<div class="card">
+<h3>⭐ Rating Statistics</h3>
+<div id="ratingStats" style="margin-top:15px;line-height:2">
+Loading...
+</div>
+</div>
+
+<div class="card">
+<h3>👥 Registered Users</h3>
+<div class="tableWrap">
+<table>
+<thead>
+<tr><th>Username</th><th>Email</th><th>Created</th></tr>
+</thead>
+<tbody id="usersTable"></tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>🔐 Login Activities</h3>
+<div class="tableWrap">
+<table>
+<thead>
+<tr><th>User</th><th>Date</th><th>Activity</th></tr>
+</thead>
+<tbody id="loginTable"></tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>⭐ All Rating Activities</h3>
+<div class="tableWrap">
+<table>
+<thead>
+<tr><th>User</th><th>Rating</th><th>Date</th></tr>
+</thead>
+<tbody id="ratingTable"></tbody>
+</table>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="page" id="about">
+<h2 class="pageTitle">About GLOBAL X</h2>
+<div class="card">
+GLOBAL X - Search the web. Made in Sri Lanka.
+</div>
+</section>
+
+<footer>GLOBAL X | Made in Sri Lanka 🇱🇰</footer>
+
+<!-- LOGIN DIALOG -->
+<dialog id="loginDlg">
+<h2 id="loginTitle">GLOBAL X Login</h2>
+<p>Create your account or login to GLOBAL X.</p>
+
+<div class="field">
+<label>Username</label>
+<input id="username" placeholder="Enter username" autocomplete="username">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input id="password" type="password" placeholder="Minimum 6 characters" autocomplete="current-password">
+</div>
+
+<div class="msg" id="loginMsg"></div>
+
+<button class="primary full" id="loginAction" onclick="loginOrSignup()">Login</button>
+
+<button class="btn full" onclick="toggleAuth()">Create Account</button>
+<button class="btn full" onclick="loginDlg.close()">Close</button>
+</dialog>
+
+<!-- RATING DIALOG -->
+<dialog id="rateDlg">
+<h2>Your Rating ⭐</h2>
+<p>How was your experience with GLOBAL X?</p>
+<div class="stars" id="starButtons">
+<button class="starBtn" data-value="1">★</button>
+<button class="starBtn" data-value="2">★</button>
+<button class="starBtn" data-value="3">★</button>
+<button class="starBtn" data-value="4">★</button>
+<button class="starBtn" data-value="5">★</button>
+</div>
+<p id="ratingLabel" style="text-align:center"></p>
+<button class="primary full" onclick="submitRating()">Submit Rating</button>
+<button class="btn full" onclick="rateDlg.close()">Close</button>
+</dialog>
+
+<script type="module">
+
+// ========================================
+// 1. FIREBASE CONFIGURATION
+// ========================================
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
+} from
+"https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+doc,
+setDoc,
+addDoc,
+getDoc,
+serverTimestamp,
+onSnapshot,
+query,
+orderBy,
+limit
+} from
+"https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+// IMPORTANT: Replace these with your Firebase project details.
+
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_PROJECT.firebasestorage.app",
+messagingSenderId: "YOUR_SENDER_ID",
+appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ========================================
+// 2. GLOBAL VARIABLES
+// ========================================
+
+let currentUser = null;
 let authMode = "login";
-function getUsers(){ try{ return JSON.parse(localStorage.getItem("gx-users")||"{}"); }catch(e){ return {}; } }
-function setUsers(u){ try{ localStorage.setItem("gx-users", JSON.stringify(u)); }catch(e){} }
-function getCurrentUser(){
-  try{
-    var email = localStorage.getItem("gx-session");
-    if(!email) return null;
-    var users = getUsers();
-    return users[email] || null;
-  }catch(e){ return null; }
-}
-function cleanName(v){
-  v = (v||"").trim().toLowerCase().replace("@x.com","").replace(/[^a-z0-9._]/g,"");
-  return v;
-}
-function updatePreview(){
-  var n = cleanName(document.getElementById("gxUser").value);
-  document.getElementById("gxPreview").textContent = (n||"yourname") + "@x.com";
-}
-document.getElementById("gxUser").addEventListener("input", updatePreview);
-function openLogin(){
-  var cur = getCurrentUser();
-  if(cur){ openAccount(); return; }
-  authMode = "login";
-  document.getElementById("loginTitle").textContent = "Login to GLOBAL X";
-  document.getElementById("loginMainBtn").textContent = "Login";
-  document.getElementById("toggleAuthBtn").textContent = "New user? Create Account";
-  document.getElementById("loginMsg").textContent = "";
-  document.getElementById("loginMsg").className = "loginMsg";
-  document.getElementById("loginDlg").showModal();
-  setTimeout(()=>document.getElementById("gxUser").focus(), 100);
-}
-function toggleAuthMode(){
-  if(authMode==="login"){
-    authMode="signup";
-    document.getElementById("loginTitle").textContent = "Create GLOBAL X Account";
-    document.getElementById("loginMainBtn").textContent = "Create Account";
-    document.getElementById("toggleAuthBtn").textContent = "Already have an account? Login";
-  } else {
-    authMode="login";
-    document.getElementById("loginTitle").textContent = "Login to GLOBAL X";
-    document.getElementById("loginMainBtn").textContent = "Login";
-    document.getElementById("toggleAuthBtn").textContent = "New user? Create Account";
-  }
-  document.getElementById("loginMsg").textContent = "";
-}
-function doLoginOrSignup(){
-  var raw = document.getElementById("gxUser").value;
-  var pass = document.getElementById("gxPass").value;
-  var msg = document.getElementById("loginMsg");
-  var name = cleanName(raw);
-  if(!name){ msg.textContent="Please enter a username. Example: alex"; msg.className="loginMsg"; return; }
-  if(name.length < 3){ msg.textContent="Username must be at least 3 characters."; return; }
-  if(!pass || pass.length < 4){ msg.textContent="Password must be at least 4 characters."; return; }
-  var email = name + "@x.com";
-  var users = getUsers();
-  if(authMode==="signup"){
-    if(users[email]){ msg.textContent="This username is already taken. Please try another one."; return; }
-    users[email] = { username:name, email:email, password:pass, created:new Date().toLocaleString(), searches:0 };
-    setUsers(users);
-    save("gx-session", email);
-    msg.textContent="Account created successfully! Welcome "+email;
-    msg.className="loginMsg ok";
-    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); }, 800);
-  } else {
-    if(!users[email]){ msg.textContent="No account found. Please click Create Account."; return; }
-    if(users[email].password !== pass){ msg.textContent="Incorrect password. Please try again."; return; }
-    save("gx-session", email);
-    msg.textContent="Welcome back, "+email;
-    msg.className="loginMsg ok";
-    setTimeout(()=>{ document.getElementById("loginDlg").close(); refreshAuthUI(); }, 600);
-  }
-}
-function refreshAuthUI(){
-  var cur = getCurrentUser();
-  var area = document.getElementById("authArea");
-  if(cur){
-    var first = cur.username.charAt(0).toUpperCase();
-    area.innerHTML = '<button class="userChip" type="button" onclick="openAccount()"><span class="avatar" style="width:32px;height:32px;font-size:15px">'+first+'</span><span>'+cur.email+'</span></button>';
-  } else {
-    area.innerHTML = '<button class="loginBtn" type="button" onclick="openLogin()">Login</button>';
-  }
-}
-function openAccount(){
-  var cur = getCurrentUser();
-  if(!cur){ openLogin(); return; }
-  document.getElementById("accBody").innerHTML =
-    '<div class="accRow"><b>Username</b><span>'+cur.username+'</span></div>'+
-    '<div class="accRow"><b>GLOBAL X Email</b><span>'+cur.email+'</span></div>'+
-    '<div class="accRow"><b>Account Created</b><span>'+cur.created+'</span></div>'+
-    '<div class="accRow"><b>Total Searches</b><span>'+(cur.searches||0)+'</span></div>'+
-    '<div class="accRow"><b>Status</b><span>Active - Saved Permanently</span></div>';
-  document.getElementById("accDlg").showModal();
-}
-function logoutUser(){
-  try{ localStorage.removeItem("gx-session"); }catch(e){}
-  document.getElementById("accDlg").close();
-  refreshAuthUI();
-  alert("You have been logged out. You can log in again anytime.");
-}
-refreshAuthUI();
-document.getElementById("gxPass").addEventListener("keydown", function(e){ if(e.key==="Enter") doLoginOrSignup(); });
-function looksLikeUrl(t){ return !/\s/.test(t) && /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(t); }
-let mode = "All";
-const MODE_URL = {
-  All: t => GOOGLE + t,
-  Web: t => GOOGLE + t + "&udm=14",
-  AI: t => GOOGLE + t + "&udm=50",
-  Images: t => GOOGLE + t + "&tbm=isch",
-  Videos: t => GOOGLE + t + "&tbm=vid",
-  News: t => GOOGLE + t + "&tbm=nws",
-  Shopping: t => GOOGLE + t + "&tbm=shop",
-  Maps: t => "https://www.google.com/maps/search/?api=1&query=" + t
+let selectedRating = 0;
+let currentMode = "All";
+let dashboardUnsubscribers = [];
+let ratingPromptTimer = null;
+
+const $ = id => document.getElementById(id);
+
+// ========================================
+// 3. MENU
+// ========================================
+
+window.openMenu = function(){
+$("sidebar").classList.add("show");
+$("overlay").classList.add("show");
 };
-function setMode(m){
-  mode = m;
-  document.querySelectorAll(".mode").forEach(b => {
-    const on = b.dataset.mode === m;
-    b.classList.toggle("active", on);
-    b.setAttribute("aria-pressed", on);
-  });
-}
-document.getElementById("modes").addEventListener("click", e => {
-  const b = e.target.closest(".mode");
-  if (!b) return;
-  setMode(b.dataset.mode);
-  if (q.value.trim()) doSearch(); else q.focus();
-});
-function doSearch(){
-  const t = q.value.trim();
-  if (!t) { q.focus(); return; }
-  var cur = getCurrentUser();
-  if(cur){ var users=getUsers(); users[cur.email].searches=(users[cur.email].searches||0)+1; setUsers(users); }
-  if ((mode === "All" || mode === "Web") && looksLikeUrl(t)) {
-    window.location.href = /^https?:\/\//i.test(t) ? t : "https://" + t;
-    return;
-  }
-  window.location.href = MODE_URL[mode](encodeURIComponent(t));
-}
-function feelingLucky(){
-  const t = q.value.trim() || "GLOBAL X Sri Lanka";
-  window.location.href = GOOGLE + encodeURIComponent(t) + "&btnI=1";
-}
-q.addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
-document.getElementById("imagesLink").addEventListener("click", e => {
-  const t = q.value.trim();
-  if (t) { e.preventDefault(); window.open(GOOGLE + encodeURIComponent(t) + "&tbm=isch", "_blank", "noopener"); }
-});
-function startVoice(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { alert("Voice search is not supported in this browser. Try Chrome or Edge."); return; }
-  const btn = document.getElementById("micBtn");
-  const rec = new SR();
-  rec.lang = voiceLang;
-  rec.interimResults = false;
-  rec.onresult = e => { q.value = e.results[0][0].transcript; doSearch(); };
-  rec.onerror = e => { alert(e.error === "not-allowed" ? "Allow microphone access to use voice search." : "Voice search failed. Try again."); };
-  rec.onend = () => btn.classList.remove("on");
-  try { rec.start(); btn.classList.add("on"); } catch (e) { btn.classList.remove("on"); }
-}
-const P = t => "<p>" + t + "</p>";
-const pages = {
-  about: ["About GLOBAL X", P("GLOBAL X is a search homepage made in Sri Lanka. Type a question or a web address and go straight to what you need.") + P("It supports voice search in English, Tamil and Sinhala, and image search through Google Lens.")],
-  advertising: ["Advertising", P("GLOBAL X does not show ads today. If you want to advertise or sponsor GLOBAL X in the future, contact the founder through the Business page.")],
-  business: ["Business", P("Building something for Sri Lankan users? GLOBAL X is open to partnerships, sponsorships and API collaborations.") + P("Business contact details will be published here soon.")],
-  how: ["How Search works", P("When you press Global X Search, your words are sent to Google Search and the results open in your browser.") + P("If you type a web address such as example.com, GLOBAL X opens that site directly.") + P("The Images link and the Lens button open Google Images and Google Lens.")],
-  privacy: ["Privacy", P("GLOBAL X does not keep an account for you on its own servers; your GLOBAL X login is saved only in this browser's local storage, on this device.") + P("Your theme and voice-language choices are saved only in your own browser.") + P("If you rate our service, your star rating and basic device details (browser, device type, language, time zone and screen size) are sent to us. We do not ask for your name or email.") + P("Searches are handled by Google, so Google's privacy policy applies once you reach its results. Voice search uses your browser's speech service and asks for microphone permission first.")],
-  terms: ["Terms", P("GLOBAL X is provided as is, without any guarantee that it will always be available or error free.") + P("Search results come from third parties. GLOBAL X is not responsible for the content of the websites you visit.") + P("By using this site you agree to use it lawfully.")],
-  settings: ["Settings", ""]
+
+window.closeMenu = function(){
+$("sidebar").classList.remove("show");
+$("overlay").classList.remove("show");
 };
-function openInfo(key){
-  const [title, html] = pages[key];
-  document.getElementById("dlgTitle").textContent = title;
-  const box = document.getElementById("dlgBody");
-  box.innerHTML = html;
-  if (key === "settings") {
-    box.innerHTML = '<label>Theme<select id="selTheme"><option value="light">Light</option><option value="dark">Dark</option></select></label>' + '<label>Voice language<select id="selVoice"><option value="en-US">English</option><option value="ta-LK">Tamil</option><option value="si-LK">Sinhala</option></select></label>';
-    const st = document.getElementById("selTheme"), sv = document.getElementById("selVoice");
-    st.value = theme; sv.value = voiceLang;
-    st.onchange = () => { theme = st.value; save("gx-theme", theme); applyTheme(); };
-    sv.onchange = () => { voiceLang = sv.value; save("gx-voice", voiceLang); };
-  }
-  dlg.showModal();
+
+window.showPage = function(page){
+
+closeMenu();
+
+$("home").style.display = page === "home" ? "flex" : "none";
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("show");
+});
+
+if(page !== "home"){
+$(page).classList.add("show");
 }
-dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
-const RATING_URL = "";
-(function () {
-  const rate = document.getElementById("rate");
-  const box = document.getElementById("stars");
-  const label = document.getElementById("starLabel");
-  const submit = document.getElementById("rateSubmit");
-  const ask = document.getElementById("rateAsk");
-  const done = document.getElementById("rateDone");
-  const testMode = location.hash === "#rate";
-  const WORDS = ["Poor", "Fair", "Good", "Very good", "Excellent"];
-  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.4l-5.9 3.3 1.2-6.6-4.8-4.6 6.6-.9z"/></svg>';
-  let value = 0;
-  try { if (!testMode && localStorage.getItem("gx-rated") === "1") return; } catch (e) {}
-  for (let i = 1; i <= 5; i++) {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "star"; b.dataset.v = i;
-    b.setAttribute("role", "radio"); b.setAttribute("aria-checked", "false");
-    b.setAttribute("aria-label", i + (i === 1 ? " star" : " stars") + " - " + WORDS[i - 1]);
-    b.innerHTML = STAR; box.appendChild(b);
-  }
-  const stars = box.querySelectorAll(".star");
-  function paint(n){ stars.forEach((s, i) => s.classList.toggle("on", i < n)); label.textContent = n ? WORDS[n - 1] : ""; }
-  box.addEventListener("click", e => { const b = e.target.closest(".star"); if (!b) return; value = +b.dataset.v; stars.forEach((s, i) => s.setAttribute("aria-checked", i + 1 === value)); paint(value); submit.hidden = false; });
-  box.addEventListener("mouseover", e => { const b = e.target.closest(".star"); if (b) paint(+b.dataset.v); });
-  box.addEventListener("mouseleave", () => paint(value));
-  function store(v){
-    let vid = "";
-    try { vid = localStorage.getItem("gx-vid") || ("v" + Math.random().toString(36).slice(2, 10)); localStorage.setItem("gx-vid", vid); } catch (e) {}
-    const data = { rating: v, id: vid, time: new Date().toISOString(), localTime: new Date().toLocaleString(), timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "", language: navigator.language || "", device: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Mobile" : "Desktop", platform: navigator.platform || "", screen: screen.width + "x" + screen.height, ua: navigator.userAgent, page: location.href.split("#")[0], referrer: document.referrer };
-    try { const list = JSON.parse(localStorage.getItem("gx-ratings") || "[]"); list.push(data); localStorage.setItem("gx-ratings", JSON.stringify(list)); localStorage.setItem("gx-rated", "1"); } catch (e) {}
-    if (RATING_URL) { try { fetch(RATING_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) }).catch(() => {}); } catch (e) {} }
-  }
-  submit.addEventListener("click", () => { if (!value) return; store(value); ask.hidden = true; done.hidden = false; });
-  document.getElementById("rateOk").addEventListener("click", () => rate.close());
-  function show(){ if (rate.open) return; if (dlg.open || body.classList.contains("splashing")) { setTimeout(show, 5000); return; } value = 0; paint(0); submit.hidden = true; ask.hidden = false; done.hidden = true; rate.showModal(); }
-  setTimeout(show, testMode ? 4500 : 120000);
-})();
-if ("serviceWorker" in navigator) { window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); }); }
-(function () {
-  const bar = document.getElementById("install");
-  const btn = document.getElementById("installBtn");
-  const msg = document.getElementById("installMsg");
-  const no  = document.getElementById("installNo");
-  if (window.__gxIcon192) document.getElementById("installIcon").src = window.__gxIcon192;
-  const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
-  if (standalone) return;
-  const ua = navigator.userAgent;
-  const isIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  const isMobile = isIOS || /android|mobi/i.test(ua);
-  let dismissedAt = 0;
-  try { dismissedAt = +localStorage.getItem("gx-install-dismissed") || 0; } catch (e) {}
-  if (Date.now() - dismissedAt < 3 * 24 * 3600 * 1000) return;
-  let shown = false;
-  function showBar(){ if (shown) return; if (body.classList.contains("splashing") || document.getElementById("rate").open || dlg.open) { setTimeout(showBar, 1500); return; } shown = true; bar.classList.add("show"); }
-  function hideBar(remember){ bar.classList.remove("show"); if (remember) save("gx-install-dismissed", Date.now()); }
-  function ready(){ msg.textContent = "Add to your home screen for quick access."; btn.style.display = ""; setTimeout(showBar, 1200); }
-  if (window.__bip) ready();
-  window.addEventListener("gx-bip", ready);
-  btn.addEventListener("click", async () => { const ev = window.__bip; if (!ev) { hideBar(false); return; } ev.prompt(); try { await ev.userChoice; } catch (e) {} window.__bip = null; hideBar(false); });
-  no.addEventListener("click", () => hideBar(true));
-  window.addEventListener("appinstalled", () => { window.__bip = null; hideBar(false); });
-  if (isIOS) { msg.innerHTML = 'Tap <b>Share</b>, then <b>Add to Home Screen</b>.'; btn.style.display = "none"; setTimeout(showBar, 4000); }
-  else if (isMobile) { setTimeout(() => { if (!window.__bip) { msg.innerHTML = 'Open the browser menu, then tap <b>Install app</b> or <b>Add to Home screen</b>.'; btn.style.display = "none"; showBar(); } }, 6000); }
-})();
+
+if(page === "services"){
+checkAdmin();
+}
+};
+
+window.toggleTheme = function(){
+document.body.classList.toggle("dark");
+localStorage.setItem(
+"gx-theme",
+document.body.classList.contains("dark") ? "dark" : "light"
+);
+};
+
+if(localStorage.getItem("gx-theme")==="dark"){
+document.body.classList.add("dark");
+}
+
+// ========================================
+// 4. LOGIN / SIGNUP
+// ========================================
+
+window.openLogin = function(){
+
+closeMenu();
+
+if(currentUser){
+alert("Logged in as: "+currentUser.email);
+return;
+}
+
+authMode = "login";
+$("loginTitle").textContent = "GLOBAL X Login";
+$("loginAction").textContent = "Login";
+$("loginDlg").showModal();
+};
+
+window.toggleAuth = function(){
+
+authMode = authMode === "login" ? "signup" : "login";
+
+$("loginTitle").textContent =
+authMode === "signup" ? "Create GLOBAL X Account" : "GLOBAL X Login";
+
+$("loginAction").textContent =
+authMode === "signup" ? "Create Account" : "Login";
+
+$("loginMsg").textContent = "";
+};
+
+function usernameToEmail(name){
+return name.trim().toLowerCase().replace(/[^a-z0-9._-]/g,"") + "@x.com";
+}
+
+window.loginOrSignup = async function(){
+
+const name = $("username").value.trim().toLowerCase();
+const password = $("password").value;
+const msg = $("loginMsg");
+
+if(name.length < 3){
+msg.textContent = "Username must have at least 3 characters.";
+return;
+}
+
+if(password.length < 6){
+msg.textContent = "Password must have at least 6 characters.";
+return;
+}
+
+const email = usernameToEmail(name);
+
+$("loginAction").disabled = true;
+msg.textContent = "Please wait...";
+
+try{
+
+if(authMode === "signup"){
+
+const credential = await createUserWithEmailAndPassword(
+auth,email,password
+);
+
+const user = credential.user;
+
+await setDoc(doc(db,"gxUsers",user.uid),{
+uid:user.uid,
+username:name,
+email:email,
+createdAt:serverTimestamp()
+});
+
+}else{
+
+await signInWithEmailAndPassword(auth,email,password);
+
+}
+
+msg.textContent = "Success!";
+$("loginDlg").close();
+
+}catch(error){
+
+msg.textContent = error.message;
+
+}finally{
+
+$("loginAction").disabled = false;
+
+}
+
+};
+
+window.logoutUser = async function(){
+
+await signOut(auth);
+alert("Logged out successfully.");
+};
+
+// ========================================
+// 5. AUTH STATE AND LOGIN ACTIVITY
+// ========================================
+
+onAuthStateChanged(auth,async user=>{
+
+currentUser = user;
+
+if(user){
+
+$("authArea").innerHTML =
+`<button class="userBtn" onclick="openLogin()">
+${escapeHTML(user.email)}
+</button>
+<button class="btn" onclick="logoutUser()">Logout</button>`;
+
+try{
+
+const userRef = doc(db,"gxUsers",user.uid);
+const userSnap = await getDoc(userRef);
+
+if(userSnap.exists()){
+
+const data = userSnap.data();
+
+await addDoc(collection(db,"gxActivities"),{
+uid:user.uid,
+username:data.username,
+email:user.email,
+type:"login",
+createdAt:serverTimestamp()
+});
+
+}
+
+}catch(error){
+console.error("Login activity:",error);
+}
+
+scheduleRating();
+
+}else{
+
+$("authArea").innerHTML =
+`<button class="loginBtn" onclick="openLogin()">Login</button>`;
+
+clearTimeout(ratingPromptTimer);
+
+}
+
+});
+
+function scheduleRating(){
+
+clearTimeout(ratingPromptTimer);
+
+ratingPromptTimer = setTimeout(async()=>{
+
+if(!currentUser) return;
+
+try{
+
+const ratingRef = doc(db,"gxUserRatings",currentUser.uid);
+const ratingSnap = await getDoc(ratingRef);
+
+if(!ratingSnap.exists()){
+$("rateDlg").showModal();
+}
+
+}catch(error){
+console.error(error);
+}
+
+},120000);
+
+}
+
+// ========================================
+// 6. STAR RATING
+// ========================================
+
+document.querySelectorAll(".starBtn").forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+selectedRating = Number(button.dataset.value);
+
+document.querySelectorAll(".starBtn").forEach(star=>{
+star.classList.toggle(
+"selected",
+Number(star.dataset.value)<=selectedRating
+);
+});
+
+const labels = ["Poor","Fair","Good","Very Good","Excellent"];
+
+$("ratingLabel").textContent = labels[selectedRating-1];
+
+});
+
+});
+
+window.submitRating = async function(){
+
+if(!currentUser){
+alert("Please login before rating.");
+$("rateDlg").close();
+openLogin();
+return;
+}
+
+if(!selectedRating){
+alert("Please select your star rating.");
+return;
+}
+
+try{
+
+const userSnap = await getDoc(doc(db,"gxUsers",currentUser.uid));
+
+if(!userSnap.exists()){
+alert("Account details not found.");
+return;
+}
+
+const userData = userSnap.data();
+
+const ratingRef = doc(db,"gxUserRatings",currentUser.uid);
+const oldRating = await getDoc(ratingRef);
+
+if(oldRating.exists()){
+alert("You have already rated GLOBAL X.");
+$("rateDlg").close();
+return;
+}
+
+await setDoc(ratingRef,{
+
+uid:currentUser.uid,
+username:userData.username,
+email:currentUser.email,
+rating:selectedRating,
+createdAt:serverTimestamp()
+
+});
+
+await addDoc(collection(db,"gxActivities"),{
+
+uid:currentUser.uid,
+username:userData.username,
+type:"rating",
+rating:selectedRating,
+createdAt:serverTimestamp()
+
+});
+
+$("rateDlg").close();
+
+alert("Thank you for rating GLOBAL X!");
+
+}catch(error){
+
+alert("Rating failed: "+error.message);
+
+}
+
+};
+
+// ========================================
+// 7. ADMIN DASHBOARD
+// ========================================
+
+async function checkAdmin(){
+
+if(!currentUser){
+$("adminStatus").textContent = "Please login first.";
+$("dashboard").classList.add("hidden");
+return;
+}
+
+try{
+
+const token = await currentUser.getIdTokenResult(true);
+
+if(token.claims.admin !== true){
+
+$("adminStatus").textContent =
+"Access denied. Administrator permission required.";
+
+$("dashboard").classList.add("hidden");
+return;
+
+}
+
+$("adminStatus").textContent = "Administrator Access Verified ✓";
+
+$("dashboard").classList.remove("hidden");
+
+startDashboard();
+
+}catch(error){
+
+$("adminStatus").textContent = "Unable to verify administrator access.";
+console.error(error);
+
+}
+
+}
+
+// ========================================
+// 8. LIVE FIRESTORE DATA
+// ========================================
+
+function stopDashboard(){
+
+dashboardUnsubscribers.forEach(unsubscribe=>unsubscribe());
+dashboardUnsubscribers=[];
+
+}
+
+function startDashboard(){
+
+stopDashboard();
+
+let users=[];
+let activities=[];
+let ratings=[];
+
+function updateDashboard(){
+
+$("totalUsers").textContent=users.length;
+
+$("totalLogins").textContent=
+activities.filter(a=>a.type==="login").length;
+
+$("totalRatings").textContent=ratings.length;
+
+$("fiveStars").textContent=
+ratings.filter(r=>Number(r.rating)===5).length;
+
+$("usersTable").innerHTML=users.map(u=>`
+
+<tr>
+<td>${escapeHTML(u.username)}</td>
+<td>${escapeHTML(u.email)}</td>
+<td>${formatDate(u.createdAt)}</td>
+</tr>
+
+`).join("") || "<tr><td colspan='3'>No users yet.</td></tr>";
+
+const counts=[0,0,0,0,0];
+
+ratings.forEach(r=>{
+const n=Number(r.rating);
+if(n>=1 && n<=5) counts[n-1]++;
+});
+
+$("ratingStats").innerHTML=counts.map((n,i)=>`
+<div> ${i+1} ⭐ : <b>${n}</b> ratings</div>
+`).reverse().join("");
+
+$("loginTable").innerHTML=activities
+.filter(a=>a.type==="login")
+.map(a=>`
+
+<tr>
+<td>${escapeHTML(a.username||"User")}</td>
+<td>${formatDate(a.createdAt)}</td>
+<td class="badge">Login</td>
+</tr>
+
+`).join("") || "<tr><td colspan='3'>No login activities.</td></tr>";
+
+$("ratingTable").innerHTML=ratings.map(r=>`
+
+<tr>
+<td>${escapeHTML(r.username||"User")}</td>
+<td class="star">${"★".repeat(Number(r.rating)||0)}</td>
+<td>${formatDate(r.createdAt)}</td>
+</tr>
+
+`).join("") || "<tr><td colspan='3'>No ratings yet.</td></tr>";
+
+}
+
+// USERS LISTENER
+
+dashboardUnsubscribers.push(
+onSnapshot(collection(db,"gxUsers"),snapshot=>{
+
+users=snapshot.docs.map(d=>d.data());
+updateDashboard();
+
+},error=>console.error(error))
+);
+
+// LOGIN ACTIVITIES LISTENER
+
+dashboardUnsubscribers.push(
+onSnapshot(
+query(collection(db,"gxActivities"),
+orderBy("createdAt","desc"),limit(200)),
+snapshot=>{
+
+activities=snapshot.docs.map(d=>d.data());
+updateDashboard();
+
+},
+error=>console.error(error)
+)
+);
+
+// RATINGS LISTENER
+
+dashboardUnsubscribers.push(
+onSnapshot(collection(db,"gxUserRatings"),snapshot=>{
+
+ratings=snapshot.docs.map(d=>d.data());
+updateDashboard();
+
+},error=>console.error(error))
+);
+
+}
+
+function formatDate(timestamp){
+
+if(!timestamp) return "Pending";
+
+try{
+return timestamp.toDate().toLocaleString();
+}catch(e){
+return "Pending";
+}
+
+}
+
+// ========================================
+// 9. SEARCH
+// ========================================
+
+const searchURLs={
+
+All:q=>"https://www.google.com/search?q="+q,
+Web:q=>"https://www.google.com/search?q="+q+"&udm=14",
+AI:q=>"https://www.google.com/search?q="+q+"&udm=50",
+Images:q=>"https://www.google.com/search?q="+q+"&tbm=isch",
+Videos:q=>"https://www.google.com/search?q="+q+"&tbm=vid",
+News:q=>"https://www.google.com/search?q="+q+"&tbm=nws",
+Shopping:q=>"https://www.google.com/search?q="+q+"&tbm=shop",
+Maps:q=>"https://www.google.com/maps/search/?api=1&query="+q
+
+};
+
+document.querySelectorAll(".mode").forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+currentMode=button.dataset.mode;
+
+document.querySelectorAll(".mode").forEach(b=>{
+b.classList.toggle("active",b===button);
+});
+
+if($("q").value.trim()) doSearch();
+
+});
+
+});
+
+function looksLikeUrl(text){
+return !/\s/.test(text) &&
+/^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(text);
+}
+
+window.doSearch=function(){
+
+const text=$("q").value.trim();
+
+if(!text) return;
+
+if((currentMode==="All"||currentMode==="Web")&&looksLikeUrl(text)){
+
+location.href=/^https?:\/\//i.test(text)
+? text : "https://"+text;
+
+return;
+
+}
+
+location.href=searchURLs[currentMode](
+encodeURIComponent(text)
+);
+
+};
+
+window.feelingLucky=function(){
+
+const text=$("q").value.trim()||"GLOBAL X Sri Lanka";
+
+location.href="https://www.google.com/search?q="+
+encodeURIComponent(text)+"&btnI=1";
+
+};
+
+$("q").addEventListener("keydown",e=>{
+if(e.key==="Enter") doSearch();
+});
+
+// ========================================
+// 10. SAFE HTML DISPLAY
+// ========================================
+
+function escapeHTML(value){
+
+return String(value||"").replace(/[&<>"']/g,char=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+})[char]);
+
+}
+
+// ========================================
+// 11. CLEANUP
+// ========================================
+
+window.addEventListener("beforeunload",()=>{
+stopDashboard();
+});
+
 </script>
+
 </body>
 </html>

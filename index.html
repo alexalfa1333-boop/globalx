@@ -67,24 +67,7 @@ border-radius:15px;
 font-size:25px;
 }
 
-.loginBtn,.primary{
-background:linear-gradient(90deg,#6b1ff0,#22b8a4);
-color:white;
-border:0;
-padding:13px 23px;
-border-radius:30px;
-font-weight:bold;
-}
-
-.auth{display:flex;align-items:center;gap:8px}
-
-.userBtn{
-background:var(--panel);
-border:1px solid var(--line);
-padding:12px;
-border-radius:20px;
-font-size:12px;
-}
+.spacer{width:48px}
 
 main{
 min-height:calc(100vh - 140px);
@@ -234,134 +217,8 @@ border-radius:15px;
 margin-bottom:15px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-gap:12px;
-margin-bottom:20px;
-}
-
-.stat{
-background:var(--panel);
-padding:20px 12px;
-border:1px solid var(--line);
-border-radius:15px;
-text-align:center;
-}
-
-.stat strong{
-display:block;
-font-size:30px;
-margin-top:10px;
-color:#7850e9;
-}
-
-.stat span{
-font-size:13px;
-color:var(--muted);
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-font-size:13px;
-}
-
-th,td{
-padding:12px 8px;
-border-bottom:1px solid var(--line);
-text-align:left;
-}
-
-.tableWrap{overflow-x:auto}
-.badge{color:#188038;font-weight:bold}
-.star{color:#f5a623;font-size:17px}
-
-.hidden{display:none!important}
-
-/* LOGIN DIALOG */
-
-dialog{
-margin:auto;
-width:min(92%,430px);
-background:var(--bg);
-color:var(--text);
-border:1px solid var(--line);
-border-radius:22px;
-padding:28px;
-}
-
-dialog::backdrop{background:#000b}
-
-dialog h2{
-font-family:Lexend;
-font-size:25px;
-margin-bottom:12px;
-}
-
-dialog p{
-color:var(--muted);
-font-size:14px;
-line-height:1.5;
-margin-bottom:18px;
-}
-
-.field{margin:16px 0}
-
-.field label{
-display:block;
-margin-bottom:8px;
-}
-
-.field input{
-width:100%;
-height:53px;
-border:1px solid var(--line);
-border-radius:12px;
-padding:12px;
-background:var(--bg);
-outline:none;
-}
-
-.field input:focus{
-border-color:#7850e9;
-}
-
-.full{
-width:100%;
-margin-top:12px;
-min-height:53px;
-font-size:16px;
-}
-
-.msg{
-font-size:13px;
-margin-top:12px;
-color:#e74c3c;
-line-height:1.5;
-}
-
-.msg.ok{color:#188038}
-
-.stars{
-display:flex;
-justify-content:center;
-gap:5px;
-margin:20px 0;
-}
-
-.starBtn{
-font-size:38px;
-background:none;
-border:0;
-color:#ccc;
-}
-
-.starBtn.selected{color:#f5a623}
-
 @media(max-width:600px){
 .pageTitle{font-size:21px}
-.grid{grid-template-columns:repeat(2,1fr)}
 .brand{font-size:21px}
 }
 </style>
@@ -372,9 +229,7 @@ color:#ccc;
 <header>
 <button class="menuBtn" onclick="openMenu()">☰</button>
 <div class="brand">GLOBAL X</div>
-<div class="auth" id="authArea">
-<button class="loginBtn" onclick="openLogin()">Login</button>
-</div>
+<div class="spacer"></div>
 </header>
 
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
@@ -383,10 +238,8 @@ color:#ccc;
 <button class="closeSide" onclick="closeMenu()">×</button>
 <div class="sideTitle">GLOBAL X</div>
 <button class="sideItem" onclick="showPage('home')">⌂ Home</button>
-<button class="sideItem" onclick="showPage('services')">🌐 GLOBAL X Services</button>
 <button class="sideItem" onclick="showPage('about')">ⓘ About</button>
 <button class="sideItem" onclick="toggleTheme()">🌙 Dark / Light Mode</button>
-<button class="sideItem" onclick="openLogin()">👤 Account</button>
 </aside>
 
 <!-- HOME -->
@@ -416,86 +269,7 @@ color:#ccc;
 </div>
 </main>
 
-<!-- SERVICES -->
-
-<section class="page" id="services">
-
-<h2 class="pageTitle">🌐 GLOBAL X Services</h2>
-
-<div class="card">
-<h3>GLOBAL X Admin Dashboard</h3>
-<p id="adminStatus" style="margin-top:10px">
-Checking administrator access...
-</p>
-</div>
-
-<div id="dashboard" class="hidden">
-
-<div class="grid">
-<div class="stat">
-<span>Total Registered Users</span>
-<strong id="totalUsers">0</strong>
-</div>
-
-<div class="stat">
-<span>Total Login Activities</span>
-<strong id="totalLogins">0</strong>
-</div>
-
-<div class="stat">
-<span>Total Ratings</span>
-<strong id="totalRatings">0</strong>
-</div>
-
-<div class="stat">
-<span>Five Star Ratings</span>
-<strong id="fiveStars">0</strong>
-</div>
-</div>
-
-<div class="card">
-<h3>⭐ Rating Statistics</h3>
-<div id="ratingStats" style="margin-top:15px;line-height:2"></div>
-</div>
-
-<div class="card">
-<h3>👥 Registered Users</h3>
-<div class="tableWrap">
-<table>
-<thead>
-<tr><th>Username</th><th>Email</th><th>Created</th></tr>
-</thead>
-<tbody id="usersTable"></tbody>
-</table>
-</div>
-</div>
-
-<div class="card">
-<h3>🔐 Login Activities</h3>
-<div class="tableWrap">
-<table>
-<thead>
-<tr><th>User</th><th>Date</th><th>Activity</th></tr>
-</thead>
-<tbody id="loginTable"></tbody>
-</table>
-</div>
-</div>
-
-<div class="card">
-<h3>⭐ All Rating Activities</h3>
-<div class="tableWrap">
-<table>
-<thead>
-<tr><th>User</th><th>Rating</th><th>Date</th></tr>
-</thead>
-<tbody id="ratingTable"></tbody>
-</table>
-</div>
-</div>
-
-</div>
-</section>
+<!-- ABOUT -->
 
 <section class="page" id="about">
 <h2 class="pageTitle">About GLOBAL X</h2>
@@ -506,165 +280,26 @@ GLOBAL X - Search the web. Made in Sri Lanka 🇱🇰
 
 <footer>GLOBAL X | Made in Sri Lanka 🇱🇰</footer>
 
-<!-- LOGIN -->
-
-<dialog id="loginDlg">
-
-<h2 id="loginTitle">GLOBAL X Login</h2>
-
-<p>Create your account or login to GLOBAL X.</p>
-
-<div class="field">
-<label>Username</label>
-<input id="username" placeholder="Enter username"
-autocomplete="username" autocapitalize="none">
-</div>
-
-<div class="field">
-<label>Password</label>
-<input id="password" type="password"
-placeholder="Minimum 6 characters"
-autocomplete="current-password">
-</div>
-
-<div class="msg" id="loginMsg"></div>
-
-<button class="primary full" id="loginAction"
-onclick="loginOrSignup()">Login</button>
-
-<button class="btn full" id="toggleBtn" onclick="toggleAuth()">Create Account</button>
-
-<button class="btn full" onclick="loginDlg.close()">Close</button>
-
-</dialog>
-
-<!-- RATING -->
-
-<dialog id="rateDlg">
-
-<h2>Your Rating ⭐</h2>
-
-<p>How was your experience with GLOBAL X?</p>
-
-<div class="stars" id="starButtons">
-<button class="starBtn" data-value="1">★</button>
-<button class="starBtn" data-value="2">★</button>
-<button class="starBtn" data-value="3">★</button>
-<button class="starBtn" data-value="4">★</button>
-<button class="starBtn" data-value="5">★</button>
-</div>
-
-<p id="ratingLabel" style="text-align:center"></p>
-
-<button class="primary full" onclick="submitRating()">Submit Rating</button>
-
-<button class="btn full" onclick="rateDlg.close()">Close</button>
-
-</dialog>
-
-<script type="module">
-
-// ========================================
-// 1. FIREBASE IMPORTS
-// ========================================
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
-}
-from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-doc,
-setDoc,
-addDoc,
-getDoc,
-serverTimestamp,
-onSnapshot,
-query,
-orderBy,
-limit
-}
-from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
-// ========================================
-// 2. FIREBASE CONFIG
-// ========================================
-// !!! INGA UNGA REAL FIREBASE DETAILS PASTE PANNUNGA !!!
-// Firebase Console -> Project settings (⚙️) -> General
-// -> Your apps -> Web app (</>) -> SDK setup and configuration
-// Antha "firebaseConfig" values ah keezha replace pannunga.
-
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
-// Check configuration
-
-const configReady =
-firebaseConfig.apiKey !== "YOUR_API_KEY" &&
-firebaseConfig.projectId !== "YOUR_PROJECT_ID" &&
-firebaseConfig.appId !== "YOUR_APP_ID";
-
-let app,auth,db;
-
-if(configReady){
-
-try{
-
-app=initializeApp(firebaseConfig);
-auth=getAuth(app);
-db=getFirestore(app);
-
-}catch(error){
-
-console.error("Firebase initialization:",error);
-
-}
-
-}
-
-// ========================================
-// 3. GLOBAL VARIABLES
-// ========================================
-
-let currentUser=null;
-let authMode="login";
-let selectedRating=0;
-let currentMode="All";
-let dashboardUnsubscribers=[];
-let ratingPromptTimer=null;
+<script>
 
 const $=id=>document.getElementById(id);
+let currentMode="All";
 
 // ========================================
-// 4. MENU
+// MENU
 // ========================================
 
-window.openMenu=function(){
+function openMenu(){
 $("sidebar").classList.add("show");
 $("overlay").classList.add("show");
-};
+}
 
-window.closeMenu=function(){
+function closeMenu(){
 $("sidebar").classList.remove("show");
 $("overlay").classList.remove("show");
-};
+}
 
-window.showPage=function(page){
+function showPage(page){
 
 closeMenu();
 
@@ -678,11 +313,9 @@ if(page!=="home"){
 $(page).classList.add("show");
 }
 
-if(page==="services") checkAdmin();
+}
 
-};
-
-window.toggleTheme=function(){
+function toggleTheme(){
 
 document.body.classList.toggle("dark");
 
@@ -693,7 +326,7 @@ document.body.classList.contains("dark")?"dark":"light"
 );
 }catch(e){}
 
-};
+}
 
 try{
 if(localStorage.getItem("gx-theme")==="dark"){
@@ -702,604 +335,7 @@ document.body.classList.add("dark");
 }catch(e){}
 
 // ========================================
-// 5. LOGIN / SIGNUP
-// ========================================
-
-function setAuthMode(mode){
-
-authMode=mode;
-
-$("loginTitle").textContent=
-mode==="signup"?"Create GLOBAL X Account":"GLOBAL X Login";
-
-$("loginAction").textContent=
-mode==="signup"?"Create Account":"Login";
-
-// FIX: second button text changes properly
-$("toggleBtn").textContent=
-mode==="signup"?"Back to Login":"Create Account";
-
-$("password").value="";
-$("loginMsg").textContent="";
-$("loginMsg").classList.remove("ok");
-
-}
-
-window.openLogin=function(){
-
-closeMenu();
-
-if(currentUser){
-alert("Logged in as: "+currentUser.email);
-return;
-}
-
-setAuthMode("login");
-
-$("loginDlg").showModal();
-
-};
-
-window.toggleAuth=function(){
-
-setAuthMode(authMode==="login"?"signup":"login");
-
-};
-
-function usernameToEmail(name){
-
-return name+"@x.com";
-
-}
-
-// User login and registration
-
-window.loginOrSignup=async function(){
-
-const msg=$("loginMsg");
-msg.classList.remove("ok");
-
-if(!auth){
-
-msg.textContent=
-"Firebase configuration missing. Add your real Firebase Web App config.";
-
-return;
-
-}
-
-// FIX: spaces automatically become underscore (Elone alex -> elone_alex)
-const name=$("username").value.trim().toLowerCase().replace(/\s+/g,"_");
-const password=$("password").value;
-
-if(!/^[a-z0-9._-]{3,30}$/.test(name)){
-
-msg.textContent=
-"Username must be 3-30 characters (letters, numbers, . _ -).";
-
-return;
-
-}
-
-if(password.length<6){
-
-msg.textContent="Password must have at least 6 characters.";
-return;
-
-}
-
-const email=usernameToEmail(name);
-
-$("loginAction").disabled=true;
-msg.textContent="Connecting to Firebase...";
-
-try{
-
-let user;
-
-if(authMode==="signup"){
-
-const credential=await createUserWithEmailAndPassword(
-auth,email,password
-);
-
-user=credential.user;
-
-await setDoc(doc(db,"gxUsers",user.uid),{
-
-uid:user.uid,
-username:name,
-email:email,
-createdAt:serverTimestamp()
-
-});
-
-}else{
-
-const credential=await signInWithEmailAndPassword(auth,email,password);
-user=credential.user;
-
-}
-
-// FIX: login activity saved directly here (no race condition)
-try{
-
-await addDoc(collection(db,"gxActivities"),{
-
-uid:user.uid,
-username:name,
-email:email,
-type:"login",
-createdAt:serverTimestamp()
-
-});
-
-}catch(activityError){
-
-console.error("Login activity error:",activityError);
-
-}
-
-$("loginDlg").close();
-
-}catch(error){
-
-console.error(error);
-
-const errors={
-
-"auth/invalid-api-key":
-"Invalid Firebase API Key. Check your Firebase configuration.",
-
-"auth/api-key-not-valid.-please-pass-a-valid-api-key.":
-"Invalid Firebase API Key. Check your Firebase configuration.",
-
-"auth/operation-not-allowed":
-"Enable Email/Password sign-in in Firebase Authentication.",
-
-"auth/invalid-credential":
-"Incorrect username or password.",
-
-"auth/user-not-found":
-"Account not found. Please create an account.",
-
-"auth/wrong-password":
-"Incorrect password.",
-
-"auth/email-already-in-use":
-"Username already registered. Please login.",
-
-"auth/weak-password":
-"Password is too weak.",
-
-"auth/network-request-failed":
-"Network error. Check your internet connection.",
-
-"auth/invalid-email":
-"Invalid account email configuration.",
-
-"auth/unauthorized-domain":
-"Add this website domain to Firebase Authorized Domains."
-
-};
-
-msg.textContent=errors[error.code]||
-"Firebase Error: "+error.message;
-
-}finally{
-
-$("loginAction").disabled=false;
-
-}
-
-};
-
-window.logoutUser=async function(){
-
-if(!auth)return;
-
-try{
-
-await signOut(auth);
-
-clearTimeout(ratingPromptTimer);
-
-alert("Logged out successfully!");
-
-}catch(error){
-
-alert(error.message);
-
-}
-
-};
-
-// ========================================
-// 6. AUTH STATE
-// ========================================
-
-if(auth){
-
-onAuthStateChanged(auth,user=>{
-
-currentUser=user;
-
-if(user){
-
-$("authArea").innerHTML=`
-
-<button class="userBtn">
-👤 ${escapeHTML(user.email)}
-</button>
-
-<button class="btn" onclick="logoutUser()">
-Logout
-</button>
-
-`;
-
-scheduleRating();
-
-}else{
-
-$("authArea").innerHTML=`
-<button class="loginBtn" onclick="openLogin()">Login</button>
-`;
-
-clearTimeout(ratingPromptTimer);
-
-}
-
-});
-
-}else{
-
-$("adminStatus").textContent=
-"Firebase is not configured. Please add your Firebase details.";
-
-}
-
-// ========================================
-// 7. AUTOMATIC RATING PROMPT
-// ========================================
-
-function scheduleRating(){
-
-clearTimeout(ratingPromptTimer);
-
-ratingPromptTimer=setTimeout(async()=>{
-
-if(!currentUser)return;
-
-try{
-
-const ratingRef=doc(db,"gxUserRatings",currentUser.uid);
-const ratingSnap=await getDoc(ratingRef);
-
-if(!ratingSnap.exists()){
-$("rateDlg").showModal();
-}
-
-}catch(error){
-
-console.error(error);
-
-}
-
-},120000);
-
-}
-
-// ========================================
-// 8. STAR RATING
-// ========================================
-
-document.querySelectorAll(".starBtn").forEach(button=>{
-
-button.addEventListener("click",()=>{
-
-selectedRating=Number(button.dataset.value);
-
-document.querySelectorAll(".starBtn").forEach(star=>{
-
-star.classList.toggle(
-"selected",
-Number(star.dataset.value)<=selectedRating
-);
-
-});
-
-const labels=[
-"Poor",
-"Fair",
-"Good",
-"Very Good",
-"Excellent"
-];
-
-$("ratingLabel").textContent=labels[selectedRating-1];
-
-});
-
-});
-
-window.submitRating=async function(){
-
-if(!currentUser){
-
-alert("Please login before rating.");
-
-$("rateDlg").close();
-openLogin();
-
-return;
-
-}
-
-if(!selectedRating){
-
-alert("Please select your star rating.");
-return;
-
-}
-
-try{
-
-const userSnap=await getDoc(doc(db,"gxUsers",currentUser.uid));
-
-if(!userSnap.exists()){
-
-alert("Account details not found.");
-return;
-
-}
-
-const userData=userSnap.data();
-
-const ratingRef=doc(db,"gxUserRatings",currentUser.uid);
-const oldRating=await getDoc(ratingRef);
-
-if(oldRating.exists()){
-
-alert("You have already rated GLOBAL X.");
-$("rateDlg").close();
-
-return;
-
-}
-
-await setDoc(ratingRef,{
-
-uid:currentUser.uid,
-username:userData.username,
-email:currentUser.email,
-rating:selectedRating,
-createdAt:serverTimestamp()
-
-});
-
-await addDoc(collection(db,"gxActivities"),{
-
-uid:currentUser.uid,
-username:userData.username,
-type:"rating",
-rating:selectedRating,
-createdAt:serverTimestamp()
-
-});
-
-$("rateDlg").close();
-
-alert("Thank you for rating GLOBAL X!");
-
-}catch(error){
-
-console.error(error);
-alert("Rating failed: "+error.message);
-
-}
-
-};
-
-// ========================================
-// 9. ADMIN ACCESS
-// ========================================
-
-async function checkAdmin(){
-
-if(!auth){
-
-$("adminStatus").textContent=
-"Firebase is not configured. Please add your Firebase details.";
-
-return;
-
-}
-
-if(!currentUser){
-
-$("adminStatus").textContent="Please login first.";
-$("dashboard").classList.add("hidden");
-
-return;
-
-}
-
-try{
-
-const token=await currentUser.getIdTokenResult(true);
-
-if(token.claims.admin!==true){
-
-$("adminStatus").textContent=
-"Access denied. Administrator permission required.";
-
-$("dashboard").classList.add("hidden");
-
-return;
-
-}
-
-$("adminStatus").textContent=
-"Administrator Access Verified ✓";
-
-$("dashboard").classList.remove("hidden");
-
-startDashboard();
-
-}catch(error){
-
-$("adminStatus").textContent=
-"Unable to verify administrator access.";
-
-console.error(error);
-
-}
-
-}
-
-// ========================================
-// 10. LIVE ADMIN DASHBOARD
-// ========================================
-
-function stopDashboard(){
-
-dashboardUnsubscribers.forEach(unsubscribe=>unsubscribe());
-dashboardUnsubscribers=[];
-
-}
-
-function startDashboard(){
-
-stopDashboard();
-
-let users=[];
-let activities=[];
-let ratings=[];
-
-function updateDashboard(){
-
-$("totalUsers").textContent=users.length;
-
-$("totalLogins").textContent=
-activities.filter(a=>a.type==="login").length;
-
-$("totalRatings").textContent=ratings.length;
-
-$("fiveStars").textContent=
-ratings.filter(r=>Number(r.rating)===5).length;
-
-$("usersTable").innerHTML=users.map(u=>`
-
-<tr>
-<td>${escapeHTML(u.username)}</td>
-<td>${escapeHTML(u.email)}</td>
-<td>${formatDate(u.createdAt)}</td>
-</tr>
-
-`).join("")||"<tr><td colspan='3'>No users yet.</td></tr>";
-
-const counts=[0,0,0,0,0];
-
-ratings.forEach(r=>{
-
-const n=Number(r.rating);
-
-if(n>=1&&n<=5)counts[n-1]++;
-
-});
-
-$("ratingStats").innerHTML=counts.map((n,i)=>`
-
-<div>${i+1} ⭐ : <b>${n}</b> ratings</div>
-
-`).reverse().join("");
-
-$("loginTable").innerHTML=activities
-.filter(a=>a.type==="login")
-.map(a=>`
-
-<tr>
-<td>${escapeHTML(a.username||"User")}</td>
-<td>${formatDate(a.createdAt)}</td>
-<td class="badge">Login</td>
-</tr>
-
-`).join("")||"<tr><td colspan='3'>No login activities.</td></tr>";
-
-$("ratingTable").innerHTML=ratings.map(r=>`
-
-<tr>
-<td>${escapeHTML(r.username||"User")}</td>
-<td class="star">${"★".repeat(Number(r.rating)||0)}</td>
-<td>${formatDate(r.createdAt)}</td>
-</tr>
-
-`).join("")||"<tr><td colspan='3'>No ratings yet.</td></tr>";
-
-}
-
-dashboardUnsubscribers.push(
-
-onSnapshot(collection(db,"gxUsers"),snapshot=>{
-
-users=snapshot.docs.map(d=>d.data());
-updateDashboard();
-
-},error=>console.error(error))
-
-);
-
-dashboardUnsubscribers.push(
-
-onSnapshot(
-query(
-collection(db,"gxActivities"),
-orderBy("createdAt","desc"),
-limit(200)
-),
-snapshot=>{
-
-activities=snapshot.docs.map(d=>d.data());
-updateDashboard();
-
-},
-error=>console.error(error)
-)
-
-);
-
-dashboardUnsubscribers.push(
-
-onSnapshot(collection(db,"gxUserRatings"),snapshot=>{
-
-ratings=snapshot.docs.map(d=>d.data());
-updateDashboard();
-
-},error=>console.error(error))
-
-);
-
-}
-
-function formatDate(timestamp){
-
-if(!timestamp)return "Pending";
-
-try{
-
-return timestamp.toDate().toLocaleString();
-
-}catch(e){
-
-return "Pending";
-
-}
-
-}
-
-// ========================================
-// 11. SEARCH
+// SEARCH
 // ========================================
 
 const searchURLs={
@@ -1338,7 +374,7 @@ return !/\s/.test(text)&&
 
 }
 
-window.doSearch=function(){
+function doSearch(){
 
 const text=$("q").value.trim();
 
@@ -1358,9 +394,9 @@ location.href=searchURLs[currentMode](
 encodeURIComponent(text)
 );
 
-};
+}
 
-window.feelingLucky=function(){
+function feelingLucky(){
 
 const text=$("q").value.trim()||"GLOBAL X Sri Lanka";
 
@@ -1368,38 +404,12 @@ location.href=
 "https://www.google.com/search?q="+
 encodeURIComponent(text)+"&btnI=1";
 
-};
+}
 
 $("q").addEventListener("keydown",e=>{
 
 if(e.key==="Enter")doSearch();
 
-});
-
-// ========================================
-// 12. SAFE HTML
-// ========================================
-
-function escapeHTML(value){
-
-return String(value||"").replace(/[&<>"']/g,char=>({
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-})[char]);
-
-}
-
-// ========================================
-// 13. CLEANUP
-// ========================================
-
-window.addEventListener("beforeunload",()=>{
-stopDashboard();
 });
 
 </script>

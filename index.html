@@ -1,161 +1,365 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#121212">
 <title>GLOBAL X</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 :root{
---bg:#fff;--text:#202124;--muted:#70757a;
---line:#ddd;--btn:#f1f3f4;--panel:#f7f8fa;
+--bg:#fff;
+--text:#202124;
+--muted:#70757a;
+--line:#ddd;
+--panel:#f7f8fa;
+--btn:#f1f3f4;
 }
+
 body.dark{
---bg:#121212;--text:#eee;--muted:#aaa;
---line:#444;--btn:#292929;--panel:#1d1d1d;
+--bg:#121212;
+--text:#eee;
+--muted:#aaa;
+--line:#444;
+--panel:#1d1d1d;
+--btn:#292929;
 }
+
 body{
-background:var(--bg);color:var(--text);
-font-family:Arial,sans-serif;min-height:100vh;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,sans-serif;
+min-height:100vh;
 }
+
 button,input{font:inherit;color:inherit}
 button{cursor:pointer}
+
 header{
-height:65px;display:flex;align-items:center;
-justify-content:space-between;padding:0 18px;
+height:75px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
 border-bottom:1px solid var(--line);
 }
-.brand{
-font-family:Lexend,sans-serif;font-size:22px;
-font-weight:800;background:linear-gradient(90deg,#0052b4,#6b1ff0,#22b8a4);
-color:transparent;background-clip:text;
+
+.brand,.logo{
+font-family:Lexend,sans-serif;
+font-weight:800;
+background:linear-gradient(90deg,#0052b4,#6b1ff0,#22b8a4);
+color:transparent;
+background-clip:text;
 }
+
+.brand{font-size:25px}
+
 .menuBtn{
-border:0;background:var(--btn);width:43px;height:43px;
-border-radius:12px;font-size:25px;
+border:0;
+background:var(--btn);
+width:48px;height:48px;
+border-radius:15px;
+font-size:25px;
 }
-.auth{display:flex;align-items:center;gap:8px}
+
 .loginBtn,.primary{
 background:linear-gradient(90deg,#6b1ff0,#22b8a4);
-color:white;border:0;padding:12px 19px;border-radius:25px;
+color:white;
+border:0;
+padding:13px 23px;
+border-radius:30px;
 font-weight:bold;
 }
+
+.auth{display:flex;align-items:center;gap:8px}
+
 .userBtn{
-border:1px solid var(--line);background:var(--panel);
-padding:10px;border-radius:22px;font-size:12px;
+background:var(--panel);
+border:1px solid var(--line);
+padding:12px;
+border-radius:20px;
+font-size:12px;
 }
+
 main{
-min-height:calc(100vh - 130px);
-display:flex;flex-direction:column;
-align-items:center;justify-content:center;
+min-height:calc(100vh - 140px);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
 padding:25px 16px;
 }
+
 .logo{
-font-family:Lexend,sans-serif;font-size:clamp(45px,12vw,95px);
-font-weight:800;margin-bottom:30px;
-background:linear-gradient(90deg,#0052b4,#6b1ff0,#22b8a4);
-color:transparent;background-clip:text;
+font-size:clamp(45px,12vw,95px);
+margin-bottom:30px;
 }
+
 .search{
-width:100%;max-width:650px;height:55px;
-border:1px solid var(--line);border-radius:30px;
-display:flex;align-items:center;padding:0 18px;
+width:100%;
+max-width:650px;
+height:58px;
+border:1px solid var(--line);
+border-radius:30px;
+display:flex;
+align-items:center;
+padding:0 18px;
 }
+
 .search input{
-border:0;outline:0;background:transparent;
-flex:1;min-width:0;font-size:16px;
+border:0;outline:0;
+background:transparent;
+flex:1;min-width:0;
+font-size:16px;
 }
-.modes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:20px}
+
+.modes{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:8px;
+margin:20px;
+}
+
 .mode{
-padding:9px 15px;border:1px solid var(--line);
-border-radius:20px;background:var(--bg);
+padding:9px 15px;
+border:1px solid var(--line);
+border-radius:20px;
+background:var(--bg);
 }
-.mode.active{background:var(--text);color:var(--bg)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+.mode.active{
+background:var(--text);
+color:var(--bg);
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
 .btn{
-border:0;background:var(--btn);
-padding:12px 20px;border-radius:25px;
+border:0;
+background:var(--btn);
+padding:13px 20px;
+border-radius:25px;
 }
-footer{text-align:center;padding:20px;color:var(--muted)}
+
+footer{
+text-align:center;
+padding:20px;
+color:var(--muted);
+}
+
 /* MENU */
+
 .overlay{
-position:fixed;inset:0;background:#0008;
-z-index:10;display:none;
+position:fixed;
+inset:0;
+background:#0008;
+z-index:10;
+display:none;
 }
+
 .overlay.show{display:block}
+
 .sidebar{
-position:fixed;z-index:11;top:0;left:-310px;
-height:100%;width:min(290px,85vw);
-background:var(--bg);padding:22px;
-transition:.3s;box-shadow:5px 0 20px #0002;
+position:fixed;
+z-index:11;
+top:0;left:-310px;
+height:100%;
+width:min(290px,85vw);
+background:var(--bg);
+padding:22px;
+transition:.3s;
+box-shadow:5px 0 20px #0002;
 }
+
 .sidebar.show{left:0}
-.sideTitle{font-family:Lexend;font-size:21px;margin:20px 0}
+
+.sideTitle{
+font-family:Lexend;
+font-size:21px;
+margin:20px 0;
+}
+
 .sideItem{
-width:100%;padding:15px;text-align:left;
-border:0;background:var(--panel);
-border-radius:12px;margin:6px 0;font-size:15px;
+width:100%;
+padding:15px;
+text-align:left;
+border:0;
+background:var(--panel);
+border-radius:12px;
+margin:6px 0;
+font-size:15px;
 }
-.closeSide{float:right;border:0;background:none;font-size:25px}
+
+.closeSide{
+float:right;
+border:0;
+background:none;
+font-size:25px;
+}
+
 /* PAGES */
+
 .page{
-display:none;max-width:950px;width:100%;
-margin:auto;padding:25px 15px;
+display:none;
+max-width:950px;
+width:100%;
+margin:auto;
+padding:25px 15px;
 }
+
 .page.show{display:block}
+
 .pageTitle{
-font-family:Lexend;font-size:25px;margin-bottom:20px;
+font-family:Lexend;
+font-size:25px;
+margin-bottom:20px;
 }
+
 .card{
-background:var(--panel);border:1px solid var(--line);
-padding:18px;border-radius:15px;margin-bottom:15px;
+background:var(--panel);
+border:1px solid var(--line);
+padding:18px;
+border-radius:15px;
+margin-bottom:15px;
 }
+
 .grid{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-gap:12px;margin-bottom:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+gap:12px;
+margin-bottom:20px;
 }
+
 .stat{
-background:var(--panel);padding:20px 12px;
-border:1px solid var(--line);border-radius:15px;
+background:var(--panel);
+padding:20px 12px;
+border:1px solid var(--line);
+border-radius:15px;
 text-align:center;
 }
-.stat strong{display:block;font-size:30px;margin-top:10px;color:#7850e9}
-.stat span{font-size:13px;color:var(--muted)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:left}
+
+.stat strong{
+display:block;
+font-size:30px;
+margin-top:10px;
+color:#7850e9;
+}
+
+.stat span{
+font-size:13px;
+color:var(--muted);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:13px;
+}
+
+th,td{
+padding:12px 8px;
+border-bottom:1px solid var(--line);
+text-align:left;
+}
+
 .tableWrap{overflow-x:auto}
 .badge{color:#188038;font-weight:bold}
 .star{color:#f5a623;font-size:17px}
-/* DIALOGS */
-dialog{
-margin:auto;width:min(92%,430px);
-background:var(--bg);color:var(--text);
-border:1px solid var(--line);border-radius:20px;
-padding:25px;
-}
-dialog::backdrop{background:#0009}
-dialog h2{font-family:Lexend;margin-bottom:10px}
-dialog p{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:15px}
-.field{margin:14px 0}
-.field label{display:block;margin-bottom:7px;font-size:14px}
-.field input{
-width:100%;height:46px;border:1px solid var(--line);
-border-radius:10px;padding:10px;background:var(--bg);
-}
-.full{width:100%;margin-top:10px}
-.msg{font-size:13px;margin-top:10px;color:#d93025}
-.stars{display:flex;justify-content:center;gap:5px;margin:20px 0}
-.starBtn{font-size:38px;background:none;border:0;color:#ccc}
-.starBtn.selected{color:#f5a623}
+
 .hidden{display:none!important}
+
+/* LOGIN DIALOG */
+
+dialog{
+margin:auto;
+width:min(92%,430px);
+background:var(--bg);
+color:var(--text);
+border:1px solid var(--line);
+border-radius:22px;
+padding:28px;
+}
+
+dialog::backdrop{background:#000b}
+
+dialog h2{
+font-family:Lexend;
+font-size:25px;
+margin-bottom:12px;
+}
+
+dialog p{
+color:var(--muted);
+font-size:14px;
+line-height:1.5;
+margin-bottom:18px;
+}
+
+.field{margin:16px 0}
+
+.field label{
+display:block;
+margin-bottom:8px;
+}
+
+.field input{
+width:100%;
+height:53px;
+border:1px solid var(--line);
+border-radius:12px;
+padding:12px;
+background:var(--bg);
+outline:none;
+}
+
+.field input:focus{
+border-color:#7850e9;
+}
+
+.full{
+width:100%;
+margin-top:12px;
+min-height:53px;
+font-size:16px;
+}
+
+.msg{
+font-size:13px;
+margin-top:12px;
+color:#e74c3c;
+line-height:1.5;
+}
+
+.stars{
+display:flex;
+justify-content:center;
+gap:5px;
+margin:20px 0;
+}
+
+.starBtn{
+font-size:38px;
+background:none;
+border:0;
+color:#ccc;
+}
+
+.starBtn.selected{color:#f5a623}
+
 @media(max-width:600px){
 .pageTitle{font-size:21px}
 .grid{grid-template-columns:repeat(2,1fr)}
+.brand{font-size:21px}
 }
 </style>
 </head>
@@ -179,10 +383,11 @@ border-radius:10px;padding:10px;background:var(--bg);
 <button class="sideItem" onclick="showPage('services')">🌐 GLOBAL X Services</button>
 <button class="sideItem" onclick="showPage('about')">ⓘ About</button>
 <button class="sideItem" onclick="toggleTheme()">🌙 Dark / Light Mode</button>
-<button class="sideItem" onclick="openLogin()">👤 Login / Account</button>
+<button class="sideItem" onclick="openLogin()">👤 Account</button>
 </aside>
 
 <!-- HOME -->
+
 <main id="home">
 <div class="logo">GLOBAL X</div>
 
@@ -208,17 +413,17 @@ border-radius:10px;padding:10px;background:var(--bg);
 </div>
 </main>
 
-<!-- SERVICES DASHBOARD -->
+<!-- SERVICES -->
+
 <section class="page" id="services">
 
 <h2 class="pageTitle">🌐 GLOBAL X Services</h2>
 
 <div class="card">
 <h3>GLOBAL X Admin Dashboard</h3>
-<p style="margin-top:8px;color:var(--muted)">
-Live user login and rating activities.
+<p id="adminStatus" style="margin-top:10px">
+Checking administrator access...
 </p>
-<p id="adminStatus" style="margin-top:10px">Checking administrator access...</p>
 </div>
 
 <div id="dashboard" class="hidden">
@@ -247,9 +452,7 @@ Live user login and rating activities.
 
 <div class="card">
 <h3>⭐ Rating Statistics</h3>
-<div id="ratingStats" style="margin-top:15px;line-height:2">
-Loading...
-</div>
+<div id="ratingStats" style="margin-top:15px;line-height:2"></div>
 </div>
 
 <div class="card">
@@ -294,39 +497,52 @@ Loading...
 <section class="page" id="about">
 <h2 class="pageTitle">About GLOBAL X</h2>
 <div class="card">
-GLOBAL X - Search the web. Made in Sri Lanka.
+GLOBAL X - Search the web. Made in Sri Lanka 🇱🇰
 </div>
 </section>
 
 <footer>GLOBAL X | Made in Sri Lanka 🇱🇰</footer>
 
-<!-- LOGIN DIALOG -->
+<!-- LOGIN -->
+
 <dialog id="loginDlg">
+
 <h2 id="loginTitle">GLOBAL X Login</h2>
+
 <p>Create your account or login to GLOBAL X.</p>
 
 <div class="field">
 <label>Username</label>
-<input id="username" placeholder="Enter username" autocomplete="username">
+<input id="username" placeholder="Enter username"
+autocomplete="username">
 </div>
 
 <div class="field">
 <label>Password</label>
-<input id="password" type="password" placeholder="Minimum 6 characters" autocomplete="current-password">
+<input id="password" type="password"
+placeholder="Minimum 6 characters"
+autocomplete="current-password">
 </div>
 
 <div class="msg" id="loginMsg"></div>
 
-<button class="primary full" id="loginAction" onclick="loginOrSignup()">Login</button>
+<button class="primary full" id="loginAction"
+onclick="loginOrSignup()">Login</button>
 
 <button class="btn full" onclick="toggleAuth()">Create Account</button>
+
 <button class="btn full" onclick="loginDlg.close()">Close</button>
+
 </dialog>
 
-<!-- RATING DIALOG -->
+<!-- RATING -->
+
 <dialog id="rateDlg">
+
 <h2>Your Rating ⭐</h2>
+
 <p>How was your experience with GLOBAL X?</p>
+
 <div class="stars" id="starButtons">
 <button class="starBtn" data-value="1">★</button>
 <button class="starBtn" data-value="2">★</button>
@@ -334,19 +550,23 @@ GLOBAL X - Search the web. Made in Sri Lanka.
 <button class="starBtn" data-value="4">★</button>
 <button class="starBtn" data-value="5">★</button>
 </div>
+
 <p id="ratingLabel" style="text-align:center"></p>
+
 <button class="primary full" onclick="submitRating()">Submit Rating</button>
+
 <button class="btn full" onclick="rateDlg.close()">Close</button>
+
 </dialog>
 
 <script type="module">
 
 // ========================================
-// 1. FIREBASE CONFIGURATION
+// 1. FIREBASE IMPORTS
 // ========================================
 
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 
 import {
 getAuth,
@@ -354,8 +574,8 @@ createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
 onAuthStateChanged,
 signOut
-} from
-"https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+}
+from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 import {
 getFirestore,
@@ -369,76 +589,109 @@ onSnapshot,
 query,
 orderBy,
 limit
-} from
-"https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-// IMPORTANT: Replace these with your Firebase project details.
+// ========================================
+// 2. FIREBASE CONFIG
+// IMPORTANT: ENTER YOUR REAL DETAILS
+// ========================================
 
 const firebaseConfig = {
+
 apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_PROJECT.firebaseapp.com",
+
+authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+
 projectId: "YOUR_PROJECT_ID",
-storageBucket: "YOUR_PROJECT.firebasestorage.app",
-messagingSenderId: "YOUR_SENDER_ID",
+
+storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
+
+messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+
 appId: "YOUR_APP_ID"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+// Check configuration
+
+const configReady =
+firebaseConfig.apiKey !== "YOUR_API_KEY" &&
+firebaseConfig.projectId !== "YOUR_PROJECT_ID" &&
+firebaseConfig.appId !== "YOUR_APP_ID";
+
+let app,auth,db;
+
+if(configReady){
+
+try{
+
+app=initializeApp(firebaseConfig);
+auth=getAuth(app);
+db=getFirestore(app);
+
+}catch(error){
+
+console.error("Firebase initialization:",error);
+
+}
+
+}
 
 // ========================================
-// 2. GLOBAL VARIABLES
+// 3. GLOBAL VARIABLES
 // ========================================
 
-let currentUser = null;
-let authMode = "login";
-let selectedRating = 0;
-let currentMode = "All";
-let dashboardUnsubscribers = [];
-let ratingPromptTimer = null;
+let currentUser=null;
+let authMode="login";
+let selectedRating=0;
+let currentMode="All";
+let dashboardUnsubscribers=[];
+let ratingPromptTimer=null;
 
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
 // ========================================
-// 3. MENU
+// 4. MENU
 // ========================================
 
-window.openMenu = function(){
+window.openMenu=function(){
 $("sidebar").classList.add("show");
 $("overlay").classList.add("show");
 };
 
-window.closeMenu = function(){
+window.closeMenu=function(){
 $("sidebar").classList.remove("show");
 $("overlay").classList.remove("show");
 };
 
-window.showPage = function(page){
+window.showPage=function(page){
 
 closeMenu();
 
-$("home").style.display = page === "home" ? "flex" : "none";
+$("home").style.display=page==="home"?"flex":"none";
 
 document.querySelectorAll(".page").forEach(p=>{
 p.classList.remove("show");
 });
 
-if(page !== "home"){
+if(page!=="home"){
 $(page).classList.add("show");
 }
 
-if(page === "services"){
-checkAdmin();
-}
+if(page==="services") checkAdmin();
+
 };
 
-window.toggleTheme = function(){
+window.toggleTheme=function(){
+
 document.body.classList.toggle("dark");
+
 localStorage.setItem(
 "gx-theme",
-document.body.classList.contains("dark") ? "dark" : "light"
+document.body.classList.contains("dark")?"dark":"light"
 );
+
 };
 
 if(localStorage.getItem("gx-theme")==="dark"){
@@ -446,10 +699,10 @@ document.body.classList.add("dark");
 }
 
 // ========================================
-// 4. LOGIN / SIGNUP
+// 5. LOGIN / SIGNUP
 // ========================================
 
-window.openLogin = function(){
+window.openLogin=function(){
 
 closeMenu();
 
@@ -458,65 +711,97 @@ alert("Logged in as: "+currentUser.email);
 return;
 }
 
-authMode = "login";
-$("loginTitle").textContent = "GLOBAL X Login";
-$("loginAction").textContent = "Login";
+authMode="login";
+
+$("loginTitle").textContent="GLOBAL X Login";
+$("loginAction").textContent="Login";
+$("loginMsg").textContent="";
+
 $("loginDlg").showModal();
+
 };
 
-window.toggleAuth = function(){
+window.toggleAuth=function(){
 
-authMode = authMode === "login" ? "signup" : "login";
+authMode=authMode==="login"?"signup":"login";
 
-$("loginTitle").textContent =
-authMode === "signup" ? "Create GLOBAL X Account" : "GLOBAL X Login";
+$("loginTitle").textContent=
+authMode==="signup"
+?"Create GLOBAL X Account"
+:"GLOBAL X Login";
 
-$("loginAction").textContent =
-authMode === "signup" ? "Create Account" : "Login";
+$("loginAction").textContent=
+authMode==="signup"
+?"Create Account"
+:"Login";
 
-$("loginMsg").textContent = "";
+$("password").value="";
+$("loginMsg").textContent="";
+
 };
 
 function usernameToEmail(name){
-return name.trim().toLowerCase().replace(/[^a-z0-9._-]/g,"") + "@x.com";
+
+return name.trim().toLowerCase()
+.replace(/[^a-z0-9._-]/g,"")+"@x.com";
+
 }
 
-window.loginOrSignup = async function(){
+// User login and registration
 
-const name = $("username").value.trim().toLowerCase();
-const password = $("password").value;
-const msg = $("loginMsg");
+window.loginOrSignup=async function(){
 
-if(name.length < 3){
-msg.textContent = "Username must have at least 3 characters.";
+if(!auth){
+
+$("loginMsg").textContent=
+"Firebase configuration missing. Add your real Firebase Web App config.";
+
 return;
+
 }
 
-if(password.length < 6){
-msg.textContent = "Password must have at least 6 characters.";
+const name=$("username").value.trim().toLowerCase();
+const password=$("password").value;
+const msg=$("loginMsg");
+
+if(!/^[a-z0-9._-]{3,30}$/.test(name)){
+
+msg.textContent=
+"Username must be 3-30 characters (letters, numbers, . _ -).";
+
 return;
+
 }
 
-const email = usernameToEmail(name);
+if(password.length<6){
 
-$("loginAction").disabled = true;
-msg.textContent = "Please wait...";
+msg.textContent="Password must have at least 6 characters.";
+return;
+
+}
+
+const email=usernameToEmail(name);
+
+$("loginAction").disabled=true;
+msg.textContent="Connecting to Firebase...";
 
 try{
 
-if(authMode === "signup"){
+if(authMode==="signup"){
 
-const credential = await createUserWithEmailAndPassword(
+const credential=await createUserWithEmailAndPassword(
 auth,email,password
 );
 
-const user = credential.user;
+const user=credential.user;
 
 await setDoc(doc(db,"gxUsers",user.uid),{
+
 uid:user.uid,
 username:name,
 email:email,
 createdAt:serverTimestamp()
+
 });
 
 }else{
@@ -525,72 +810,146 @@ await signInWithEmailAndPassword(auth,email,password);
 
 }
 
-msg.textContent = "Success!";
+// Mark this as an actual new login/signup event.
+sessionStorage.setItem("gx-login-event-pending","yes");
+
+msg.textContent="Login successful!";
+
 $("loginDlg").close();
 
 }catch(error){
 
-msg.textContent = error.message;
+console.error(error);
+
+const errors={
+
+"auth/invalid-api-key":
+"Invalid Firebase API Key. Check your Firebase configuration.",
+
+"auth/operation-not-allowed":
+"Enable Email/Password sign-in in Firebase Authentication.",
+
+"auth/invalid-credential":
+"Incorrect username or password.",
+
+"auth/user-not-found":
+"Account not found. Please create an account.",
+
+"auth/wrong-password":
+"Incorrect password.",
+
+"auth/email-already-in-use":
+"Username already registered. Please login.",
+
+"auth/weak-password":
+"Password is too weak.",
+
+"auth/network-request-failed":
+"Network error. Check your internet connection.",
+
+"auth/invalid-email":
+"Invalid account email configuration.",
+
+"auth/unauthorized-domain":
+"Add this website domain to Firebase Authorized Domains."
+
+};
+
+msg.textContent=errors[error.code]||
+"Firebase Error: "+error.message;
 
 }finally{
 
-$("loginAction").disabled = false;
+$("loginAction").disabled=false;
 
 }
 
 };
 
-window.logoutUser = async function(){
+window.logoutUser=async function(){
 
-await signOut(auth);
-alert("Logged out successfully.");
-};
-
-// ========================================
-// 5. AUTH STATE AND LOGIN ACTIVITY
-// ========================================
-
-onAuthStateChanged(auth,async user=>{
-
-currentUser = user;
-
-if(user){
-
-$("authArea").innerHTML =
-`<button class="userBtn" onclick="openLogin()">
-${escapeHTML(user.email)}
-</button>
-<button class="btn" onclick="logoutUser()">Logout</button>`;
+if(!auth)return;
 
 try{
 
-const userRef = doc(db,"gxUsers",user.uid);
-const userSnap = await getDoc(userRef);
+await signOut(auth);
+
+clearTimeout(ratingPromptTimer);
+
+alert("Logged out successfully!");
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+// ========================================
+// 6. AUTH STATE
+// ========================================
+
+if(auth){
+
+onAuthStateChanged(auth,async user=>{
+
+currentUser=user;
+
+if(user){
+
+$("authArea").innerHTML=`
+
+<button class="userBtn">
+👤 ${escapeHTML(user.email)}
+</button>
+
+<button class="btn" onclick="logoutUser()">
+Logout
+</button>
+
+`;
+
+try{
+
+const userRef=doc(db,"gxUsers",user.uid);
+const userSnap=await getDoc(userRef);
 
 if(userSnap.exists()){
 
-const data = userSnap.data();
+const data=userSnap.data();
+
+if(sessionStorage.getItem("gx-login-event-pending")==="yes"){
 
 await addDoc(collection(db,"gxActivities"),{
+
 uid:user.uid,
 username:data.username,
 email:user.email,
 type:"login",
 createdAt:serverTimestamp()
+
 });
+
+sessionStorage.removeItem("gx-login-event-pending");
+
+}
 
 }
 
 }catch(error){
-console.error("Login activity:",error);
+
+console.error("Login activity error:",error);
+
 }
 
 scheduleRating();
 
 }else{
 
-$("authArea").innerHTML =
-`<button class="loginBtn" onclick="openLogin()">Login</button>`;
+$("authArea").innerHTML=`
+<button class="loginBtn" onclick="openLogin()">Login</button>
+`;
 
 clearTimeout(ratingPromptTimer);
 
@@ -598,25 +957,38 @@ clearTimeout(ratingPromptTimer);
 
 });
 
+}else{
+
+$("adminStatus").textContent=
+"Firebase is not configured. Please add your Firebase details.";
+
+}
+
+// ========================================
+// 7. AUTOMATIC RATING PROMPT
+// ========================================
+
 function scheduleRating(){
 
 clearTimeout(ratingPromptTimer);
 
-ratingPromptTimer = setTimeout(async()=>{
+ratingPromptTimer=setTimeout(async()=>{
 
-if(!currentUser) return;
+if(!currentUser)return;
 
 try{
 
-const ratingRef = doc(db,"gxUserRatings",currentUser.uid);
-const ratingSnap = await getDoc(ratingRef);
+const ratingRef=doc(db,"gxUserRatings",currentUser.uid);
+const ratingSnap=await getDoc(ratingRef);
 
 if(!ratingSnap.exists()){
 $("rateDlg").showModal();
 }
 
 }catch(error){
+
 console.error(error);
+
 }
 
 },120000);
@@ -624,62 +996,81 @@ console.error(error);
 }
 
 // ========================================
-// 6. STAR RATING
+// 8. STAR RATING
 // ========================================
 
 document.querySelectorAll(".starBtn").forEach(button=>{
 
 button.addEventListener("click",()=>{
 
-selectedRating = Number(button.dataset.value);
+selectedRating=Number(button.dataset.value);
 
 document.querySelectorAll(".starBtn").forEach(star=>{
+
 star.classList.toggle(
 "selected",
 Number(star.dataset.value)<=selectedRating
 );
-});
-
-const labels = ["Poor","Fair","Good","Very Good","Excellent"];
-
-$("ratingLabel").textContent = labels[selectedRating-1];
 
 });
 
+const labels=[
+"Poor",
+"Fair",
+"Good",
+"Very Good",
+"Excellent"
+];
+
+$("ratingLabel").textContent=labels[selectedRating-1];
+
 });
 
-window.submitRating = async function(){
+});
+
+window.submitRating=async function(){
 
 if(!currentUser){
+
 alert("Please login before rating.");
+
 $("rateDlg").close();
 openLogin();
+
 return;
+
 }
 
 if(!selectedRating){
+
 alert("Please select your star rating.");
 return;
+
 }
 
 try{
 
-const userSnap = await getDoc(doc(db,"gxUsers",currentUser.uid));
+const userSnap=await getDoc(doc(db,"gxUsers",currentUser.uid));
 
 if(!userSnap.exists()){
+
 alert("Account details not found.");
 return;
+
 }
 
-const userData = userSnap.data();
+const userData=userSnap.data();
 
-const ratingRef = doc(db,"gxUserRatings",currentUser.uid);
-const oldRating = await getDoc(ratingRef);
+const ratingRef=doc(db,"gxUserRatings",currentUser.uid);
+const oldRating=await getDoc(ratingRef);
 
 if(oldRating.exists()){
+
 alert("You have already rated GLOBAL X.");
 $("rateDlg").close();
+
 return;
+
 }
 
 await setDoc(ratingRef,{
@@ -708,6 +1099,7 @@ alert("Thank you for rating GLOBAL X!");
 
 }catch(error){
 
+console.error(error);
 alert("Rating failed: "+error.message);
 
 }
@@ -715,32 +1107,37 @@ alert("Rating failed: "+error.message);
 };
 
 // ========================================
-// 7. ADMIN DASHBOARD
+// 9. ADMIN ACCESS
 // ========================================
 
 async function checkAdmin(){
 
 if(!currentUser){
-$("adminStatus").textContent = "Please login first.";
+
+$("adminStatus").textContent="Please login first.";
 $("dashboard").classList.add("hidden");
+
 return;
+
 }
 
 try{
 
-const token = await currentUser.getIdTokenResult(true);
+const token=await currentUser.getIdTokenResult(true);
 
-if(token.claims.admin !== true){
+if(token.claims.admin!==true){
 
-$("adminStatus").textContent =
+$("adminStatus").textContent=
 "Access denied. Administrator permission required.";
 
 $("dashboard").classList.add("hidden");
+
 return;
 
 }
 
-$("adminStatus").textContent = "Administrator Access Verified ✓";
+$("adminStatus").textContent=
+"Administrator Access Verified ✓";
 
 $("dashboard").classList.remove("hidden");
 
@@ -748,7 +1145,9 @@ startDashboard();
 
 }catch(error){
 
-$("adminStatus").textContent = "Unable to verify administrator access.";
+$("adminStatus").textContent=
+"Unable to verify administrator access.";
+
 console.error(error);
 
 }
@@ -756,7 +1155,7 @@ console.error(error);
 }
 
 // ========================================
-// 8. LIVE FIRESTORE DATA
+// 10. LIVE ADMIN DASHBOARD
 // ========================================
 
 function stopDashboard(){
@@ -794,17 +1193,22 @@ $("usersTable").innerHTML=users.map(u=>`
 <td>${formatDate(u.createdAt)}</td>
 </tr>
 
-`).join("") || "<tr><td colspan='3'>No users yet.</td></tr>";
+`).join("")||"<tr><td colspan='3'>No users yet.</td></tr>";
 
 const counts=[0,0,0,0,0];
 
 ratings.forEach(r=>{
+
 const n=Number(r.rating);
-if(n>=1 && n<=5) counts[n-1]++;
+
+if(n>=1&&n<=5)counts[n-1]++;
+
 });
 
 $("ratingStats").innerHTML=counts.map((n,i)=>`
-<div> ${i+1} ⭐ : <b>${n}</b> ratings</div>
+
+<div>${i+1} ⭐ : <b>${n}</b> ratings</div>
+
 `).reverse().join("");
 
 $("loginTable").innerHTML=activities
@@ -817,7 +1221,7 @@ $("loginTable").innerHTML=activities
 <td class="badge">Login</td>
 </tr>
 
-`).join("") || "<tr><td colspan='3'>No login activities.</td></tr>";
+`).join("")||"<tr><td colspan='3'>No login activities.</td></tr>";
 
 $("ratingTable").innerHTML=ratings.map(r=>`
 
@@ -827,27 +1231,29 @@ $("ratingTable").innerHTML=ratings.map(r=>`
 <td>${formatDate(r.createdAt)}</td>
 </tr>
 
-`).join("") || "<tr><td colspan='3'>No ratings yet.</td></tr>";
+`).join("")||"<tr><td colspan='3'>No ratings yet.</td></tr>";
 
 }
 
-// USERS LISTENER
-
 dashboardUnsubscribers.push(
+
 onSnapshot(collection(db,"gxUsers"),snapshot=>{
 
 users=snapshot.docs.map(d=>d.data());
 updateDashboard();
 
 },error=>console.error(error))
+
 );
 
-// LOGIN ACTIVITIES LISTENER
-
 dashboardUnsubscribers.push(
+
 onSnapshot(
-query(collection(db,"gxActivities"),
-orderBy("createdAt","desc"),limit(200)),
+query(
+collection(db,"gxActivities"),
+orderBy("createdAt","desc"),
+limit(200)
+),
 snapshot=>{
 
 activities=snapshot.docs.map(d=>d.data());
@@ -856,35 +1262,40 @@ updateDashboard();
 },
 error=>console.error(error)
 )
+
 );
 
-// RATINGS LISTENER
-
 dashboardUnsubscribers.push(
+
 onSnapshot(collection(db,"gxUserRatings"),snapshot=>{
 
 ratings=snapshot.docs.map(d=>d.data());
 updateDashboard();
 
 },error=>console.error(error))
+
 );
 
 }
 
 function formatDate(timestamp){
 
-if(!timestamp) return "Pending";
+if(!timestamp)return "Pending";
 
 try{
+
 return timestamp.toDate().toLocaleString();
+
 }catch(e){
+
 return "Pending";
+
 }
 
 }
 
 // ========================================
-// 9. SEARCH
+// 11. SEARCH
 // ========================================
 
 const searchURLs={
@@ -910,27 +1321,30 @@ document.querySelectorAll(".mode").forEach(b=>{
 b.classList.toggle("active",b===button);
 });
 
-if($("q").value.trim()) doSearch();
+if($("q").value.trim())doSearch();
 
 });
 
 });
 
 function looksLikeUrl(text){
-return !/\s/.test(text) &&
+
+return !/\s/.test(text)&&
 /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(text);
+
 }
 
 window.doSearch=function(){
 
 const text=$("q").value.trim();
 
-if(!text) return;
+if(!text)return;
 
 if((currentMode==="All"||currentMode==="Web")&&looksLikeUrl(text)){
 
 location.href=/^https?:\/\//i.test(text)
-? text : "https://"+text;
+?text
+:"https://"+text;
 
 return;
 
@@ -946,17 +1360,20 @@ window.feelingLucky=function(){
 
 const text=$("q").value.trim()||"GLOBAL X Sri Lanka";
 
-location.href="https://www.google.com/search?q="+
+location.href=
+"https://www.google.com/search?q="+
 encodeURIComponent(text)+"&btnI=1";
 
 };
 
 $("q").addEventListener("keydown",e=>{
-if(e.key==="Enter") doSearch();
+
+if(e.key==="Enter")doSearch();
+
 });
 
 // ========================================
-// 10. SAFE HTML DISPLAY
+// 12. SAFE HTML
 // ========================================
 
 function escapeHTML(value){
@@ -974,7 +1391,7 @@ return String(value||"").replace(/[&<>"']/g,char=>({
 }
 
 // ========================================
-// 11. CLEANUP
+// 13. CLEANUP
 // ========================================
 
 window.addEventListener("beforeunload",()=>{
